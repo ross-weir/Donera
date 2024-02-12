@@ -1,0 +1,8 @@
+{
+  "name": "@donera/alephium-config",
+  "version": "1.0.0",
+  "private": true,
+  "devDependencies": {
+    "@alephium/cli": "^0.29.1"
+  }
+}
