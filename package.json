@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "build": "turbo build",
     "lint": "turbo lint",
     "test": "turbo test",
     "fmt": "prettier --write ."
