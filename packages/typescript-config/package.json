@@ -1,6 +1,7 @@
 {
   "name": "@donera/typescript-config",
   "version": "1.0.0",
+  "private": true,
   "devDependencies": {
     "@tsconfig/bun": "^1.0.3"
   }

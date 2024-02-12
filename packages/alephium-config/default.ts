@@ -19,7 +19,6 @@ const config: Configuration<unknown> = {
     },
     testnet: {
       nodeUrl: process.env.DONERA_NODE_URL ?? "https://wallet-v20.testnet.alephium.org",
-
       privateKeys: privateKeys(),
       settings: defaultSettings,
     },
@@ -32,4 +31,3 @@ const config: Configuration<unknown> = {
 };
 
 export default config;
-
