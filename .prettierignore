@@ -1,0 +1,7 @@
+node_modules
+pnpm-lock.yaml
+**/.turbo/**
+**/artifacts/**
+**/.next/**
+**/_next/**
+**/dist/**

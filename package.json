@@ -1,0 +1,17 @@
+{
+  "name": "donera",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "lint": "turbo lint",
+    "test": "turbo test",
+    "fmt": "prettier --write ."
+  },
+  "packageManager": "pnpm@8.9.0",
+  "engines": {
+    "node": ">=18"
+  },
+  "devDependencies": {
+    "turbo": "^1.12.3"
+  }
+}

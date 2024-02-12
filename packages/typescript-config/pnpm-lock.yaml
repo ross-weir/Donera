@@ -1,0 +1,18 @@
+lockfileVersion: "6.0"
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
+devDependencies:
+  "@tsconfig/bun":
+    specifier: ^1.0.3
+    version: 1.0.3
+
+packages:
+  /@tsconfig/bun@1.0.3:
+    resolution:
+      {
+        integrity: sha512-W0aKC59ffkRQ4h29GP6oJzt5oCxMddfojmZAOaurVlyIWOIfukva/z8QjL1tiMvUF+jOwYD5yv0+g7b3Mzx37A==,
+      }
+    dev: true
