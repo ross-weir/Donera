@@ -1,0 +1,37 @@
+{
+  "version": "v2.8.2",
+  "name": "DonateToFund",
+  "bytecodeTemplate": "0101030000000bb4{2}{3}a3{1}{2}{3}0f0c{0}0103",
+  "fieldsSig": {
+    "names": [
+      "donera",
+      "fundContractId",
+      "tokenId",
+      "amount"
+    ],
+    "types": [
+      "ByteVec",
+      "ByteVec",
+      "ByteVec",
+      "U256"
+    ],
+    "isMutable": [
+      false,
+      false,
+      false,
+      false
+    ]
+  },
+  "functions": [
+    {
+      "name": "main",
+      "usePreapprovedAssets": true,
+      "useAssetsInContract": false,
+      "isPublic": true,
+      "paramNames": [],
+      "paramTypes": [],
+      "paramIsMutable": [],
+      "returnTypes": []
+    }
+  ]
+}
