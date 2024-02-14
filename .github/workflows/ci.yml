@@ -17,6 +17,7 @@ jobs:
         with:
           fetch-depth: 2
       - uses: pnpm/action-setup@v3
+      - uses: oven-sh/setup-bun@v1
       - name: Setup Node.js environment
         uses: actions/setup-node@v4
         with:
