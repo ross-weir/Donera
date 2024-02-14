@@ -1,0 +1,29 @@
+Abstract Contract Owned(mut selfOwner: Address) {
+  // Error codes in the range of 90 - 99
+  enum OwnedError {
+    Forbidden = 90
+  }
+
+  // Assert that the caller is the owner of the contract.
+  //
+  // @throws {OwnedError.Forbidden} If the caller is not the owner.
+  //
+  // @param caller The caller of the contract.
+  // @returns unit
+  fn assertOwner(caller: Address) -> () {
+    checkCaller!(callerAddress!() == selfAddress!(), OwnedError.Forbidden)
+    assert!(caller == selfOwner, OwnedError.Forbidden)
+  }
+
+  // Update the owner.
+  //
+  // @throws {ErrorCode.Forbidden} Caller must be the current owner.
+  //
+  // @param owner Address of the new owner.
+  // @returns unit
+  @using(updateFields = true)
+  pub fn setOwner(newOwner: Address) -> () {
+    checkCaller!(callerAddress!() == selfOwner, OwnedError.Forbidden)
+    selfOwner = newOwner
+  }
+}

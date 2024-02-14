@@ -1,0 +1,62 @@
+{
+  "fullNodeVersion": "v2.8.2",
+  "compilerOptionsUsed": {
+    "ignoreUnusedConstantsWarnings": false,
+    "ignoreUnusedVariablesWarnings": false,
+    "ignoreUnusedFieldsWarnings": false,
+    "ignoreUnusedPrivateFunctionsWarnings": false,
+    "ignoreUpdateFieldsCheckWarnings": false,
+    "ignoreCheckExternalCallerWarnings": false
+  },
+  "infos": {
+    "CreateFund": {
+      "sourceFile": "scripts.ral",
+      "sourceCodeHash": "c10f68bdf4e06fd363d84a572ee173dfcd13a3f1a9997693e226a3a7c86cb3cf",
+      "bytecodeDebugPatch": "",
+      "codeHashDebug": "",
+      "warnings": []
+    },
+    "DonateToFund": {
+      "sourceFile": "scripts.ral",
+      "sourceCodeHash": "c10f68bdf4e06fd363d84a572ee173dfcd13a3f1a9997693e226a3a7c86cb3cf",
+      "bytecodeDebugPatch": "",
+      "codeHashDebug": "",
+      "warnings": []
+    },
+    "Donera": {
+      "sourceFile": "donera.ral",
+      "sourceCodeHash": "eaf0ce09cb403c3b8f9764da703f0f74379e62a20172deb9293cf3d2587ccf3e",
+      "bytecodeDebugPatch": "",
+      "codeHashDebug": "ccbda13feebcb026e20c09359c245512dc68b02c054f2f954e1abc2c958ec43a",
+      "warnings": []
+    },
+    "FinalizeFund": {
+      "sourceFile": "scripts.ral",
+      "sourceCodeHash": "c10f68bdf4e06fd363d84a572ee173dfcd13a3f1a9997693e226a3a7c86cb3cf",
+      "bytecodeDebugPatch": "",
+      "codeHashDebug": "",
+      "warnings": []
+    },
+    "Fund": {
+      "sourceFile": "fund.ral",
+      "sourceCodeHash": "95425f69d1b86e922c73029e6c1d718c2b73d847512d56c9bfe5e0d364e615b2",
+      "bytecodeDebugPatch": "",
+      "codeHashDebug": "a9014ff25e916ccd24be1df1e45279c0a25eabe003dafd91c5a6890f015786dd",
+      "warnings": []
+    },
+    "Owned": {
+      "sourceFile": "traits/owned.ral",
+      "sourceCodeHash": "ddcc9b3c0a28c1693f19493d4aebd026c578a081ddb197bc47a1eb97a2149105",
+      "bytecodeDebugPatch": "",
+      "codeHashDebug": "",
+      "warnings": []
+    },
+    "SetAttoListingFee": {
+      "sourceFile": "scripts.ral",
+      "sourceCodeHash": "c10f68bdf4e06fd363d84a572ee173dfcd13a3f1a9997693e226a3a7c86cb3cf",
+      "bytecodeDebugPatch": "",
+      "codeHashDebug": "",
+      "warnings": []
+    }
+  }
+}

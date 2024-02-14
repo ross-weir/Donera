@@ -1,0 +1,45 @@
+TxScript CreateFund(
+  donera: Donera,
+  name: ByteVec,
+  description: ByteVec,
+  recipient: Address,
+  goal: U256,
+  deadlineTimestamp: U256
+) {
+  // 1 alph for the subcontract that's created
+  let requiredAssets =  donera.getAttoListingFee() + 1 alph
+  donera.createFund{callerAddress!() -> ALPH: requiredAssets}(
+    name,
+    description,
+    recipient,
+    goal,
+    deadlineTimestamp
+  )
+}
+
+TxScript DonateToFund(
+  donera: Donera,
+  fundContractId: ByteVec,
+  tokenId: ByteVec,
+  amount: U256
+) {
+  donera.donateToFund{callerAddress!() -> tokenId: amount}(
+    fundContractId,
+    tokenId,
+    amount
+  )
+}
+
+TxScript FinalizeFund(
+  donera: Donera,
+  fundContractId: ByteVec
+) {
+  donera.finalizeFund(fundContractId)
+}
+
+TxScript SetAttoListingFee(
+  donera: Donera,
+  newAttoFee: U256
+) {
+  donera.setSelfAttoListingFee(newAttoFee)
+}

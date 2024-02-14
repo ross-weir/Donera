@@ -29,4 +29,5 @@ jobs:
       - name: Lint
         run: pnpm lint
       - name: Test
-        run: pnpm test
+        # TODO dapp package requires devnet node to run tests
+        run: npx turbo test --filter=\!dapp

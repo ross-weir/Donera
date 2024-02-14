@@ -1,0 +1,255 @@
+{
+  "version": "v2.8.2",
+  "name": "Donera",
+  "bytecode": "0309164028408640b040ce40dc40e940f240ff00000101000ab4b24513405a7b1600a0024513405a7b010001010007b4a0024513405a7b1600a1020101050a004030b417051605a001a916001601441602474416034044160440444e170616001601160216031604130564b213016417081707160513c40de0b6b3a7640000a21606a00016071608c11709051600160116021603160416097401030305001516001703b41704160416011602a31604160116020f0c160301060616011602160416006101000102001116001701b40c0d16010105450c7b0c0c160101070716005e010201010005b40000a0021600a8010001010004b400001600a100010000000102a00102010001010004b400001600a101",
+  "codeHash": "ccbda13feebcb026e20c09359c245512dc68b02c054f2f954e1abc2c958ec43a",
+  "fieldsSig": {
+    "names": [
+      "selfFundTemplateId",
+      "selfAttoListingFee",
+      "selfOwner"
+    ],
+    "types": [
+      "ByteVec",
+      "U256",
+      "Address"
+    ],
+    "isMutable": [
+      true,
+      true,
+      true
+    ]
+  },
+  "eventsSig": [
+    {
+      "name": "FundListed",
+      "fieldNames": [
+        "name",
+        "description",
+        "recipient",
+        "goal",
+        "deadlineTimestamp",
+        "fundContractId"
+      ],
+      "fieldTypes": [
+        "ByteVec",
+        "ByteVec",
+        "Address",
+        "U256",
+        "U256",
+        "ByteVec"
+      ]
+    },
+    {
+      "name": "Donation",
+      "fieldNames": [
+        "tokenId",
+        "amount",
+        "donor",
+        "fundContractId"
+      ],
+      "fieldTypes": [
+        "ByteVec",
+        "U256",
+        "Address",
+        "ByteVec"
+      ]
+    },
+    {
+      "name": "FundFinalized",
+      "fieldNames": [
+        "contractId"
+      ],
+      "fieldTypes": [
+        "ByteVec"
+      ]
+    }
+  ],
+  "functions": [
+    {
+      "name": "assertOwner",
+      "usePreapprovedAssets": false,
+      "useAssetsInContract": false,
+      "isPublic": false,
+      "paramNames": [
+        "caller"
+      ],
+      "paramTypes": [
+        "Address"
+      ],
+      "paramIsMutable": [
+        false
+      ],
+      "returnTypes": []
+    },
+    {
+      "name": "setOwner",
+      "usePreapprovedAssets": false,
+      "useAssetsInContract": false,
+      "isPublic": true,
+      "paramNames": [
+        "newOwner"
+      ],
+      "paramTypes": [
+        "Address"
+      ],
+      "paramIsMutable": [
+        false
+      ],
+      "returnTypes": []
+    },
+    {
+      "name": "createFund",
+      "usePreapprovedAssets": true,
+      "useAssetsInContract": true,
+      "isPublic": true,
+      "paramNames": [
+        "name",
+        "description",
+        "recipient",
+        "goal",
+        "deadlineTimestamp"
+      ],
+      "paramTypes": [
+        "ByteVec",
+        "ByteVec",
+        "Address",
+        "U256",
+        "U256"
+      ],
+      "paramIsMutable": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "returnTypes": []
+    },
+    {
+      "name": "donateToFund",
+      "usePreapprovedAssets": true,
+      "useAssetsInContract": false,
+      "isPublic": true,
+      "paramNames": [
+        "fundContractId",
+        "tokenId",
+        "amount"
+      ],
+      "paramTypes": [
+        "ByteVec",
+        "ByteVec",
+        "U256"
+      ],
+      "paramIsMutable": [
+        false,
+        false,
+        false
+      ],
+      "returnTypes": []
+    },
+    {
+      "name": "finalizeFund",
+      "usePreapprovedAssets": false,
+      "useAssetsInContract": false,
+      "isPublic": true,
+      "paramNames": [
+        "fundContractId"
+      ],
+      "paramTypes": [
+        "ByteVec"
+      ],
+      "paramIsMutable": [
+        false
+      ],
+      "returnTypes": []
+    },
+    {
+      "name": "withdraw",
+      "usePreapprovedAssets": false,
+      "useAssetsInContract": true,
+      "isPublic": true,
+      "paramNames": [
+        "amount"
+      ],
+      "paramTypes": [
+        "U256"
+      ],
+      "paramIsMutable": [
+        false
+      ],
+      "returnTypes": []
+    },
+    {
+      "name": "setSelfFundTemplateId",
+      "usePreapprovedAssets": false,
+      "useAssetsInContract": false,
+      "isPublic": true,
+      "paramNames": [
+        "newFundTemplateId"
+      ],
+      "paramTypes": [
+        "ByteVec"
+      ],
+      "paramIsMutable": [
+        false
+      ],
+      "returnTypes": []
+    },
+    {
+      "name": "getAttoListingFee",
+      "usePreapprovedAssets": false,
+      "useAssetsInContract": false,
+      "isPublic": true,
+      "paramNames": [],
+      "paramTypes": [],
+      "paramIsMutable": [],
+      "returnTypes": [
+        "U256"
+      ]
+    },
+    {
+      "name": "setSelfAttoListingFee",
+      "usePreapprovedAssets": false,
+      "useAssetsInContract": false,
+      "isPublic": true,
+      "paramNames": [
+        "newAttoListingFee"
+      ],
+      "paramTypes": [
+        "U256"
+      ],
+      "paramIsMutable": [
+        false
+      ],
+      "returnTypes": []
+    }
+  ],
+  "constants": [],
+  "enums": [
+    {
+      "name": "DoneraError",
+      "fields": [
+        {
+          "name": "Forbidden",
+          "value": {
+            "type": "U256",
+            "value": "0"
+          }
+        }
+      ]
+    },
+    {
+      "name": "OwnedError",
+      "fields": [
+        {
+          "name": "Forbidden",
+          "value": {
+            "type": "U256",
+            "value": "90"
+          }
+        }
+      ]
+    }
+  ]
+}

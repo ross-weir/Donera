@@ -1,0 +1,64 @@
+Contract Fund(
+  selfName: ByteVec,
+  selfDescription: ByteVec,
+  selfRecipient: Address,
+  selfGoal: U256,
+  selfDeadline: U256,
+  mut selfOwner: Address // Central Donera contract
+) extends Owned(selfOwner) {
+  // Error codes in range 50 - 59
+  enum FundError {
+    // User tried to finalize fund before deadline was reached
+    FundInProgress = 50
+  }
+
+  // Get the name of the fund raiser.
+  pub fn getName() -> ByteVec {
+    return selfName
+  }
+
+  // Get the description of the fund raiser.
+  pub fn getDescription() -> ByteVec {
+    return selfDescription
+  }
+
+  // Get the goal of the fund raiser.
+  pub fn getGoal() -> U256 {
+    return selfGoal
+  }
+
+  // Get the recipient of the fund raiser.
+  pub fn getRecipient() -> Address {
+    return selfRecipient
+  }
+
+  // Donate tokens to this fund raiser.
+  //
+  // @throws {OwnedError.Forbidden} Caller must be the `Donera` contract.
+  //
+  // @param donor The address of the entity making he donation.
+  // @param tokenId The ID of the token being donated.
+  // @param amount The amount of tokens being donated.
+  // @returns unit
+  @using(preapprovedAssets = true, checkExternalCaller = false, assetsInContract = true)
+  pub fn donate(donor: Address, tokenId: ByteVec, amount: U256) -> () {
+    assertOwner(callerAddress!())
+    transferTokenToSelf!(donor, tokenId, amount)
+  }
+
+  // Finalize the fund raiser.
+  // 
+  // Can only be called after the fund raiser deadline has passed.
+  // Transfers all tokens owned by the contract to the recipient.
+  //
+  // @throws {OwnedError.Forbidden} Caller must be the `Donera` contract.
+  // @throws {FundError.FundInProgress} Must be called after the funds deadline.
+  //
+  // @returns unit
+  @using(assetsInContract = true)
+  pub fn finalize() -> () {
+    assertOwner(callerAddress!())
+    assert!(blockTimeStamp!() >= selfDeadline, FundError.FundInProgress)
+    destroySelf!(selfRecipient)
+  }
+}

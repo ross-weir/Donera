@@ -1,0 +1,141 @@
+Contract Donera(
+  mut selfFundTemplateId: ByteVec,
+  mut selfAttoListingFee: U256, 
+  mut selfOwner: Address
+) extends Owned(selfOwner) {
+  event FundListed(
+    name: ByteVec,
+    description: ByteVec,
+    recipient: Address,
+    goal: U256,
+    deadlineTimestamp: U256,
+    fundContractId: ByteVec
+  )
+
+  event Donation(
+    tokenId: ByteVec,
+    amount: U256,
+    donor: Address,
+    fundContractId: ByteVec
+  )
+
+  // TODO do we need any other fields?
+  event FundFinalized(contractId: ByteVec)
+
+  // Donera error codes in the range of 0 - 10
+  enum DoneraError {
+    // An action was attempted by an unauthorized caller.
+    Forbidden = 0
+  }
+
+  @using(preapprovedAssets = true, checkExternalCaller = false, assetsInContract = true)
+  pub fn createFund(
+    name: ByteVec,
+    description: ByteVec,
+    recipient: Address,
+    goal: U256,
+    deadlineTimestamp: U256
+  ) -> () {
+    let lister = callerAddress!()
+
+    transferTokenToSelf!(lister, ALPH, selfAttoListingFee)
+
+    // maybe should use a nounce or something for better uniqueness
+    let pathHash = blake2b!(
+      name ++
+      description ++
+      toByteVec!(recipient) ++
+      toByteVec!(goal) ++
+      toByteVec!(deadlineTimestamp)
+    )
+    let (immFields, mutFields) = Fund.encodeFields!(
+      name,
+      description,
+      recipient,
+      goal,
+      deadlineTimestamp,
+      selfAddress!()
+    )
+    let fundContractId = copyCreateSubContract!{lister -> ALPH: 1 alph}(
+      pathHash,
+      selfFundTemplateId,
+      immFields,
+      mutFields
+    )
+
+    emit FundListed(
+      name,
+      description,
+      recipient,
+      goal,
+      deadlineTimestamp,
+      fundContractId
+    )
+  }
+
+  // Donate tokens to the supplied fund.
+  // If making an ALPH token donation the amount should be in atto format.
+  @using(preapprovedAssets = true, checkExternalCaller = false)
+  pub fn donateToFund(fundContractId: ByteVec, tokenId: ByteVec, amount: U256) -> () {
+    let fund = Fund(fundContractId)
+    let donor = callerAddress!()
+
+    // TODO protocol fee
+
+    fund.donate{donor -> tokenId: amount}(donor, tokenId, amount)
+
+    emit Donation(tokenId, amount, donor, fundContractId)
+  }
+
+  pub fn finalizeFund(fundContractId: ByteVec) -> () {
+    let fund = Fund(fundContractId)
+    checkCaller!(callerAddress!() == fund.getRecipient(), DoneraError.Forbidden)
+
+    // TODO protocol fee
+
+    fund.finalize()
+
+    emit FundFinalized(fundContractId)
+  }
+
+  // Withdraw collected protocol fees from the contract.
+  //
+  // @throws {OwnedError.Forbidden} Caller must be the admin.
+  //
+  // @param amount The amount of ALPH to withdraw from the contract.
+  // @returns unit
+  @using(assetsInContract = true)
+  pub fn withdraw(amount: U256) -> () {
+    assertOwner(callerAddress!())
+    transferTokenFromSelf!(selfOwner, ALPH, amount)
+  }
+
+  // Update the fund contract template id.
+  //
+  // @throws {OwnedError.Forbidden} Caller must be the admin.
+  //
+  // @param newFundTemplateId The new template id.
+  // @returns unit
+  @using(updateFields = true)
+  pub fn setSelfFundTemplateId(newFundTemplateId: ByteVec) -> () {
+    assertOwner(callerAddress!())
+    selfFundTemplateId = newFundTemplateId
+  }
+
+  // Get the current fund listing fee in atto ALPH format.
+  pub fn getAttoListingFee() -> U256 {
+    return selfAttoListingFee
+  }
+
+  // Update the listing fee for new funds.
+  //
+  // @throws {OwnedError.Forbidden} Caller must be the admin.
+  //
+  // @param newAttoListingFee The new cost of listing a fund in ALPH atto format.
+  // @returns unit
+  @using(updateFields = true)
+  pub fn setSelfAttoListingFee(newAttoListingFee: U256) -> () {
+    assertOwner(callerAddress!())
+    selfAttoListingFee = newAttoListingFee
+  }
+}
