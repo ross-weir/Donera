@@ -16,10 +16,6 @@ interface ConnectButtonRendererProps {
   truncatedAddress?: string;
 }
 
-interface ConnectButtonProps extends ConnectButtonRendererProps {
-  loading?: boolean;
-}
-
 function BaseConnectButton(props: ElementProps<"button"> & ButtonProps) {
   return (
     <Button {...props} variant="light" leftSection={<IconWallet size={18} />}>
@@ -28,7 +24,7 @@ function BaseConnectButton(props: ElementProps<"button"> & ButtonProps) {
   );
 }
 
-function ConnectButton({ show, isConnecting }: ConnectButtonProps) {
+function ConnectButton({ show, isConnecting }: ConnectButtonRendererProps) {
   return <BaseConnectButton onClick={show} loading={isConnecting} />;
 }
 
