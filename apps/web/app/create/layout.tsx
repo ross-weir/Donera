@@ -1,8 +1,9 @@
 import { Container } from "@mantine/core";
+import classes from "./layout.module.css";
 
 export default function CreateFundLayout({ children }: { children: React.ReactNode }) {
   return (
-    <Container pt="xl" size={500}>
+    <Container className={classes.container} size={700}>
       {children}
     </Container>
   );

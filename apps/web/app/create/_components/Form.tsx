@@ -26,13 +26,14 @@ interface CreateFundFormProps {
 }
 
 export default function CreateFundForm({ onSubmittedTx }: CreateFundFormProps) {
+  const { signer, account } = useWallet();
   const form = useForm<FormSchema>({
     initialValues: {
       name: "",
       description: "",
       goal: 0,
       deadline: dayjs().add(1, "day").toDate(),
-      beneficiary: "",
+      beneficiary: account?.address ?? "",
     },
     validate: {
       name: isNotEmpty("Name cannot be empty"),
@@ -46,8 +47,6 @@ export default function CreateFundForm({ onSubmittedTx }: CreateFundFormProps) {
     },
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { signer } = useWallet();
-
   const onSubmit = async (form: FormSchema) => {
     setIsSubmitting(true);
     getDoneraDapp()
@@ -60,7 +59,12 @@ export default function CreateFundForm({ onSubmittedTx }: CreateFundFormProps) {
   return (
     <form onSubmit={form.onSubmit(onSubmit)}>
       <Stack>
-        <TextInput label="Name" withAsterisk {...form.getInputProps("name")} />
+        <TextInput
+          label="Name"
+          description="The name of your fund raiser"
+          withAsterisk
+          {...form.getInputProps("name")}
+        />
         <Textarea
           label="Description"
           description="Describe the reason for creating the fund"
@@ -82,7 +86,7 @@ export default function CreateFundForm({ onSubmittedTx }: CreateFundFormProps) {
         <TextInput
           label="Beneficiary"
           withAsterisk
-          description="The address of the beneficiary receiving and finializing the fund"
+          description="The address of the beneficiary receiving the funds"
           {...form.getInputProps("beneficiary")}
         />
         <Group justify="flex-end">
