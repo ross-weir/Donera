@@ -26,6 +26,9 @@ jobs:
         run: pnpm install
       - name: Build
         run: pnpm build
+        env:
+          # needs to be set for build to succeed, not used otherwise
+          NEXT_PUBLIC_DONERA_NETWORK: "http://localhost:22973"
       - name: Lint
         run: pnpm lint
       - name: Test
