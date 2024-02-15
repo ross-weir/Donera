@@ -1,6 +1,7 @@
 import { Button, Container, Group, Text, Title } from "@mantine/core";
 import classes from "./page.module.css";
 import { IconSearch } from "@tabler/icons-react";
+import Link from "next/link";
 
 export default function LandingPage() {
   return (
@@ -19,26 +20,26 @@ export default function LandingPage() {
       </Text>
 
       <Group className={classes.controls}>
-        <Button
-          component="a"
-          href="/"
-          size="xl"
-          className={classes.control}
-          variant="default"
-          leftSection={<IconSearch size={20} />}
-        >
-          Browse
-        </Button>
-        <Button
-          component="a"
-          href="/create"
-          size="xl"
-          className={classes.control}
-          variant="gradient"
-          gradient={{ from: "blue", to: "cyan" }}
-        >
-          Launch fund
-        </Button>
+        <Link href="/">
+          <Button
+            size="xl"
+            className={classes.control}
+            variant="default"
+            leftSection={<IconSearch size={20} />}
+          >
+            Browse
+          </Button>
+        </Link>
+        <Link href="/create">
+          <Button
+            size="xl"
+            className={classes.control}
+            variant="gradient"
+            gradient={{ from: "blue", to: "cyan" }}
+          >
+            Launch fund
+          </Button>
+        </Link>
       </Group>
     </Container>
   );

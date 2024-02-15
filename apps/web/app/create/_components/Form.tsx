@@ -7,6 +7,7 @@ import { DateTimePicker } from "@mantine/dates";
 import { useForm, isNotEmpty, hasLength, isInRange } from "@mantine/form";
 import { getDoneraDapp } from "../../_donera";
 import dayjs from "dayjs";
+import Link from "next/link";
 
 interface FormSchema {
   name: string;
@@ -85,9 +86,9 @@ export default function CreateFundForm({ onSubmittedTx }: CreateFundFormProps) {
           {...form.getInputProps("beneficiary")}
         />
         <Group justify="flex-end">
-          <Button component="a" href="/" variant="default">
-            Cancel
-          </Button>
+          <Link href="/">
+            <Button variant="default">Cancel</Button>
+          </Link>
           <Button type="submit" disabled={!signer} loading={isSubmitting}>
             Create
           </Button>
