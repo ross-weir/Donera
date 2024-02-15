@@ -7,7 +7,7 @@ import ColorSchemeToggleIcon from "./ColorSchemeToggleIcon";
 import logo from "./logo.png";
 
 // Fixes the loading jank of wallet connect button.
-// Takes half a second for the button to appear for some reason, this adds a loader placeholder
+// This is really noticeable in dev builds but only happens for a split second in prod builds
 const WalletConnectButton = dynamic(() => import("./WalletConnectButton"), {
   loading: () => <WalletConnectButtonLoader />,
   ssr: false,
