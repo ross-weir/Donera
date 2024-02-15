@@ -1,4 +1,4 @@
-import { Text, Group, Title } from "@mantine/core";
+import { Group, Title } from "@mantine/core";
 import { WalletConnectButtonLoader } from "./WalletConnectButton";
 import dynamic from "next/dynamic";
 import Image from "next/image";
@@ -8,7 +8,8 @@ import logo from "./logo.png";
 import Link from "next/link";
 
 // Fixes the loading jank of wallet connect button.
-// This is really noticeable in dev builds but only happens for a split second in prod builds
+// Only noticable on first load in dev envs, maybe also on slow connections?
+// Still probably worth having if it prevents jank for laggy users
 const WalletConnectButton = dynamic(() => import("./WalletConnectButton"), {
   loading: () => <WalletConnectButtonLoader />,
   ssr: false,
