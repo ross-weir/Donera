@@ -4,7 +4,7 @@ import "@mantine/dates/styles.css";
 import type { Metadata } from "next";
 import { AppShellMain, ColorSchemeScript } from "@mantine/core";
 import { AppShell, AppShellHeader } from "@mantine/core";
-import DoneraContext from "./_components/DoneraContext";
+import DoneraProvider from "./_components/DoneraProvider";
 import Header from "./_components/Header";
 
 export const metadata: Metadata = {
@@ -20,14 +20,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ColorSchemeScript />
       </head>
       <body>
-        <DoneraContext>
+        <DoneraProvider>
           <AppShell header={{ height: 60 }}>
             <AppShellHeader>
               <Header />
             </AppShellHeader>
             <AppShellMain>{children}</AppShellMain>
           </AppShell>
-        </DoneraContext>
+        </DoneraProvider>
       </body>
     </html>
   );

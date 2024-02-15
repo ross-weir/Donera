@@ -5,7 +5,7 @@ import { MantineProvider } from "@mantine/core";
 import AlephiumWeb3 from "./AlephiumWeb3";
 import { getNetwork } from "../_donera";
 
-export default function DoneraContext({ children }: { children: React.ReactNode }) {
+export default function DoneraProvider({ children }: { children: React.ReactNode }) {
   return (
     <MantineProvider>
       <AlephiumWalletProvider network={getNetwork()}>
