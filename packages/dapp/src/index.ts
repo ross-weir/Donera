@@ -1,1 +1,1 @@
-export * from "../artifacts/ts";
+export * from "./donera";

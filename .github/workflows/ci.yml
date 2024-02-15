@@ -8,7 +8,7 @@ on:
  
 jobs:
   build:
-    name: Build and Test
+    name: Test and Lint
     timeout-minutes: 15
     runs-on: ubuntu-latest
     steps:
@@ -24,8 +24,6 @@ jobs:
           cache: 'pnpm'
       - name: Install dependencies
         run: pnpm install
-      - name: Build
-        run: pnpm build
       - name: Lint
         run: pnpm lint
       - name: Test

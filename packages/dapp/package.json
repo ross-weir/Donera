@@ -9,7 +9,9 @@
     "lint": "eslint ."
   },
   "exports": {
-    "./contracts/*": "./src/contracts/*.ts"
+    ".": "./src/index.ts",
+    "./contracts/*": "./src/contracts/*.ts",
+    "./scripts": "./src/scripts.ts"
   },
   "devDependencies": {
     "@alephium/cli": "^0.29.2",
