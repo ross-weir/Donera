@@ -22,7 +22,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <DoneraProvider>
           <AppShell header={{ height: 60 }}>
-            <AppShellHeader>
+            <AppShellHeader withBorder={false}>
               <Header />
             </AppShellHeader>
             <AppShellMain>{children}</AppShellMain>
