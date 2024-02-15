@@ -11,10 +11,14 @@
   "dependencies": {
     "@alephium/web3": "^0.29.2",
     "@alephium/web3-react": "^0.29.2",
+    "@donera/dapp": "workspace:^",
     "@mantine/core": "^7.5.2",
+    "@mantine/dates": "^7.5.2",
+    "@mantine/form": "^7.5.2",
     "@mantine/hooks": "^7.5.2",
     "@tabler/icons-react": "^2.47.0",
     "clsx": "^2.1.0",
+    "dayjs": "^1.11.10",
     "next": "14.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
