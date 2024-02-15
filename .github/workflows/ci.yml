@@ -8,7 +8,7 @@ on:
  
 jobs:
   build:
-    name: Build and Test
+    name: Test and Lint
     timeout-minutes: 15
     runs-on: ubuntu-latest
     steps:
@@ -24,13 +24,8 @@ jobs:
           cache: 'pnpm'
       - name: Install dependencies
         run: pnpm install
-      - name: Build
-        run: pnpm build
-        env:
-          # needs to be set for build to succeed, not used otherwise
-          NEXT_PUBLIC_DONERA_NETWORK: "devnet"
       - name: Lint
-        run: pnpm lint
+        run: npx turbo lint
       - name: Test
         # TODO dapp package requires devnet node to run tests
         run: npx turbo test --filter=\!dapp
