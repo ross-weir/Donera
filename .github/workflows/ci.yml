@@ -28,7 +28,7 @@ jobs:
         run: pnpm build
         env:
           # needs to be set for build to succeed, not used otherwise
-          NEXT_PUBLIC_DONERA_NETWORK: "http://localhost:22973"
+          NEXT_PUBLIC_DONERA_NETWORK: "devnet"
       - name: Lint
         run: pnpm lint
       - name: Test
