@@ -1,12 +1,12 @@
 // VERY rough end-to-end test for fund creation -> donation -> fund finalization
 import { describe, it } from "bun:test";
 import { testNodeWallet } from "@alephium/web3-test";
-import { CreateFund, DonateToFund, Donera, DoneraTypes, FinalizeFund } from "../../src";
+import { CreateFund, DonateToFund, FinalizeFund } from "../../src/scripts";
+import { Donera, DoneraTypes } from "../../src/contracts/donera";
 import { loadDeployments } from "../../artifacts/ts/deployments";
 import {
   ONE_ALPH,
   stringToHex,
-  DUST_AMOUNT,
   web3,
   Contract,
   Project,
@@ -36,7 +36,7 @@ describe("end-to-end Donera", () => {
         goal: 1n,
         deadlineTimestamp: 5n,
       },
-      attoAlphAmount: listingFeeCall.returns + ONE_ALPH + DUST_AMOUNT,
+      attoAlphAmount: listingFeeCall.returns + ONE_ALPH,
     });
     console.log(`create fund txid: ${result.txId}`);
     const node = web3.getCurrentNodeProvider();
