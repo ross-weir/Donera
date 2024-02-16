@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "update": "prisma db push",
-    "generate": "prisma generate",
+    "build": "prisma generate",
     "fmt": "prisma format",
     "db:local": "./scripts/start_local.sh"
   },
