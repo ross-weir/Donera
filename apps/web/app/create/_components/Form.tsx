@@ -5,7 +5,7 @@ import { useWallet } from "@alephium/web3-react";
 import { Button, Group, NumberInput, Stack, TextInput, Textarea } from "@mantine/core";
 import { DateTimePicker } from "@mantine/dates";
 import { useForm, isNotEmpty, hasLength, isInRange } from "@mantine/form";
-import { getDoneraDapp } from "../../_donera";
+import { getDoneraDapp } from "../../_lib/donera";
 import dayjs from "dayjs";
 import Link from "next/link";
 import { onSubmittedFund } from "../_actions";
