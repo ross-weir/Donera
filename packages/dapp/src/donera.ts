@@ -68,7 +68,7 @@ export class DoneraDapp {
     };
   }
 
-  async getEventForTx<E, C extends ContractInstance>(
+  private async getEventForTx<E, C extends ContractInstance>(
     txId: string,
     // needed to get the events signatures
     contractFactory: ContractFactory<C>,
