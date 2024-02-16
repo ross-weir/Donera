@@ -8,19 +8,19 @@ datasource db {
 }
 
 model Fund {
-  id            String      @id @default(auto()) @map("_id") @db.ObjectId
-  fundContractId  String
-  name          String
-  description   String
-  goal          BigInt
-  deadline      DateTime
-  beneficiary   String
+  id             String      @id @default(auto()) @map("_id") @db.ObjectId
+  fundContractId String
+  name           String
+  description    String
+  goal           BigInt
+  deadline       DateTime
+  beneficiary    String
   // TODO createdBy the address of the creator? or we can store it in the transaction, we should have the person that made the tx available
-  creationTx  Transaction
+  creationTx     Transaction
 }
 
 type Transaction {
-  id  String
+  id        String
   // unverified txns that were created over `n` time ago should
   // be cleaned up by a scheduled job
   createdAt DateTime
