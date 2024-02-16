@@ -12,6 +12,7 @@
       "inputs": ["src/**/*.tsx", "src/**/*.ts", "test/**/*.ts", "test/**/*.tsx"]
     },
     "lint": {},
+    "fmt": {},
     "dev": {
       "cache": false,
       "persistent": true
