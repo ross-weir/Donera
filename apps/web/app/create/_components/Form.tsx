@@ -8,6 +8,7 @@ import { useForm, isNotEmpty, hasLength, isInRange } from "@mantine/form";
 import { getDoneraDapp } from "../../_donera";
 import dayjs from "dayjs";
 import Link from "next/link";
+import { onSubmittedFund } from "../_actions";
 
 interface FormSchema {
   name: string;
@@ -21,11 +22,7 @@ function dateIsInFuture(date: Date): boolean {
   return date > new Date();
 }
 
-interface CreateFundFormProps {
-  onSubmittedTx: (txId: string) => Promise<void>;
-}
-
-export default function CreateFundForm({ onSubmittedTx }: CreateFundFormProps) {
+export default function CreateFundForm() {
   const { signer, account } = useWallet();
   const form = useForm<FormSchema>({
     initialValues: {
@@ -51,7 +48,7 @@ export default function CreateFundForm({ onSubmittedTx }: CreateFundFormProps) {
     setIsSubmitting(true);
     getDoneraDapp()
       .createFund(signer!, form)
-      .then(onSubmittedTx)
+      .then(onSubmittedFund)
       .catch(console.error)
       .finally(() => setIsSubmitting(false));
   };

@@ -23,7 +23,7 @@ type Transaction {
   id        String
   // unverified txns that were created over `n` time ago should
   // be cleaned up by a scheduled job
-  createdAt DateTime
+  createdAt DateTime  @default(now())
   confirmed Boolean
   // we eagerly create the fund before verifying the transaction actually exists
   // to provide a smooth ui when users are creating a new fund
