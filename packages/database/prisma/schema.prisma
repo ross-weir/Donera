@@ -1,0 +1,33 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Fund {
+  id             String      @id @default(auto()) @map("_id") @db.ObjectId
+  fundContractId String
+  name           String
+  description    String
+  goal           BigInt
+  deadline       DateTime
+  beneficiary    String
+  // TODO createdBy the address of the creator? or we can store it in the transaction, we should have the person that made the tx available
+  creationTx     Transaction
+}
+
+type Transaction {
+  id        String
+  // unverified txns that were created over `n` time ago should
+  // be cleaned up by a scheduled job
+  createdAt DateTime
+  confirmed Boolean
+  // we eagerly create the fund before verifying the transaction actually exists
+  // to provide a smooth ui when users are creating a new fund
+  // if verified is false we have not actually seen the tx on the network yet
+  // if it is true, we have seen the tx and it is legit
+  verified  Boolean
+}
