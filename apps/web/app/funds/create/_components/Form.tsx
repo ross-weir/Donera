@@ -35,7 +35,7 @@ export default function CreateFundForm() {
     },
     validate: {
       name: isNotEmpty("Name cannot be empty"),
-      description: hasLength({ min: 1 }, "Description must be between 0 - 800 characters"),
+      description: hasLength({ min: 1 }, "You must provide a description"),
       goal: isInRange({ min: 1 }, "Goal must be 1 or more"),
       deadline: (value: Date) => (!dateIsInFuture(value) ? "Deadline must be in the future" : null),
       beneficiary: isNotEmpty("Beneficiary cannot be empty"),
