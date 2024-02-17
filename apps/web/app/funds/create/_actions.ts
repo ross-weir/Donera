@@ -2,16 +2,20 @@
 
 import { redirect } from "next/navigation";
 import { CreateFundResult } from "@donera/dapp";
-import { Client } from "@donera/database";
+import { PrismaClient } from "@donera/database";
 
-export async function onSubmittedFund({ fundContractId, txId, ...rest }: CreateFundResult) {
-  const client = new Client();
+export async function onSubmittedFund(
+  { fundContractId, txId, ...rest }: CreateFundResult,
+  signerAddress: string
+) {
+  const client = new PrismaClient();
   await client.fund.create({
     data: {
       ...rest.params,
       fundContractId,
       creationTx: {
         id: txId,
+        signerAddress,
         verified: false,
         confirmed: false,
       },
