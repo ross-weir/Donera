@@ -5,7 +5,7 @@ import { useWallet } from "@alephium/web3-react";
 import { Button, Group, NumberInput, Stack, TextInput, Textarea } from "@mantine/core";
 import { DateTimePicker } from "@mantine/dates";
 import { useForm, isNotEmpty, hasLength, isInRange } from "@mantine/form";
-import { getDoneraDapp } from "../../_lib/donera";
+import { getDoneraDapp } from "../../../_lib/donera";
 import dayjs from "dayjs";
 import Link from "next/link";
 import { onSubmittedFund } from "../_actions";
@@ -24,13 +24,14 @@ function dateIsInFuture(date: Date): boolean {
 
 export default function CreateFundForm() {
   const { signer, account } = useWallet();
+  const creatorAddress = account?.address ?? "";
   const form = useForm<FormSchema>({
     initialValues: {
       name: "",
       description: "",
       goal: 0,
       deadline: dayjs().add(1, "day").toDate(),
-      beneficiary: account?.address ?? "",
+      beneficiary: creatorAddress,
     },
     validate: {
       name: isNotEmpty("Name cannot be empty"),
@@ -48,7 +49,7 @@ export default function CreateFundForm() {
     setIsSubmitting(true);
     getDoneraDapp()
       .createFund(signer!, form)
-      .then(onSubmittedFund)
+      .then((f) => onSubmittedFund(f, creatorAddress))
       .catch(console.error)
       .finally(() => setIsSubmitting(false));
   };

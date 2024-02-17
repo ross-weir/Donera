@@ -21,6 +21,7 @@ model Fund {
 
 type Transaction {
   id        String
+  signerAddress  String
   // unverified txns that were created over `n` time ago should
   // be cleaned up by a scheduled job
   createdAt DateTime  @default(now())
