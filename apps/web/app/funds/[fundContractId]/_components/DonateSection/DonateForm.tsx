@@ -2,23 +2,24 @@ import { Button, Grid, NumberInput } from "@mantine/core";
 import { SelectToken } from "./SelectToken";
 import { useState } from "react";
 import { ALPH_TOKEN_ID } from "@alephium/web3";
-import { mainnetTokensMetadata } from "@alephium/token-list";
+import { ALPH, mainnetTokensMetadata, testnetTokensMetadata } from "@alephium/token-list";
 import { isInRange, useForm } from "@mantine/form";
+import { getNetwork } from "../../../../_lib/donera";
 
-const otherTokens = mainnetTokensMetadata.tokens.map((t) => ({
-  symbol: t.symbol,
-  value: t.id,
-  imageSrc: t.logoURI,
-}));
+const tokenMetadata = getNetwork() === "mainnet" ? mainnetTokensMetadata : testnetTokensMetadata;
 const tokens = [
   {
-    symbol: "ALPH",
-    value: ALPH_TOKEN_ID,
-    imageSrc:
+    ...ALPH,
+    logoURI:
       "https://raw.githubusercontent.com/alephium/alephium-brand-guide/master/logos/grey/Logo-Icon-Grey.png",
   },
-  ...otherTokens,
-];
+  ...tokenMetadata.tokens,
+].map((t) => ({
+  symbol: t.symbol,
+  value: t.id,
+  decimals: t.decimals,
+  imageSrc: t.logoURI,
+}));
 
 type FormSchema = {
   tokenId: string;
