@@ -30,7 +30,7 @@ export default function LandingPage() {
             Browse
           </Button>
         </Link>
-        <Link href="/create">
+        <Link href="/funds/create">
           <Button
             size="xl"
             className={classes.control}
