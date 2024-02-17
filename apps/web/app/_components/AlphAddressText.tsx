@@ -4,7 +4,7 @@ import {} from "@alephium/web3-react";
 
 export type AlphAddressTextProps = {
   address: string;
-  trunacate?: boolean;
+  truncate?: boolean;
   showTooltip?: boolean;
   explorerLink?: string;
 } & TextProps;
@@ -18,13 +18,13 @@ const truncatedAddress = (address: string) => {
 export function AlphAddressText({
   address,
   explorerLink,
-  trunacate = true,
+  truncate = true,
   showTooltip = true,
   ...rest
 }: AlphAddressTextProps) {
   let text = (
     <Text className={classes.text} {...rest}>
-      {trunacate ? truncatedAddress(address) : address}
+      {truncate ? truncatedAddress(address) : address}
     </Text>
   );
 
