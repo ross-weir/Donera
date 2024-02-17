@@ -8,7 +8,7 @@ import { useForm, isNotEmpty, hasLength, isInRange } from "@mantine/form";
 import { getDoneraDapp } from "../../../_lib/donera";
 import dayjs from "dayjs";
 import Link from "next/link";
-import { onSubmittedFund } from "../_actions";
+import { saveFund } from "../_actions/mutations";
 
 interface FormSchema {
   name: string;
@@ -49,7 +49,7 @@ export default function CreateFundForm() {
     setIsSubmitting(true);
     getDoneraDapp()
       .createFund(signer!, form)
-      .then((f) => onSubmittedFund(f, creatorAddress))
+      .then((f) => saveFund(f, creatorAddress))
       .catch(console.error)
       .finally(() => setIsSubmitting(false));
   };

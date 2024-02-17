@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import { CreateFundResult } from "@donera/dapp";
 import { PrismaClient } from "@donera/database";
 
-export async function onSubmittedFund(
+export async function saveFund(
   { fundContractId, txId, ...rest }: CreateFundResult,
   signerAddress: string
 ) {
