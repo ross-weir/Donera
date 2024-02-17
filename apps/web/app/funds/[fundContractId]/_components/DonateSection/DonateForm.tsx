@@ -43,24 +43,22 @@ export function DonateForm() {
   // TODO:need to convert the value based on the tokens decimals
 
   return (
-    <>
-      <form onSubmit={form.onSubmit(onSubmit)}>
-        <Grid>
-          <Grid.Col span={7} pr={0}>
-            <NumberInput required hideControls decimalScale={2} {...form.getInputProps("amount")} />
-          </Grid.Col>
-          <Grid.Col span={5} pl={0}>
-            <SelectToken
-              data={tokens}
-              dropdownProps={{ mah: 200, style: { overflowY: "auto" } }}
-              {...form.getInputProps("tokenId")}
-            />
-          </Grid.Col>
-        </Grid>
-        <Button type="submit" mt="lg" fullWidth loading={isSubmitting}>
-          Donate
-        </Button>
-      </form>
-    </>
+    <form onSubmit={form.onSubmit(onSubmit)}>
+      <Grid>
+        <Grid.Col span={7} pr={0}>
+          <NumberInput required hideControls decimalScale={2} {...form.getInputProps("amount")} />
+        </Grid.Col>
+        <Grid.Col span={5} pl={0}>
+          <SelectToken
+            data={tokens}
+            dropdownProps={{ mah: 200, style: { overflowY: "auto" } }}
+            {...form.getInputProps("tokenId")}
+          />
+        </Grid.Col>
+      </Grid>
+      <Button type="submit" mt="lg" fullWidth loading={isSubmitting}>
+        Donate
+      </Button>
+    </form>
   );
 }
