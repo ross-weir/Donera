@@ -14,6 +14,9 @@ importers:
 
   apps/web:
     dependencies:
+      '@alephium/token-list':
+        specifier: ^0.0.14
+        version: 0.0.14
       '@alephium/web3':
         specifier: ^0.29.2
         version: 0.29.2
@@ -201,6 +204,15 @@ packages:
     dependencies:
       '@alephium/web3': 0.29.2
       bowser: 2.11.0
+    transitivePeerDependencies:
+      - encoding
+    dev: false
+
+  /@alephium/token-list@0.0.14:
+    resolution: {integrity: sha512-47x/cp367ObF1C8zheVo5ITsbarAOToQsvvRnHCnZbf0IE4Ri2jQhcQtKfqFK5i9288+/jrCy2ldPcG8SqVBTg==}
+    engines: {node: '>=16', npm: '>=8'}
+    dependencies:
+      cross-fetch: 3.1.8
     transitivePeerDependencies:
       - encoding
     dev: false

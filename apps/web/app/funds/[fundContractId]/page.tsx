@@ -3,6 +3,8 @@ import { Container, Group } from "@mantine/core";
 import { notFound } from "next/navigation";
 import { FundDetail } from "./_components/FundDetail";
 import classes from "./page.module.css";
+import { DonateSection } from "./_components/DonateSection/DonateSection";
+import { convertAlphAmountWithDecimals } from "@alephium/web3";
 
 export default async function FundDetailPage({ params }: { params: { fundContractId: string } }) {
   // TODO also fetch contract balance
@@ -17,11 +19,8 @@ export default async function FundDetailPage({ params }: { params: { fundContrac
     notFound();
   }
 
-  const { name, description, creationTx, beneficiary, deadline } = fund;
-
-  function DonateFund() {
-    return <p>DONATE TO THE FUND BRO</p>;
-  }
+  const { name, description, creationTx, beneficiary, deadline, goal: goalStr } = fund;
+  const goal = BigInt(goalStr);
 
   return (
     <Container fluid className={classes.container}>
@@ -37,7 +36,14 @@ export default async function FundDetailPage({ params }: { params: { fundContrac
           confirmed={creationTx.confirmed && creationTx.verified}
           createdAt={creationTx.createdAt.toLocaleString()}
         />
-        <DonateFund />
+        <DonateSection
+          w={450}
+          goal={goal}
+          alphRaised={BigInt(convertAlphAmountWithDecimals(300)!)}
+          shadow="sm"
+          p="xl"
+          withBorder
+        />
       </Group>
     </Container>
   );

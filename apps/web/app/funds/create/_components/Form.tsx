@@ -35,10 +35,7 @@ export default function CreateFundForm() {
     },
     validate: {
       name: isNotEmpty("Name cannot be empty"),
-      description: hasLength(
-        { min: 0, max: 800 },
-        "Description must be between 0 - 800 characters"
-      ),
+      description: hasLength({ min: 1 }, "Description must be between 0 - 800 characters"),
       goal: isInRange({ min: 1 }, "Goal must be 1 or more"),
       deadline: (value: Date) => (!dateIsInFuture(value) ? "Deadline must be in the future" : null),
       beneficiary: isNotEmpty("Beneficiary cannot be empty"),
@@ -49,7 +46,9 @@ export default function CreateFundForm() {
     setIsSubmitting(true);
     getDoneraDapp()
       .createFund(signer!, form)
-      .then((f) => saveFund(f, creatorAddress))
+      .then(({ goal, ...fields }) => {
+        saveFund({ goal: goal.toString(), ...fields }, creatorAddress);
+      })
       .catch(console.error)
       .finally(() => setIsSubmitting(false));
   };
@@ -61,30 +60,36 @@ export default function CreateFundForm() {
           label="Name"
           description="The name of your fund raiser"
           withAsterisk
+          required
           {...form.getInputProps("name")}
         />
         <Textarea
           label="Description"
           description="Describe the reason for creating the fund"
           withAsterisk
+          required
           {...form.getInputProps("description")}
         />
         <NumberInput
           label="Goal"
           description="The amount of ALPH you are aiming to raise"
           withAsterisk
+          required
+          hideControls
           decimalScale={2}
           {...form.getInputProps("goal")}
         />
         <DateTimePicker
           label="Deadline"
           withAsterisk
+          required
           description="The end time for the fundraiser"
           {...form.getInputProps("deadline")}
         />
         <TextInput
           label="Beneficiary"
           withAsterisk
+          required
           description="The address of the beneficiary receiving the funds"
           {...form.getInputProps("beneficiary")}
         />
