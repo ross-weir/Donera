@@ -1,7 +1,7 @@
 "use client";
 
 import { prettifyAttoAlphAmount } from "@alephium/web3";
-import { Paper, PaperProps, Progress, Space, Text } from "@mantine/core";
+import { Title, Paper, PaperProps, Progress, Space, Text } from "@mantine/core";
 import { DonateForm } from "./DonateForm";
 
 export type DonateSectionProps = {
@@ -25,8 +25,9 @@ export function DonateSection({ goal, alphRaised, assetsRaised, ...rest }: Donat
       </Text>
       <Progress value={progress} color="green" />
       <Space h="md" />
-      <DonateForm />
+      <Title order={4}>Make a donation</Title>
       <Space h="md" />
+      <DonateForm />
     </Paper>
   );
 }

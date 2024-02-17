@@ -26,7 +26,7 @@ export interface CreateFundResult {
   fundContractId: string;
   name: string;
   description: string;
-  goal: bigint;
+  goal: string;
   deadline: Date;
   beneficiary: string;
 }
@@ -71,7 +71,7 @@ export class DoneraDapp {
       fundContractId: fields.fundContractId,
       name: params.name,
       description: params.description,
-      goal: attoGoal,
+      goal: attoGoal.toString(),
       deadline: params.deadline,
       beneficiary: params.beneficiary,
     };

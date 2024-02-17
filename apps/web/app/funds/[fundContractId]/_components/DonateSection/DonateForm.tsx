@@ -1,4 +1,4 @@
-import { Button, Grid, NumberInput, Space, Title } from "@mantine/core";
+import { Button, Grid, NumberInput } from "@mantine/core";
 import { SelectToken } from "./SelectToken";
 import { useState } from "react";
 import { ALPH_TOKEN_ID } from "@alephium/web3";
@@ -44,8 +44,6 @@ export function DonateForm() {
 
   return (
     <>
-      <Title order={4}>Make a donation</Title>
-      <Space h="md" />
       <form onSubmit={form.onSubmit(onSubmit)}>
         <Grid>
           <Grid.Col span={7} pr={0}>
