@@ -73,6 +73,7 @@ export default function CreateFundForm() {
           label="Goal"
           description="The amount of ALPH you are aiming to raise"
           withAsterisk
+          decimalScale={2}
           {...form.getInputProps("goal")}
         />
         <DateTimePicker

@@ -24,7 +24,11 @@ export interface CreateFundParam {
 export interface CreateFundResult {
   txId: string;
   fundContractId: string;
-  params: CreateFundParam;
+  name: string;
+  description: string;
+  goal: bigint;
+  deadline: Date;
+  beneficiary: string;
 }
 
 export class DoneraDapp {
@@ -44,13 +48,14 @@ export class DoneraDapp {
   ): Promise<CreateFundResult> {
     const deadlineUnixTs = Math.floor(params.deadline.getTime() / 1000);
     const listingFeeCall = await this.doneraInstance.methods.getAttoListingFee();
+    const attoGoal = convertAlphAmountWithDecimals(params.goal)!;
     const { txId } = await CreateFund.execute(signer, {
       initialFields: {
         donera: this.doneraInstance.contractId,
         name: stringToHex(params.name),
         description: stringToHex(params.description),
         recipient: params.beneficiary,
-        goal: convertAlphAmountWithDecimals(params.goal)!,
+        goal: attoGoal,
         deadlineTimestamp: BigInt(deadlineUnixTs),
       },
       attoAlphAmount: listingFeeCall.returns + ONE_ALPH,
@@ -64,7 +69,11 @@ export class DoneraDapp {
     return {
       txId,
       fundContractId: fields.fundContractId,
-      params,
+      name: params.name,
+      description: params.description,
+      goal: attoGoal,
+      deadline: params.deadline,
+      beneficiary: params.beneficiary,
     };
   }
 
