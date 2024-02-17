@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@alephium/token-list": "^0.0.14",
     "@alephium/web3": "^0.29.2",
     "@alephium/web3-react": "^0.29.2",
     "@donera/dapp": "workspace:^",

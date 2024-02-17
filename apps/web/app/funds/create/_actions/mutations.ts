@@ -11,7 +11,7 @@ export async function saveFund(
   const client = new PrismaClient();
   await client.fund.create({
     data: {
-      ...rest.params,
+      ...rest,
       fundContractId,
       creationTx: {
         id: txId,

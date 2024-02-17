@@ -6,7 +6,8 @@
     "update": "prisma db push",
     "build": "prisma generate",
     "fmt": "prisma format",
-    "db:local": "./scripts/start_local.sh"
+    "dev": "./scripts/start_local.sh",
+    "clean": "docker rm donera-db"
   },
   "exports": {
     ".": "./src/index.ts"

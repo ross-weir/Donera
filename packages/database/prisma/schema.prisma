@@ -12,10 +12,12 @@ model Fund {
   fundContractId String
   name           String
   description    String
-  goal           BigInt
+  // In atto alph format
+  // Using a string to avoid headaches associated with
+  // passing bigint across network boundaries as JSON
+  goal           String
   deadline       DateTime
   beneficiary    String
-  // TODO createdBy the address of the creator? or we can store it in the transaction, we should have the person that made the tx available
   creationTx     Transaction
 }
 
