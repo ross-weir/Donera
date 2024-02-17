@@ -5,17 +5,15 @@ import { Paper, PaperProps, Progress, Space, Text } from "@mantine/core";
 import { DonateForm } from "./DonateForm";
 
 export type DonateSectionProps = {
-  goal: bigint;
-  alphRaised: bigint;
+  // atto format
+  goal: string;
+  // atto format
+  alphRaised: string;
   assetsRaised?: unknown;
 } & PaperProps;
 
 export function DonateSection({ goal, alphRaised, assetsRaised, ...rest }: DonateSectionProps) {
-  console.log(alphRaised);
-  console.log(goal);
-  // const progress = Number((BigInt(alphRaised) / BigInt(goal)) * BigInt(100));
-  const progress = Number(BigInt(alphRaised) / BigInt(goal)) * 100;
-  console.log(progress);
+  const progress = Number((BigInt(alphRaised) * BigInt(100)) / BigInt(goal));
 
   return (
     <Paper {...rest}>
@@ -25,7 +23,7 @@ export function DonateSection({ goal, alphRaised, assetsRaised, ...rest }: Donat
           raised of {prettifyAttoAlphAmount(goal)} target
         </Text>
       </Text>
-      <Progress value={60} color="green" />
+      <Progress value={progress} color="green" />
       <Space h="md" />
       <DonateForm />
       <Space h="md" />

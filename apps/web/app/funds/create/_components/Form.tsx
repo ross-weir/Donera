@@ -46,9 +46,7 @@ export default function CreateFundForm() {
     setIsSubmitting(true);
     getDoneraDapp()
       .createFund(signer!, form)
-      .then(({ goal, ...fields }) => {
-        saveFund({ goal: goal.toString(), ...fields }, creatorAddress);
-      })
+      .then((f) => saveFund(f, creatorAddress))
       .catch(console.error)
       .finally(() => setIsSubmitting(false));
   };

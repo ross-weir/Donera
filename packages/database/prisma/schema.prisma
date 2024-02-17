@@ -13,7 +13,9 @@ model Fund {
   name           String
   description    String
   // In atto alph format
-  goal           BigInt
+  // Using a string to avoid headaches associated with
+  // passing bigint across network boundaries as JSON
+  goal           String
   deadline       DateTime
   beneficiary    String
   creationTx     Transaction

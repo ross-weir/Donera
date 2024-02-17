@@ -8,6 +8,7 @@ import { convertAlphAmountWithDecimals } from "@alephium/web3";
 
 export default async function FundDetailPage({ params }: { params: { fundContractId: string } }) {
   // TODO also fetch contract balance
+  const alphRaised = convertAlphAmountWithDecimals("60")!.toString();
   const client = new PrismaClient();
   const fund = await client.fund.findFirst({
     where: {
@@ -19,8 +20,7 @@ export default async function FundDetailPage({ params }: { params: { fundContrac
     notFound();
   }
 
-  const { name, description, creationTx, beneficiary, deadline, goal: goalStr } = fund;
-  const goal = BigInt(goalStr);
+  const { name, description, creationTx, beneficiary, deadline, goal } = fund;
 
   return (
     <Container fluid className={classes.container}>
@@ -36,14 +36,7 @@ export default async function FundDetailPage({ params }: { params: { fundContrac
           confirmed={creationTx.confirmed && creationTx.verified}
           createdAt={creationTx.createdAt.toLocaleString()}
         />
-        <DonateSection
-          w={450}
-          goal={goal}
-          alphRaised={BigInt(convertAlphAmountWithDecimals(300)!)}
-          shadow="sm"
-          p="xl"
-          withBorder
-        />
+        <DonateSection w={450} goal={goal} alphRaised={alphRaised} shadow="sm" p="xl" withBorder />
       </Group>
     </Container>
   );

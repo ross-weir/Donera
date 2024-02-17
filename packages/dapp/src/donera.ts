@@ -16,7 +16,7 @@ import { CreateFund } from "./scripts";
 export interface CreateFundParam {
   name: string;
   description: string;
-  goal: number;
+  goal: number | string;
   deadline: Date;
   beneficiary: string;
 }
