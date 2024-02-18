@@ -1,4 +1,4 @@
-import { PrismaClient } from "@donera/database";
+import { getClient } from "@donera/database";
 import { Container, Group } from "@mantine/core";
 import { notFound } from "next/navigation";
 import { FundDetail } from "./_components/FundDetail";
@@ -8,7 +8,7 @@ import { addressFromContractId, web3 } from "@alephium/web3";
 
 export default async function FundDetailPage({ params }: { params: { fundContractId: string } }) {
   const { fundContractId } = params;
-  const client = new PrismaClient();
+  const client = getClient();
   // TODO: cache this, fund fields dont change
   const fund = await client.fund.findFirst({
     where: {

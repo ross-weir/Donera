@@ -19,6 +19,8 @@ model Fund {
   deadline       DateTime
   beneficiary    String
   creationTx     Transaction
+  // The tokens donated to this fund
+  tokens         Token[]
 }
 
 type Transaction {
@@ -33,4 +35,15 @@ type Transaction {
   // if verified is false we have not actually seen the tx on the network yet
   // if it is true, we have seen the tx and it is legit
   verified  Boolean
+}
+
+type Token {
+  id      String
+  amount  String
+}
+
+
+model Indexer {
+  id      String @id @default(auto()) @map("_id") @db.ObjectId
+  height  Int
 }
