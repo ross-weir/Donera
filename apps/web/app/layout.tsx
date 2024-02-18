@@ -1,5 +1,6 @@
 import "@mantine/core/styles.css";
 import "@mantine/dates/styles.css";
+import "./_lib/server/init";
 
 import type { Metadata } from "next";
 import { AppShellMain, ColorSchemeScript } from "@mantine/core";
@@ -13,7 +14,6 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  // set web3.setCurrentNodeProvider()
   return (
     <html lang="en">
       <head>

@@ -2,18 +2,19 @@ import { Button, Grid, NumberInput } from "@mantine/core";
 import { SelectToken } from "./SelectToken";
 import { useState } from "react";
 import { ALPH_TOKEN_ID } from "@alephium/web3";
-import { ALPH, mainnetTokensMetadata, testnetTokensMetadata } from "@alephium/token-list";
+import { ALPH } from "@alephium/token-list";
 import { isInRange, useForm } from "@mantine/form";
-import { getNetwork } from "../../../../_lib/donera";
+import { getDoneraDapp, getNetwork } from "../../../../_lib/donera";
+import { getTokensForNetwork } from "@donera/dapp";
+import { useWallet } from "@alephium/web3-react";
 
-const tokenMetadata = getNetwork() === "mainnet" ? mainnetTokensMetadata : testnetTokensMetadata;
 const tokens = [
   {
     ...ALPH,
     logoURI:
       "https://raw.githubusercontent.com/alephium/alephium-brand-guide/master/logos/grey/Logo-Icon-Grey.png",
   },
-  ...tokenMetadata.tokens,
+  ...getTokensForNetwork(getNetwork()),
 ].map((t) => ({
   symbol: t.symbol,
   value: t.id,
@@ -26,7 +27,12 @@ type FormSchema = {
   amount: number;
 };
 
-export function DonateForm() {
+export type DonateFormProps = {
+  fundContractId: string;
+};
+
+export function DonateForm({ fundContractId }: DonateFormProps) {
+  const { signer } = useWallet();
   const form = useForm<FormSchema>({
     initialValues: { tokenId: ALPH_TOKEN_ID, amount: 0 },
     validate: { amount: isInRange({ min: 1 }, "Donation value must be supplied") },
@@ -34,14 +40,18 @@ export function DonateForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const onSubmit = (form: FormSchema) => {
-    setIsSubmitting(true);
     console.log(form);
+    setIsSubmitting(true);
+    getDoneraDapp()
+      .donateToFund(signer!, { fundContractId, ...form })
+      .then(console.log)
+      .catch(console.error)
+      .finally(() => setIsSubmitting(false));
 
     setIsSubmitting(false);
   };
   /** "donate" (or connect wallet) button, should be disabled if unconfirmed */
   /** message that cant donate until confirmed */
-  // TODO:need to convert the value based on the tokens decimals
 
   return (
     <form onSubmit={form.onSubmit(onSubmit)}>
