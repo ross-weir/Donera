@@ -20,26 +20,26 @@ export default function LandingPage() {
       </Text>
 
       <Group className={classes.controls}>
-        <Link href="/">
-          <Button
-            size="xl"
-            className={classes.control}
-            variant="default"
-            leftSection={<IconSearch size={20} />}
-          >
-            Browse
-          </Button>
-        </Link>
-        <Link href="/funds/create">
-          <Button
-            size="xl"
-            className={classes.control}
-            variant="gradient"
-            gradient={{ from: "blue", to: "cyan" }}
-          >
-            Launch fund
-          </Button>
-        </Link>
+        <Button
+          component={Link}
+          href="/browse"
+          size="xl"
+          className={classes.control}
+          variant="default"
+          leftSection={<IconSearch size={20} />}
+        >
+          Browse
+        </Button>
+        <Button
+          component={Link}
+          href="/create"
+          size="xl"
+          className={classes.control}
+          variant="gradient"
+          gradient={{ from: "blue", to: "cyan" }}
+        >
+          Launch fund
+        </Button>
       </Group>
     </Container>
   );

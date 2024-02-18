@@ -1,6 +1,10 @@
 {
   "extends": "@donera/typescript-config/next.json",
   "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["app/*"]
+    },
     "plugins": [
       {
         "name": "next"

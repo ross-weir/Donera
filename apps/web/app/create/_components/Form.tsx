@@ -5,7 +5,7 @@ import { useWallet } from "@alephium/web3-react";
 import { Button, Group, NumberInput, Stack, TextInput, Textarea } from "@mantine/core";
 import { DateTimePicker } from "@mantine/dates";
 import { useForm, isNotEmpty, hasLength, isInRange } from "@mantine/form";
-import { getDoneraDapp } from "../../../_lib/donera";
+import { getDoneraDapp } from "@/_lib/donera";
 import dayjs from "dayjs";
 import Link from "next/link";
 import { saveFund } from "../_actions/mutations";
@@ -93,9 +93,11 @@ export default function CreateFundForm() {
         />
         <Group justify="flex-end">
           <Link href="/">
-            <Button variant="default">Cancel</Button>
+            <Button miw={120} variant="default">
+              Cancel
+            </Button>
           </Link>
-          <Button type="submit" disabled={!signer} loading={isSubmitting}>
+          <Button type="submit" miw={120} disabled={!signer} loading={isSubmitting}>
             Create
           </Button>
         </Group>

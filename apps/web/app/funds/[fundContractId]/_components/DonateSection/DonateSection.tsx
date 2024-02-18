@@ -1,8 +1,8 @@
 "use client";
 
-import { prettifyAttoAlphAmount } from "@alephium/web3";
-import { Title, Paper, PaperProps, Progress, Space, Text } from "@mantine/core";
+import { Title, Paper, PaperProps, Space } from "@mantine/core";
 import { DonateForm } from "./DonateForm";
+import { FundProgress } from "@/_components/FundProgress";
 
 export type DonateSectionProps = {
   fundContractId: string;
@@ -20,17 +20,9 @@ export function DonateSection({
   assetsRaised,
   ...rest
 }: DonateSectionProps) {
-  const progress = Number((BigInt(alphRaised) * BigInt(100)) / BigInt(goal));
-
   return (
     <Paper {...rest}>
-      <Text size="xl">
-        {prettifyAttoAlphAmount(alphRaised)} ALPH{" "}
-        <Text span c="dimmed" size="xs">
-          raised of {prettifyAttoAlphAmount(goal)} target
-        </Text>
-      </Text>
-      <Progress value={progress} color="green" />
+      <FundProgress goal={goal} raised={alphRaised} labelProps={{ size: "xl" }} />
       <Space h="md" />
       <Title order={4}>Make a donation</Title>
       <Space h="md" />

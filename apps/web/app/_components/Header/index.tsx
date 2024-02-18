@@ -19,11 +19,11 @@ export default function Header() {
   return (
     <Group h="100%" px="md" justify="space-between">
       <Group>
-        <Link href="/">
-          <Image src={logo} alt="Donera Logo" width={32} height={32} />
-        </Link>
         <Link href="/" style={{ textDecoration: "none", color: "unset" }}>
-          <Title order={2}>Donera</Title>
+          <Group>
+            <Image src={logo} alt="Donera Logo" width={32} height={32} />
+            <Title order={2}>Donera</Title>
+          </Group>
         </Link>
       </Group>
       <Group>
