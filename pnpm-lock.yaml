@@ -173,6 +173,22 @@ importers:
       '@donera/database':
         specifier: workspace:^
         version: link:../database
+    devDependencies:
+      '@donera/eslint-config':
+        specifier: workspace:^
+        version: link:../eslint-config
+      '@donera/typescript-config':
+        specifier: workspace:^
+        version: link:../typescript-config
+      '@types/bun':
+        specifier: ^1.0.5
+        version: 1.0.5
+      eslint:
+        specifier: ^8.56.0
+        version: 8.56.0
+      typescript:
+        specifier: ^5.3.3
+        version: 5.3.3
 
   packages/typescript-config:
     devDependencies:

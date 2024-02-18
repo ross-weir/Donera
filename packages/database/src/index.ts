@@ -8,3 +8,5 @@ import { PrismaClient } from "@prisma/client";
 export function getClient() {
   return new PrismaClient();
 }
+
+export type DoneraPrismaClient = ReturnType<typeof getClient>;

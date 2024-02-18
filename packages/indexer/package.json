@@ -1,12 +1,19 @@
 {
-  "name": "indexer",
+  "name": "@donera/indexer",
   "version": "1.0.0",
   "private": true,
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "exports": {
+    ".": "./src/index.ts"
   },
   "dependencies": {
     "@alephium/web3": "^0.29.2",
     "@donera/database": "workspace:^"
+  },
+  "devDependencies": {
+    "@donera/eslint-config": "workspace:^",
+    "@donera/typescript-config": "workspace:^",
+    "@types/bun": "^1.0.5",
+    "eslint": "^8.56.0",
+    "typescript": "^5.3.3"
   }
 }
