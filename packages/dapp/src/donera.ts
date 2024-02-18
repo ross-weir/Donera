@@ -8,20 +8,24 @@ import {
   convertAlphAmountWithDecimals,
   ContractFactory,
   ContractInstance,
+  convertAmountWithDecimals,
+  ALPH_TOKEN_ID,
 } from "@alephium/web3";
+import { ALPH, TokenInfo } from "@alephium/token-list";
 import { Donera, DoneraInstance, DoneraTypes } from "./contracts/donera";
 import { Deployments, loadDeployments } from "./deploys";
-import { CreateFund } from "./scripts";
+import { CreateFund, DonateToFund } from "./scripts";
+import { getTokensForNetwork } from "./tokens";
 
-export interface CreateFundParam {
+export type CreateFundParam = {
   name: string;
   description: string;
   goal: number | string;
   deadline: Date;
   beneficiary: string;
-}
+};
 
-export interface CreateFundResult {
+export type CreateFundResult = {
   txId: string;
   fundContractId: string;
   name: string;
@@ -29,17 +33,29 @@ export interface CreateFundResult {
   goal: string;
   deadline: Date;
   beneficiary: string;
-}
+};
+
+export type DonateToFundParam = {
+  fundContractId: string;
+  tokenId: string;
+  amount: number | string;
+};
+
+export type DonateToFundResult = {
+  txId: string;
+};
 
 export class DoneraDapp {
+  private readonly tokens: TokenInfo[];
   private readonly deploys: Deployments;
 
-  constructor(deploys: Deployments) {
+  constructor(networkId: NetworkId, deploys: Deployments) {
+    this.tokens = getTokensForNetwork(networkId);
     this.deploys = deploys;
   }
 
   static forNetwork(network: NetworkId): DoneraDapp {
-    return new DoneraDapp(loadDeployments(network));
+    return new DoneraDapp(network, loadDeployments(network));
   }
 
   public async createFund(
@@ -77,6 +93,30 @@ export class DoneraDapp {
     };
   }
 
+  public async donateToFund(
+    signer: SignerProvider,
+    { fundContractId, tokenId, amount }: DonateToFundParam
+  ): Promise<DonateToFundResult> {
+    const tokenInfo = this.getTokenInfo(tokenId);
+
+    if (!tokenInfo) {
+      throw new Error(`Only verified tokens can be donated, tokenId ${tokenId} is not verified`);
+    }
+
+    const donateAmount = convertAmountWithDecimals(amount, tokenInfo.decimals)!;
+    const { txId } = await DonateToFund.execute(signer, {
+      initialFields: {
+        donera: this.doneraInstance.contractId,
+        fundContractId,
+        tokenId,
+        amount: donateAmount,
+      },
+      attoAlphAmount: donateAmount,
+    });
+
+    return { txId };
+  }
+
   private async getEventForTx<E, C extends ContractInstance>(
     txId: string,
     // needed to get the events signatures
@@ -89,6 +129,14 @@ export class DoneraDapp {
       throw new Error(`getEventForTx: Failed to find event with index ${eventIndex} in tx ${txId}`);
     }
     return Contract.fromApiEvent(targetEvent, undefined, txId, () => contractFactory.contract) as E;
+  }
+
+  private getTokenInfo(tokenId: string): TokenInfo | undefined {
+    if (tokenId === ALPH_TOKEN_ID) {
+      return ALPH;
+    }
+
+    return this.tokens.find((t) => t.id === tokenId);
   }
 
   get contracts(): Deployments["contracts"] {

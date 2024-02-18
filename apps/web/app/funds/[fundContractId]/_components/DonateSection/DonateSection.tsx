@@ -5,6 +5,7 @@ import { Title, Paper, PaperProps, Progress, Space, Text } from "@mantine/core";
 import { DonateForm } from "./DonateForm";
 
 export type DonateSectionProps = {
+  fundContractId: string;
   // atto format
   goal: string;
   // atto format
@@ -12,7 +13,13 @@ export type DonateSectionProps = {
   assetsRaised?: unknown;
 } & PaperProps;
 
-export function DonateSection({ goal, alphRaised, assetsRaised, ...rest }: DonateSectionProps) {
+export function DonateSection({
+  fundContractId,
+  goal,
+  alphRaised,
+  assetsRaised,
+  ...rest
+}: DonateSectionProps) {
   const progress = Number((BigInt(alphRaised) * BigInt(100)) / BigInt(goal));
 
   return (
@@ -27,7 +34,7 @@ export function DonateSection({ goal, alphRaised, assetsRaised, ...rest }: Donat
       <Space h="md" />
       <Title order={4}>Make a donation</Title>
       <Space h="md" />
-      <DonateForm />
+      <DonateForm fundContractId={fundContractId} />
     </Paper>
   );
 }
