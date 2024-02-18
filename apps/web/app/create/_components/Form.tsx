@@ -93,9 +93,11 @@ export default function CreateFundForm() {
         />
         <Group justify="flex-end">
           <Link href="/">
-            <Button variant="default">Cancel</Button>
+            <Button miw={120} variant="default">
+              Cancel
+            </Button>
           </Link>
-          <Button type="submit" disabled={!signer} loading={isSubmitting}>
+          <Button type="submit" miw={120} disabled={!signer} loading={isSubmitting}>
             Create
           </Button>
         </Group>
