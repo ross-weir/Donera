@@ -2,11 +2,14 @@
 export * from "@prisma/client";
 import { PrismaClient } from "@prisma/client";
 
+export type DoneraPrismaClient = ReturnType<typeof prismaClientSingleton>;
+
 const prismaClientSingleton = () => {
   return new PrismaClient();
 };
 
 declare global {
+  // eslint-disable-next-line no-var
   var prisma: undefined | ReturnType<typeof prismaClientSingleton>;
 }
 
