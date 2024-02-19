@@ -7,14 +7,20 @@
     "build": "prisma generate",
     "fmt": "prisma format",
     "dev": "./scripts/start_local.sh",
-    "clean": "docker rm donera-db"
+    "clean": "docker rm donera-db && docker volume prune"
   },
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./funds": "./src/funds.ts"
   },
   "devDependencies": {
+    "@donera/eslint-config": "workspace:^",
+    "@donera/typescript-config": "workspace:^",
+    "@types/bun": "^1.0.5",
     "@types/node": "^20.11.17",
-    "prisma": "^5.9.1"
+    "eslint": "^8.56.0",
+    "prisma": "^5.9.1",
+    "typescript": "^5.3.3"
   },
   "dependencies": {
     "@prisma/client": "^5.9.1"

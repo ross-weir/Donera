@@ -1,32 +1,20 @@
-import { PrismaClient, Prisma, Fund } from "@prisma/client";
-import { getPrismaClient } from "@prisma/client/runtime/library";
+import db from "./src";
+import { fundsWithBalances } from "./src/funds";
 
-console.log("testing");
-const client = new PrismaClient();
-const count = await client.fund.count();
-console.log(count);
-// await client.fund.create({
-//   data: {
-//     fundContractId: "ff",
-//     name: "testing",
-//     description: "testing desc",
-//     deadline: new Date(),
-//     beneficiary: "beniAddress",
-//     goal: 100n,
-//     creationTx: {
-//       id: "c",
-//       createdAt: new Date(),
-//       confirmed: false,
-//       verified: false,
-//     },
+// const funds = await db.fund.findMany({
+//   where: {
+//     id: "037e5c68d1d15f8e9947d587b96374fb4c37b6331d0bc0a5d66b09c45fd51d00",
+//   },
+//   select: {
+//     id: true,
+//     name: true,
 //   },
 // });
 
-client.fund.findFirst({
-  include: {
-    _count: {
-      select: { donations: true },
-    },
-  },
-  where: {},
-});
+const funds = await fundsWithBalances(db);
+
+for (const f of funds) {
+  console.log(f);
+}
+// const d = await fundsWithBalances(db);
+// console.log(d[0].balances);

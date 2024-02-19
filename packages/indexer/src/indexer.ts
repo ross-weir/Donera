@@ -36,6 +36,17 @@ export abstract class BaseIndexer implements Indexer {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  protected incHeight(): PrismaPromise<any> {
+    return this.db.indexer.updateMany({
+      data: {
+        height: {
+          increment: 1,
+        },
+      },
+    });
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   protected updateHeight(newHeight: number): PrismaPromise<any> {
     // use update many so we dont need a `where` clause
     // there should only ever be one document

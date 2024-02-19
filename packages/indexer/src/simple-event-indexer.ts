@@ -1,6 +1,6 @@
 import { Donera, DoneraTypes } from "@donera/dapp/contracts";
 import { BaseIndexer, IndexerConfig } from "./indexer";
-import { Contract, hexToString, node } from "@alephium/web3";
+import { ALPH_TOKEN_ID, Contract, addressFromContractId, hexToString, node } from "@alephium/web3";
 import { PrismaPromise } from "@donera/database";
 import { Deployments } from "@donera/dapp/deploys";
 
@@ -54,8 +54,16 @@ export class SimpleEventIndexer extends BaseIndexer {
       return;
     }
 
-    const txns = await Promise.all(events.map((e) => this.onEvent(e)));
-    await this.db.$transaction([...txns.flat(), this.updateHeight(nextStart)]);
+    const createEvents = events.filter((e) => e.eventIndex === Donera.eventIndex.FundListed);
+    const otherEvents = events.filter((e) => e.eventIndex !== Donera.eventIndex.FundListed);
+    const createTxns = await Promise.all(createEvents.map((e) => this.onEvent(e)));
+    const otherTxns = await Promise.all(otherEvents.map((e) => this.onEvent(e)));
+
+    await this.db.$transaction([
+      ...createTxns.flat(),
+      ...otherTxns.flat(),
+      this.updateHeight(nextStart),
+    ]);
     this.currentHeight = nextStart;
   }
 
@@ -110,13 +118,31 @@ export class SimpleEventIndexer extends BaseIndexer {
   }
 
   private async processDonation(event: DoneraTypes.DonationEvent): Promise<Tx[]> {
-    const { fundContractId, amount, ...rest } = event.fields;
+    const { fundContractId, amount, tokenId, ...rest } = event.fields;
+    const contractAddress = addressFromContractId(fundContractId);
+    const group = this.deploys.contracts.Donera.contractInstance.groupIndex;
+    console.log(`GROUP ${group}`);
+    const { asset } = await this.node.contracts.getContractsAddressState(contractAddress, {
+      group,
+    });
+    const balances = [{ id: ALPH_TOKEN_ID, amount: asset.attoAlphAmount }, ...(asset.tokens ?? [])];
     return [
       this.db.donation.create({
         data: {
           amount: amount.toString(),
           fundId: fundContractId,
+          tokenId,
           ...rest,
+        },
+      }),
+      this.db.fund.update({
+        where: {
+          id: fundContractId,
+        },
+        data: {
+          balances: {
+            set: balances,
+          },
         },
       }),
     ];

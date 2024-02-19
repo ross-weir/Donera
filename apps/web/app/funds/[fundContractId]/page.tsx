@@ -1,12 +1,16 @@
-import db from "@donera/database";
+import db, { Fund } from "@donera/database";
 import { Container, Group } from "@mantine/core";
 import { notFound } from "next/navigation";
 import { FundDetail } from "./_components/FundDetail";
 import classes from "./page.module.css";
 import { DonateSection } from "./_components/DonateSection";
-import { addressFromContractId, web3 } from "@alephium/web3";
+import { ALPH_TOKEN_ID } from "@alephium/web3";
 
 export const dynamic = "force-dynamic";
+
+function alphRaised(fund: Fund): string {
+  return fund.balances?.find((b) => b.id === ALPH_TOKEN_ID)?.amount ?? "0";
+}
 
 export default async function FundDetailPage({ params }: { params: { fundContractId: string } }) {
   const { fundContractId } = params;
@@ -19,17 +23,6 @@ export default async function FundDetailPage({ params }: { params: { fundContrac
   if (!fund) {
     notFound();
   }
-
-  // might be better to fetch this client-side so it's always up-to-date?
-  // at least until we start tracking balances
-  // or revalidate it in someway using server actions on donation?
-  const { balance } = await web3
-    .getCurrentNodeProvider()
-    .addresses.getAddressesAddressBalance(
-      addressFromContractId(fundContractId),
-      {},
-      { cache: "no-cache" }
-    );
 
   const {
     name,
@@ -61,7 +54,7 @@ export default async function FundDetailPage({ params }: { params: { fundContrac
           w={450}
           fundContractId={fundContractId}
           goal={goal}
-          alphRaised={balance}
+          alphRaised={alphRaised(fund)}
           shadow="sm"
           p="xl"
           withBorder
