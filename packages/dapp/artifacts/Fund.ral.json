@@ -1,13 +1,14 @@
 {
   "version": "v2.8.2",
   "name": "Fund",
-  "bytecode": "06081640284031403a4043404c405c406f00000101000ab4b24513405a7b1600a0004513405a7b010001010007b4a0004513405a7b1600a100010000000102ce0002010000000102ce0102010000000102ce0302010000000102ce0202010103030006b40000160016011602ac010200000009b4000056ce043413327bce02b0",
-  "codeHash": "a9014ff25e916ccd24be1df1e45279c0a25eabe003dafd91c5a6890f015786dd",
+  "bytecode": "07091640284031403a4043404c40554065407800000101000ab4b24513405a7b1600a0004513405a7b010001010007b4a0004513405a7b1600a100010000000102ce0002010000000102ce0102010000000102ce0402010000000102ce0202010000000102ce0302010103030006b40000160016011602ac010200000009b4000056ce053413327bce02b0",
+  "codeHash": "b29972a121580acb2acdbcea1877588d3d0ee406b2a7f14d271b660e35a19600",
   "fieldsSig": {
     "names": [
       "selfName",
       "selfDescription",
-      "selfRecipient",
+      "selfBeneficiary",
+      "selfOrganizer",
       "selfGoal",
       "selfDeadline",
       "selfOwner"
@@ -16,11 +17,13 @@
       "ByteVec",
       "ByteVec",
       "Address",
+      "Address",
       "U256",
       "U256",
       "Address"
     ],
     "isMutable": [
+      false,
       false,
       false,
       false,
@@ -100,7 +103,19 @@
       ]
     },
     {
-      "name": "getRecipient",
+      "name": "getBeneficiary",
+      "usePreapprovedAssets": false,
+      "useAssetsInContract": false,
+      "isPublic": true,
+      "paramNames": [],
+      "paramTypes": [],
+      "paramIsMutable": [],
+      "returnTypes": [
+        "Address"
+      ]
+    },
+    {
+      "name": "getOrganizer",
       "usePreapprovedAssets": false,
       "useAssetsInContract": false,
       "isPublic": true,

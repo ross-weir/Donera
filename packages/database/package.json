@@ -13,6 +13,7 @@
     ".": "./src/index.ts"
   },
   "devDependencies": {
+    "@types/node": "^20.11.17",
     "prisma": "^5.9.1"
   },
   "dependencies": {

@@ -40,7 +40,8 @@ export namespace DoneraTypes {
   export type FundListedEvent = ContractEvent<{
     name: HexString;
     description: HexString;
-    recipient: Address;
+    beneficiary: Address;
+    organizer: Address;
     goal: bigint;
     deadlineTimestamp: bigint;
     fundContractId: HexString;
@@ -51,7 +52,10 @@ export namespace DoneraTypes {
     donor: Address;
     fundContractId: HexString;
   }>;
-  export type FundFinalizedEvent = ContractEvent<{ contractId: HexString }>;
+  export type FundFinalizedEvent = ContractEvent<{
+    finalizer: Address;
+    fundContractId: HexString;
+  }>;
 
   export interface CallMethodTable {
     getAttoListingFee: {
@@ -105,7 +109,7 @@ class Factory extends ContractFactory<DoneraInstance, DoneraTypes.Fields> {
         {
           name: HexString;
           description: HexString;
-          recipient: Address;
+          beneficiary: Address;
           goal: bigint;
           deadlineTimestamp: bigint;
         }
@@ -163,7 +167,7 @@ export const Donera = new Factory(
   Contract.fromJson(
     DoneraContractJson,
     "",
-    "ccbda13feebcb026e20c09359c245512dc68b02c054f2f954e1abc2c958ec43a"
+    "fc0d7c8138d8e175514d37521ca1d0de1041389dc99c1f739ac72c88e021a615"
   )
 );
 

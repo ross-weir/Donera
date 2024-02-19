@@ -1,4 +1,4 @@
-import { PrismaClient } from "@donera/database";
+import db from "@donera/database";
 import { Container, Group } from "@mantine/core";
 import { notFound } from "next/navigation";
 import { FundDetail } from "./_components/FundDetail";
@@ -6,13 +6,13 @@ import classes from "./page.module.css";
 import { DonateSection } from "./_components/DonateSection";
 import { addressFromContractId, web3 } from "@alephium/web3";
 
+export const dynamic = "force-dynamic";
+
 export default async function FundDetailPage({ params }: { params: { fundContractId: string } }) {
   const { fundContractId } = params;
-  const client = new PrismaClient();
-  // TODO: cache this, fund fields dont change
-  const fund = await client.fund.findFirst({
+  const fund = await db.fund.findFirst({
     where: {
-      fundContractId,
+      id: fundContractId,
     },
   });
 
@@ -31,7 +31,17 @@ export default async function FundDetailPage({ params }: { params: { fundContrac
       { cache: "no-cache" }
     );
 
-  const { name, description, creationTx, beneficiary, deadline, goal } = fund;
+  const {
+    name,
+    description,
+    createdAt,
+    confirmed,
+    beneficiary,
+    organizer,
+    verified,
+    deadline,
+    goal,
+  } = fund;
 
   return (
     <Container fluid className={classes.container}>
@@ -43,9 +53,9 @@ export default async function FundDetailPage({ params }: { params: { fundContrac
           description={description}
           beneficiary={beneficiary}
           deadline={deadline.toLocaleString()}
-          organizer={creationTx.signerAddress}
-          confirmed={creationTx.confirmed && creationTx.verified}
-          createdAt={creationTx.createdAt.toLocaleString()}
+          organizer={organizer}
+          confirmed={confirmed && verified}
+          createdAt={createdAt.toLocaleString()}
         />
         <DonateSection
           w={450}

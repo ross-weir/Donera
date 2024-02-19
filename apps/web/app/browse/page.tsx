@@ -1,10 +1,12 @@
-import { Center, Container, Divider, Group, Space, Title } from "@mantine/core";
-import { PrismaClient } from "@donera/database";
+import { Center, Container, Group, Space, Title } from "@mantine/core";
+import db from "@donera/database";
 import classes from "./page.module.css";
 import { FundCard } from "./_components/FundCard";
 
+// ensure we always get up-to-date funds
+export const dynamic = "force-dynamic";
+
 export default async function BrowseFundsPage() {
-  const db = new PrismaClient();
   const funds = await db.fund.findMany();
 
   return (

@@ -6,7 +6,8 @@ Contract Donera(
   event FundListed(
     name: ByteVec,
     description: ByteVec,
-    recipient: Address,
+    beneficiary: Address,
+    organizer: Address,
     goal: U256,
     deadlineTimestamp: U256,
     fundContractId: ByteVec
@@ -19,8 +20,7 @@ Contract Donera(
     fundContractId: ByteVec
   )
 
-  // TODO do we need any other fields?
-  event FundFinalized(contractId: ByteVec)
+  event FundFinalized(finalizer: Address, fundContractId: ByteVec)
 
   // Donera error codes in the range of 0 - 10
   enum DoneraError {
@@ -32,31 +32,33 @@ Contract Donera(
   pub fn createFund(
     name: ByteVec,
     description: ByteVec,
-    recipient: Address,
+    beneficiary: Address,
     goal: U256,
     deadlineTimestamp: U256
   ) -> () {
-    let lister = callerAddress!()
+    let organizer = callerAddress!()
 
-    transferTokenToSelf!(lister, ALPH, selfAttoListingFee)
+    transferTokenToSelf!(organizer, ALPH, selfAttoListingFee)
 
     // maybe should use a nounce or something for better uniqueness
     let pathHash = blake2b!(
       name ++
       description ++
-      toByteVec!(recipient) ++
+      toByteVec!(beneficiary) ++
+      toByteVec!(organizer) ++
       toByteVec!(goal) ++
       toByteVec!(deadlineTimestamp)
     )
     let (immFields, mutFields) = Fund.encodeFields!(
       name,
       description,
-      recipient,
+      beneficiary,
+      organizer,
       goal,
       deadlineTimestamp,
       selfAddress!()
     )
-    let fundContractId = copyCreateSubContract!{lister -> ALPH: 1 alph}(
+    let fundContractId = copyCreateSubContract!{organizer -> ALPH: 1 alph}(
       pathHash,
       selfFundTemplateId,
       immFields,
@@ -66,7 +68,8 @@ Contract Donera(
     emit FundListed(
       name,
       description,
-      recipient,
+      beneficiary,
+      organizer,
       goal,
       deadlineTimestamp,
       fundContractId
@@ -89,13 +92,14 @@ Contract Donera(
 
   pub fn finalizeFund(fundContractId: ByteVec) -> () {
     let fund = Fund(fundContractId)
-    checkCaller!(callerAddress!() == fund.getRecipient(), DoneraError.Forbidden)
+    let finalizer = callerAddress!()
+    checkCaller!(finalizer == fund.getBeneficiary(), DoneraError.Forbidden)
 
     // TODO protocol fee
 
     fund.finalize()
 
-    emit FundFinalized(fundContractId)
+    emit FundFinalized(finalizer, fundContractId)
   }
 
   // Withdraw collected protocol fees from the contract.

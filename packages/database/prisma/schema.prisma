@@ -8,29 +8,42 @@ datasource db {
 }
 
 model Fund {
-  id             String      @id @default(auto()) @map("_id") @db.ObjectId
-  fundContractId String
-  name           String
-  description    String
+  // the funds contract id
+  id          String     @id @map("_id")
+  name        String
+  description String
   // In atto alph format
-  // Using a string to avoid headaches associated with
-  // passing bigint across network boundaries as JSON
-  goal           String
-  deadline       DateTime
-  beneficiary    String
-  creationTx     Transaction
-}
-
-type Transaction {
-  id        String
-  signerAddress  String
-  // unverified txns that were created over `n` time ago should
-  // be cleaned up by a scheduled job
-  createdAt DateTime  @default(now())
-  confirmed Boolean
+  // BigInt doesn't work for numbers greater than JS number
+  // Decimal128 not currently supported, String is the
+  // recommended type currently
+  goal        String
+  deadline    DateTime
+  beneficiary String
+  organizer   String
+  donations   Donation[]
   // we eagerly create the fund before verifying the transaction actually exists
   // to provide a smooth ui when users are creating a new fund
-  // if verified is false we have not actually seen the tx on the network yet
-  // if it is true, we have seen the tx and it is legit
-  verified  Boolean
+  // if verified is false we have not actually seen the fund on the network yet
+  // if it is true, we have seen the fund and it is legit
+  verified    Boolean
+  finalized   Boolean    @default(false)
+  finalizedBy String?
+  txId        String
+  // TODO get timestamp from blockchain?
+  createdAt   DateTime   @default(now())
+  confirmed   Boolean    @default(false)
+}
+
+model Donation {
+  id      String  @id @default(auto()) @map("_id") @db.ObjectId
+  donor   String
+  tokenId String
+  amount  String
+  Fund    Fund?   @relation(fields: [fundId], references: [id])
+  fundId  String?
+}
+
+model Indexer {
+  id     String @id @default(auto()) @map("_id") @db.ObjectId
+  height Int    @default(0)
 }

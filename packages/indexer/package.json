@@ -1,0 +1,24 @@
+{
+  "name": "@donera/indexer",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "DATABASE_URL=mongodb://localhost:27017/donera bun bin/simple-index.ts"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@alephium/web3": "^0.29.2",
+    "@donera/alephium-config": "workspace:^",
+    "@donera/dapp": "workspace:^",
+    "@donera/database": "workspace:^"
+  },
+  "devDependencies": {
+    "@donera/eslint-config": "workspace:^",
+    "@donera/typescript-config": "workspace:^",
+    "@types/bun": "^1.0.5",
+    "eslint": "^8.56.0",
+    "typescript": "^5.3.3"
+  }
+}

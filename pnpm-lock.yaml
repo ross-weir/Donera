@@ -143,6 +143,9 @@ importers:
         specifier: ^5.9.1
         version: 5.9.1(prisma@5.9.1)
     devDependencies:
+      '@types/node':
+        specifier: ^20.11.17
+        version: 20.11.17
       prisma:
         specifier: ^5.9.1
         version: 5.9.1
@@ -161,6 +164,37 @@ importers:
       eslint-config-prettier:
         specifier: ^9.1.0
         version: 9.1.0(eslint@8.56.0)
+      typescript:
+        specifier: ^5.3.3
+        version: 5.3.3
+
+  packages/indexer:
+    dependencies:
+      '@alephium/web3':
+        specifier: ^0.29.2
+        version: 0.29.2
+      '@donera/alephium-config':
+        specifier: workspace:^
+        version: link:../alephium-config
+      '@donera/dapp':
+        specifier: workspace:^
+        version: link:../dapp
+      '@donera/database':
+        specifier: workspace:^
+        version: link:../database
+    devDependencies:
+      '@donera/eslint-config':
+        specifier: workspace:^
+        version: link:../eslint-config
+      '@donera/typescript-config':
+        specifier: workspace:^
+        version: link:../typescript-config
+      '@types/bun':
+        specifier: ^1.0.5
+        version: 1.0.5
+      eslint:
+        specifier: ^8.56.0
+        version: 8.56.0
       typescript:
         specifier: ^5.3.3
         version: 5.3.3

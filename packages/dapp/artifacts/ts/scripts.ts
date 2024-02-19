@@ -20,7 +20,7 @@ export const CreateFund = new ExecutableScript<{
   donera: HexString;
   name: HexString;
   description: HexString;
-  recipient: Address;
+  beneficiary: Address;
   goal: bigint;
   deadlineTimestamp: bigint;
 }>(Script.fromJson(CreateFundScriptJson));
