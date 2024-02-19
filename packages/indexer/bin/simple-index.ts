@@ -8,7 +8,10 @@ const networkId: NetworkId = "devnet";
 
 // TODO, get network form somewhere
 const { nodeUrl } = alephiumConfig.networks[networkId];
-web3.setCurrentNodeProvider(nodeUrl);
+// Bun has issues with localhost urls: https://github.com/oven-sh/bun/issues/1425
+const bunFix = nodeUrl.replace("localhost", "127.0.0.1");
+
+web3.setCurrentNodeProvider(bunFix);
 const deploys = loadDeployments(networkId);
 
 const db = getClient();
@@ -20,7 +23,7 @@ const indexerCfg = {
 
 const indexer = new SimpleEventIndexer(indexerCfg, {
   intervalMs: 4000,
-  donera: deploys.contracts.Donera.contractInstance,
+  deploys,
 });
 
 console.log("starting SIMPLE indexing..");

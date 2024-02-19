@@ -1,16 +1,16 @@
-import { Donera, DoneraInstance, DoneraTypes } from "@donera/dapp/contracts";
+import { Donera, DoneraTypes } from "@donera/dapp/contracts";
 import { BaseIndexer, IndexerConfig } from "./indexer";
-import { EventSubscription, Subscription } from "@alephium/web3";
+import { Contract, hexToString, node } from "@alephium/web3";
+import { PrismaPromise } from "@donera/database";
+import { Deployments } from "@donera/dapp/deploys";
 
 export type EventIndexerConfig = {
   intervalMs: number;
-  donera: DoneraInstance;
+  deploys: Deployments;
 };
 
-type DoneraEvent =
-  | DoneraTypes.FundListedEvent
-  | DoneraTypes.DonationEvent
-  | DoneraTypes.FundFinalizedEvent;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type Tx = PrismaPromise<any>;
 
 // TODO: handle chain re-orgs?
 
@@ -24,47 +24,52 @@ type DoneraEvent =
  * a more scalable solution.
  */
 export class SimpleEventIndexer extends BaseIndexer {
-  private subscription?: EventSubscription;
   private readonly intervalMs: number;
-  private readonly donera: DoneraInstance;
+  private readonly deploys: Deployments;
+  private taskHandle?: Timer;
 
-  constructor(cfg: IndexerConfig, { donera, intervalMs }: EventIndexerConfig) {
+  constructor(cfg: IndexerConfig, { deploys, intervalMs }: EventIndexerConfig) {
     super(cfg);
-    this.donera = donera;
+    this.deploys = deploys;
     this.intervalMs = intervalMs;
   }
 
   async run(): Promise<void> {
-    this.currentHeight = await this.getCurrentHeight();
-    this.subscription = this.donera.subscribeAllEvents(
-      {
-        pollingInterval: this.intervalMs,
-        errorCallback: (e, s) => this.onError(e, s),
-        // events should be passed seqentially at time of writting
-        // we write to the database on every event, an optimization could
-        // be batching the events and using a db txn, there doesn't currently
-        // seem to be a good way to do this with how subscription
-        // callbacks are structured
-        messageCallback: (e) => this.onEvent(e),
-      },
-      this.currentHeight
-    );
+    this.taskHandle = setInterval(async () => await this.processEvents(), this.intervalMs);
   }
 
   async stop(): Promise<void> {
-    this.subscription?.unsubscribe();
+    clearInterval(this.taskHandle);
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private async onError(e: any, subscription: Subscription<DoneraEvent>): Promise<void> {
-    // handle db transaction errors
-    console.error(e);
-    // only unsubscribe if fatal error
-    subscription.unsubscribe();
-    return;
+  private async processEvents(): Promise<void> {
+    const { events, nextStart } = await this.node.events.getEventsContractContractaddress(
+      this.deploys.contracts.Donera.contractInstance.address,
+      {
+        start: this.currentHeight,
+      }
+    );
+
+    if (nextStart === this.currentHeight) {
+      return;
+    }
+
+    await this.db.$transaction([
+      ...events.map((e) => this.onEvent(e)).flat(),
+      this.updateHeight(nextStart),
+    ]);
+    this.currentHeight = nextStart;
   }
 
-  private async onEvent(event: DoneraEvent): Promise<void> {
+  private onEvent(contractEvent: node.ContractEvent): Tx[] {
+    const event = Contract.fromApiEvent(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      contractEvent as any,
+      undefined,
+      contractEvent.txId,
+      () => Donera.contract
+    );
+    console.log("handling event", event);
     switch (event.eventIndex) {
       case Donera.eventIndex.FundListed:
         return this.processFundListed(event as DoneraTypes.FundListedEvent);
@@ -73,17 +78,14 @@ export class SimpleEventIndexer extends BaseIndexer {
       case Donera.eventIndex.FundFinalized:
         return this.processFundFinalized(event as DoneraTypes.FundFinalizedEvent);
       default:
-        console.log(`Unsupported event index: ${event.eventIndex}`);
-        return;
+        throw new Error(`Unsupported event index: ${event.eventIndex}`);
     }
   }
 
-  private async processFundListed(event: DoneraTypes.FundListedEvent): Promise<void> {
-    const { fundContractId, goal, ...rest } = event.fields;
-    console.log("GOT A FUND LISTED EVENT");
+  private processFundListed(event: DoneraTypes.FundListedEvent): Tx[] {
+    const { name, description, fundContractId, goal, deadlineTimestamp, ...rest } = event.fields;
 
-    // TODO, need to convert to name,desc,etc from hex strings
-    this.db.$transaction([
+    return [
       this.db.fund.upsert({
         where: {
           id: fundContractId,
@@ -94,28 +96,26 @@ export class SimpleEventIndexer extends BaseIndexer {
         },
         create: {
           id: fundContractId,
+          name: hexToString(name),
+          description: hexToString(description),
           goal: goal.toString(),
           verified: true,
           // maybe store as unix ts instead
-          deadline: new Date(),
+          deadline: new Date(Number(deadlineTimestamp * 1000n)),
           txId: event.txId,
           ...rest,
         },
       }),
-      this.incrementHeight(),
-    ]);
-
-    console.log("inserted", event);
-    return;
+    ];
   }
 
-  private async processDonation(event: DoneraTypes.DonationEvent): Promise<void> {
+  private processDonation(event: DoneraTypes.DonationEvent): Tx[] {
     console.log(event);
-    return;
+    return [];
   }
 
-  private async processFundFinalized(event: DoneraTypes.FundFinalizedEvent): Promise<void> {
+  private processFundFinalized(event: DoneraTypes.FundFinalizedEvent): Tx[] {
     console.log(event);
-    return;
+    return [];
   }
 }

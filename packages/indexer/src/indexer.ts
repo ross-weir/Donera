@@ -36,13 +36,13 @@ export abstract class BaseIndexer implements Indexer {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  protected incrementHeight(): PrismaPromise<any> {
+  protected updateHeight(newHeight: number): PrismaPromise<any> {
     // use update many so we dont need a `where` clause
     // there should only ever be one document
     return this.db.indexer.updateMany({
       data: {
         height: {
-          increment: 1,
+          set: newHeight,
         },
       },
     });
@@ -50,6 +50,7 @@ export abstract class BaseIndexer implements Indexer {
 
   async start(): Promise<void> {
     await this.maybeInit();
+    this.currentHeight = await this.getCurrentHeight();
     await this.run();
   }
 
