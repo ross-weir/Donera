@@ -1,6 +1,5 @@
 import { Center, Container, Group, Space, Title } from "@mantine/core";
-import db from "@donera/database";
-import { FundWithBalance, fundsWithBalances } from "@donera/database/funds";
+import db, { Fund } from "@donera/database";
 import classes from "./page.module.css";
 import { FundCard } from "./_components/FundCard";
 import { ALPH_TOKEN_ID } from "@alephium/web3";
@@ -8,12 +7,12 @@ import { ALPH_TOKEN_ID } from "@alephium/web3";
 // ensure we always get up-to-date funds
 export const dynamic = "force-dynamic";
 
-function alphRaised(fund: FundWithBalance): string {
-  return fund.balances.find((b) => b.tokenId === ALPH_TOKEN_ID)?.balance ?? "0";
+function alphRaised(fund: Fund): string {
+  return fund.balances?.find((b) => b.id === ALPH_TOKEN_ID)?.amount ?? "0";
 }
 
 export default async function BrowseFundsPage() {
-  const funds = await fundsWithBalances(db);
+  const funds = await db.fund.findMany({});
 
   return (
     <Container className={classes.container} size={1000}>

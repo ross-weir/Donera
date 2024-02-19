@@ -35,14 +35,9 @@ model Fund {
   confirmed   Boolean    @default(false)
 }
 
-model Balance {
-  id      String @id @default(auto()) @map("_id") @db.ObjectId
-  tokenId String
-  balance String
-  Fund    Fund   @relation(fields: [fundId], references: [id])
-  fundId  String
-
-  @@unique([tokenId, fundId])
+type Balance {
+  id     String
+  amount String
 }
 
 model Donation {
