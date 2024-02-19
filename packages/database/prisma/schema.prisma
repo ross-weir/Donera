@@ -35,8 +35,8 @@ model Fund {
 }
 
 type Token {
-  id     String
-  amount String
+  id      String
+  balance String
 }
 
 model Indexer {

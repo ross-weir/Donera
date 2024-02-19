@@ -54,14 +54,12 @@ export class SimpleEventIndexer extends BaseIndexer {
       return;
     }
 
-    await this.db.$transaction([
-      ...events.map((e) => this.onEvent(e)).flat(),
-      this.updateHeight(nextStart),
-    ]);
+    const txns = await Promise.all(events.map((e) => this.onEvent(e)));
+    await this.db.$transaction([...txns.flat(), this.updateHeight(nextStart)]);
     this.currentHeight = nextStart;
   }
 
-  private onEvent(contractEvent: node.ContractEvent): Tx[] {
+  private onEvent(contractEvent: node.ContractEvent): Promise<Tx[]> {
     const event = Contract.fromApiEvent(
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       contractEvent as any,
@@ -82,7 +80,7 @@ export class SimpleEventIndexer extends BaseIndexer {
     }
   }
 
-  private processFundListed(event: DoneraTypes.FundListedEvent): Tx[] {
+  private async processFundListed(event: DoneraTypes.FundListedEvent): Promise<Tx[]> {
     const { name, description, fundContractId, goal, deadlineTimestamp, ...rest } = event.fields;
 
     return [
@@ -109,12 +107,39 @@ export class SimpleEventIndexer extends BaseIndexer {
     ];
   }
 
-  private processDonation(event: DoneraTypes.DonationEvent): Tx[] {
-    console.log(event);
-    return [];
+  private async processDonation(event: DoneraTypes.DonationEvent): Promise<Tx[]> {
+    const { fundContractId, tokenId, amount } = event.fields;
+    const fund = await this.db.fund.findFirst({ where: { id: fundContractId } });
+    if (!fund) {
+      throw new Error(`Fund ${fundContractId} doesn't exist for donation`);
+    }
+    const tokens = fund.tokens ?? [];
+    const token = tokens.find((t) => t.id === tokenId);
+    if (token) {
+      const updatedBalance = BigInt(token.balance) + amount;
+      token.balance = updatedBalance.toString();
+    } else {
+      tokens.push({ id: tokenId, balance: amount.toString() });
+    }
+
+    return [
+      this.db.fund.update({
+        where: {
+          id: fundContractId,
+        },
+        data: {
+          donationCount: {
+            increment: 1,
+          },
+          tokens: {
+            set: tokens,
+          },
+        },
+      }),
+    ];
   }
 
-  private processFundFinalized(event: DoneraTypes.FundFinalizedEvent): Tx[] {
+  private async processFundFinalized(event: DoneraTypes.FundFinalizedEvent): Promise<Tx[]> {
     console.log(event);
     return [];
   }
