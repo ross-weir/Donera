@@ -1,16 +1,17 @@
+// https://www.prisma.io/docs/orm/more/help-and-troubleshooting/help-articles/nextjs-prisma-client-dev-practices
 export * from "@prisma/client";
 import { PrismaClient } from "@prisma/client";
 
-let _client: PrismaClient;
+const prismaClientSingleton = () => {
+  return new PrismaClient();
+};
 
-// we can add extensions via $extensions and they are strongly typed
-// https://www.prisma.io/docs/orm/prisma-client/client-extensions
-// although not currently used, if we use a factory function
-// we can add them with no changes required later
-export function getClient() {
-  if (_client) {
-    return _client;
-  }
-  _client = new PrismaClient();
-  return _client;
+declare global {
+  var prisma: undefined | ReturnType<typeof prismaClientSingleton>;
 }
+
+const prisma = globalThis.prisma ?? prismaClientSingleton();
+
+export default prisma;
+
+if (process.env.NODE_ENV !== "production") globalThis.prisma = prisma;

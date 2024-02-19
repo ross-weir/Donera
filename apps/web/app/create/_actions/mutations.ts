@@ -2,11 +2,10 @@
 
 import { redirect } from "next/navigation";
 import { CreateFundResult } from "@donera/dapp";
-import { getClient } from "@donera/database";
+import db from "@donera/database";
 
 export async function saveFund({ fundContractId, ...rest }: CreateFundResult) {
-  const client = getClient();
-  await client.fund.create({
+  await db.fund.create({
     data: {
       ...rest,
       id: fundContractId,

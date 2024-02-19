@@ -2,7 +2,7 @@ import { SimpleEventIndexer } from "../src";
 import { loadDeployments } from "@donera/dapp/deploys";
 import alephiumConfig from "@donera/alephium-config/default";
 import { NetworkId, web3 } from "@alephium/web3";
-import { getClient } from "@donera/database";
+import db from "@donera/database";
 
 const networkId: NetworkId = "devnet";
 
@@ -13,8 +13,6 @@ const bunFix = nodeUrl.replace("localhost", "127.0.0.1");
 
 web3.setCurrentNodeProvider(bunFix);
 const deploys = loadDeployments(networkId);
-
-const db = getClient();
 
 const indexerCfg = {
   node: web3.getCurrentNodeProvider(),

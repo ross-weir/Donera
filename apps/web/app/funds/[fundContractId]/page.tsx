@@ -1,4 +1,4 @@
-import { getClient } from "@donera/database";
+import db from "@donera/database";
 import { Container, Group } from "@mantine/core";
 import { notFound } from "next/navigation";
 import { FundDetail } from "./_components/FundDetail";
@@ -8,8 +8,7 @@ import { addressFromContractId, web3 } from "@alephium/web3";
 
 export default async function FundDetailPage({ params }: { params: { fundContractId: string } }) {
   const { fundContractId } = params;
-  const client = getClient();
-  const fund = await client.fund.findFirst({
+  const fund = await db.fund.findFirst({
     where: {
       id: fundContractId,
     },

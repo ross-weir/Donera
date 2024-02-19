@@ -1,10 +1,9 @@
 import { Center, Container, Group, Space, Title } from "@mantine/core";
-import { getClient } from "@donera/database";
+import db from "@donera/database";
 import classes from "./page.module.css";
 import { FundCard } from "./_components/FundCard";
 
 export default async function BrowseFundsPage() {
-  const db = getClient();
   const funds = await db.fund.findMany();
 
   return (
