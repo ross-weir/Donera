@@ -41,5 +41,5 @@ type Token {
 
 model Indexer {
   id     String @id @default(auto()) @map("_id") @db.ObjectId
-  height Int
+  height Int    @default(0)
 }

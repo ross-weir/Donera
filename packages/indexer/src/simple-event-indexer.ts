@@ -34,7 +34,7 @@ export class SimpleEventIndexer extends BaseIndexer {
     this.intervalMs = intervalMs;
   }
 
-  async start(): Promise<void> {
+  async run(): Promise<void> {
     this.currentHeight = await this.getCurrentHeight();
     this.subscription = this.donera.subscribeAllEvents(
       {
@@ -80,7 +80,9 @@ export class SimpleEventIndexer extends BaseIndexer {
 
   private async processFundListed(event: DoneraTypes.FundListedEvent): Promise<void> {
     const { fundContractId, goal, ...rest } = event.fields;
+    console.log("GOT A FUND LISTED EVENT");
 
+    // TODO, need to convert to name,desc,etc from hex strings
     this.db.$transaction([
       this.db.fund.upsert({
         where: {
@@ -103,7 +105,7 @@ export class SimpleEventIndexer extends BaseIndexer {
       this.incrementHeight(),
     ]);
 
-    console.log(event);
+    console.log("inserted", event);
     return;
   }
 

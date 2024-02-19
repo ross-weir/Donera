@@ -3,13 +3,14 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "echo TODO"
+    "dev": "DATABASE_URL=mongodb://localhost:27017/donera bun bin/simple-index.ts"
   },
   "exports": {
     ".": "./src/index.ts"
   },
   "dependencies": {
     "@alephium/web3": "^0.29.2",
+    "@donera/alephium-config": "workspace:^",
     "@donera/dapp": "workspace:^",
     "@donera/database": "workspace:^"
   },

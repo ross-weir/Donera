@@ -26,6 +26,15 @@ export abstract class BaseIndexer implements Indexer {
     return this.db.indexer.findFirstOrThrow().then((i) => i.height);
   }
 
+  // ensure the indexer is initialized in the db
+  protected async maybeInit(): Promise<void> {
+    const exists = (await this.db.indexer.count()) > 0;
+    if (exists) {
+      return;
+    }
+    await this.db.indexer.create({});
+  }
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   protected incrementHeight(): PrismaPromise<any> {
     // use update many so we dont need a `where` clause
@@ -39,6 +48,14 @@ export abstract class BaseIndexer implements Indexer {
     });
   }
 
-  abstract start(): Promise<void>;
-  abstract stop(): Promise<void>;
+  async start(): Promise<void> {
+    await this.maybeInit();
+    await this.run();
+  }
+
+  async stop(): Promise<void> {
+    return Promise.resolve();
+  }
+
+  protected abstract run(): Promise<void>;
 }
