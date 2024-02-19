@@ -19,6 +19,7 @@ model Fund {
   deadline    DateTime
   beneficiary String
   organizer   String
+  finalized   Boolean  @default(false)
   // The tokens donated to this fund
   tokens      Token[]
   // we eagerly create the fund before verifying the transaction actually exists
