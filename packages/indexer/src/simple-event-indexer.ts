@@ -73,12 +73,13 @@ export class SimpleEventIndexer extends BaseIndexer {
       case Donera.eventIndex.FundFinalized:
         return this.processFundFinalized(event as DoneraTypes.FundFinalizedEvent);
       default:
+        console.log(`Unsupported event index: ${event.eventIndex}`);
         return;
     }
   }
 
   private async processFundListed(event: DoneraTypes.FundListedEvent): Promise<void> {
-    const { fundContractId, goal, recipient, ...rest } = event.fields;
+    const { fundContractId, goal, ...rest } = event.fields;
 
     this.db.$transaction([
       this.db.fund.upsert({
@@ -92,10 +93,8 @@ export class SimpleEventIndexer extends BaseIndexer {
         create: {
           id: fundContractId,
           goal: goal.toString(),
-          beneficiary: recipient,
-          organizer: "",
           verified: true,
-          // convert to unixts
+          // maybe store as unix ts instead
           deadline: new Date(),
           txId: event.txId,
           ...rest,
@@ -104,8 +103,6 @@ export class SimpleEventIndexer extends BaseIndexer {
       this.incrementHeight(),
     ]);
 
-    // if the fund exists then update to verified: db.fund.upsert
-    // otherwise create fund with verified set to true
     console.log(event);
     return;
   }

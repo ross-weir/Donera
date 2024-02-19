@@ -2,7 +2,7 @@ TxScript CreateFund(
   donera: Donera,
   name: ByteVec,
   description: ByteVec,
-  recipient: Address,
+  beneficiary: Address,
   goal: U256,
   deadlineTimestamp: U256
 ) {
@@ -11,7 +11,7 @@ TxScript CreateFund(
   donera.createFund{callerAddress!() -> ALPH: requiredAssets}(
     name,
     description,
-    recipient,
+    beneficiary,
     goal,
     deadlineTimestamp
   )

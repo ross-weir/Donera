@@ -32,7 +32,8 @@ export namespace FundTypes {
   export type Fields = {
     selfName: HexString;
     selfDescription: HexString;
-    selfRecipient: Address;
+    selfBeneficiary: Address;
+    selfOrganizer: Address;
     selfGoal: bigint;
     selfDeadline: bigint;
     selfOwner: Address;
@@ -53,7 +54,11 @@ export namespace FundTypes {
       params: Omit<CallContractParams<{}>, "args">;
       result: CallContractResult<bigint>;
     };
-    getRecipient: {
+    getBeneficiary: {
+      params: Omit<CallContractParams<{}>, "args">;
+      result: CallContractResult<Address>;
+    };
+    getOrganizer: {
       params: Omit<CallContractParams<{}>, "args">;
       result: CallContractResult<Address>;
     };
@@ -112,10 +117,15 @@ class Factory extends ContractFactory<FundInstance, FundTypes.Fields> {
     ): Promise<TestContractResult<bigint>> => {
       return testMethod(this, "getGoal", params);
     },
-    getRecipient: async (
+    getBeneficiary: async (
       params: Omit<TestContractParams<FundTypes.Fields, never>, "testArgs">
     ): Promise<TestContractResult<Address>> => {
-      return testMethod(this, "getRecipient", params);
+      return testMethod(this, "getBeneficiary", params);
+    },
+    getOrganizer: async (
+      params: Omit<TestContractParams<FundTypes.Fields, never>, "testArgs">
+    ): Promise<TestContractResult<Address>> => {
+      return testMethod(this, "getOrganizer", params);
     },
     donate: async (
       params: TestContractParams<
@@ -138,7 +148,7 @@ export const Fund = new Factory(
   Contract.fromJson(
     FundContractJson,
     "",
-    "a9014ff25e916ccd24be1df1e45279c0a25eabe003dafd91c5a6890f015786dd"
+    "b29972a121580acb2acdbcea1877588d3d0ee406b2a7f14d271b660e35a19600"
   )
 );
 
@@ -186,13 +196,24 @@ export class FundInstance extends ContractInstance {
         getContractByCodeHash
       );
     },
-    getRecipient: async (
-      params?: FundTypes.CallMethodParams<"getRecipient">
-    ): Promise<FundTypes.CallMethodResult<"getRecipient">> => {
+    getBeneficiary: async (
+      params?: FundTypes.CallMethodParams<"getBeneficiary">
+    ): Promise<FundTypes.CallMethodResult<"getBeneficiary">> => {
       return callMethod(
         Fund,
         this,
-        "getRecipient",
+        "getBeneficiary",
+        params === undefined ? {} : params,
+        getContractByCodeHash
+      );
+    },
+    getOrganizer: async (
+      params?: FundTypes.CallMethodParams<"getOrganizer">
+    ): Promise<FundTypes.CallMethodResult<"getOrganizer">> => {
+      return callMethod(
+        Fund,
+        this,
+        "getOrganizer",
         params === undefined ? {} : params,
         getContractByCodeHash
       );

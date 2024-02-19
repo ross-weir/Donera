@@ -7,7 +7,7 @@
       "donera",
       "name",
       "description",
-      "recipient",
+      "beneficiary",
       "goal",
       "deadlineTimestamp"
     ],

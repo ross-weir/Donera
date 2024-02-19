@@ -9,28 +9,29 @@ datasource db {
 
 model Fund {
   // the funds contract id
-  id          String   @id @map("_id")
-  name        String
-  description String
+  id            String   @id @map("_id")
+  name          String
+  description   String
   // In atto alph format
   // Using a string to avoid headaches associated with
   // passing bigint across network boundaries as JSON
-  goal        String
-  deadline    DateTime
-  beneficiary String
-  organizer   String
-  finalized   Boolean  @default(false)
+  goal          String
+  deadline      DateTime
+  beneficiary   String
+  organizer     String
+  finalized     Boolean  @default(false)
+  donationCount Int      @default(0)
   // The tokens donated to this fund
-  tokens      Token[]
+  tokens        Token[]
   // we eagerly create the fund before verifying the transaction actually exists
   // to provide a smooth ui when users are creating a new fund
   // if verified is false we have not actually seen the fund on the network yet
   // if it is true, we have seen the fund and it is legit
-  verified    Boolean
-  txId        String
-  confirmed   Boolean  @default(false)
+  verified      Boolean
+  txId          String
+  confirmed     Boolean  @default(false)
   // TODO get timestamp from blockchain
-  createdAt   DateTime @default(now())
+  createdAt     DateTime @default(now())
 }
 
 type Token {

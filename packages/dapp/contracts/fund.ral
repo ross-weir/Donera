@@ -1,7 +1,8 @@
 Contract Fund(
   selfName: ByteVec,
   selfDescription: ByteVec,
-  selfRecipient: Address,
+  selfBeneficiary: Address,
+  selfOrganizer: Address,
   selfGoal: U256,
   selfDeadline: U256,
   mut selfOwner: Address // Central Donera contract
@@ -27,9 +28,14 @@ Contract Fund(
     return selfGoal
   }
 
-  // Get the recipient of the fund raiser.
-  pub fn getRecipient() -> Address {
-    return selfRecipient
+  // Get the beneficiary of the fund raiser.
+  pub fn getBeneficiary() -> Address {
+    return selfBeneficiary
+  }
+
+  // Get the organizer of the fund raiser.
+  pub fn getOrganizer() -> Address {
+    return selfOrganizer
   }
 
   // Donate tokens to this fund raiser.
@@ -49,7 +55,7 @@ Contract Fund(
   // Finalize the fund raiser.
   // 
   // Can only be called after the fund raiser deadline has passed.
-  // Transfers all tokens owned by the contract to the recipient.
+  // Transfers all tokens owned by the contract to the beneficiary.
   //
   // @throws {OwnedError.Forbidden} Caller must be the `Donera` contract.
   // @throws {FundError.FundInProgress} Must be called after the funds deadline.
@@ -59,6 +65,6 @@ Contract Fund(
   pub fn finalize() -> () {
     assertOwner(callerAddress!())
     assert!(blockTimeStamp!() >= selfDeadline, FundError.FundInProgress)
-    destroySelf!(selfRecipient)
+    destroySelf!(selfBeneficiary)
   }
 }

@@ -33,6 +33,7 @@ export type CreateFundResult = {
   goal: string;
   deadline: Date;
   beneficiary: string;
+  organizer: string;
 };
 
 export type DonateToFundParam = {
@@ -70,7 +71,7 @@ export class DoneraDapp {
         donera: this.doneraInstance.contractId,
         name: stringToHex(params.name),
         description: stringToHex(params.description),
-        recipient: params.beneficiary,
+        beneficiary: params.beneficiary,
         goal: attoGoal,
         deadlineTimestamp: BigInt(deadlineUnixTs),
       },
@@ -82,6 +83,8 @@ export class DoneraDapp {
       Donera.eventIndex.FundListed
     );
 
+    // TODO: should probably return the values in `fields` as they come from
+    // the blockchain itself
     return {
       txId,
       fundContractId: fields.fundContractId,
@@ -90,6 +93,7 @@ export class DoneraDapp {
       goal: attoGoal.toString(),
       deadline: params.deadline,
       beneficiary: params.beneficiary,
+      organizer: fields.organizer,
     };
   }
 

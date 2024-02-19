@@ -40,7 +40,8 @@ export namespace DoneraTypes {
   export type FundListedEvent = ContractEvent<{
     name: HexString;
     description: HexString;
-    recipient: Address;
+    beneficiary: Address;
+    organizer: Address;
     goal: bigint;
     deadlineTimestamp: bigint;
     fundContractId: HexString;
@@ -105,7 +106,7 @@ class Factory extends ContractFactory<DoneraInstance, DoneraTypes.Fields> {
         {
           name: HexString;
           description: HexString;
-          recipient: Address;
+          beneficiary: Address;
           goal: bigint;
           deadlineTimestamp: bigint;
         }
@@ -163,7 +164,7 @@ export const Donera = new Factory(
   Contract.fromJson(
     DoneraContractJson,
     "",
-    "ccbda13feebcb026e20c09359c245512dc68b02c054f2f954e1abc2c958ec43a"
+    "95d645d0a244eac9a552d34c48c31125d2d0882e0a4e814b7c628c363b5276a4"
   )
 );
 
