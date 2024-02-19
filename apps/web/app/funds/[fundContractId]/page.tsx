@@ -6,6 +6,8 @@ import classes from "./page.module.css";
 import { DonateSection } from "./_components/DonateSection";
 import { addressFromContractId, web3 } from "@alephium/web3";
 
+export const dynamic = "force-dynamic";
+
 export default async function FundDetailPage({ params }: { params: { fundContractId: string } }) {
   const { fundContractId } = params;
   const fund = await db.fund.findFirst({
