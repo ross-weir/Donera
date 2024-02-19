@@ -2,11 +2,15 @@
   "name": "@donera/indexer",
   "version": "1.0.0",
   "private": true,
+  "scripts": {
+    "dev": "echo TODO"
+  },
   "exports": {
     ".": "./src/index.ts"
   },
   "dependencies": {
     "@alephium/web3": "^0.29.2",
+    "@donera/dapp": "workspace:^",
     "@donera/database": "workspace:^"
   },
   "devDependencies": {

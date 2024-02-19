@@ -1,10 +1,9 @@
 import { NodeProvider } from "@alephium/web3";
-import { DoneraPrismaClient } from "@donera/database";
+import { PrismaClient, PrismaPromise } from "@donera/database";
 
 export type IndexerConfig = {
-  db: DoneraPrismaClient;
+  db: PrismaClient;
   node: NodeProvider;
-  chunkSize: number;
 };
 
 export interface Indexer {
@@ -13,18 +12,31 @@ export interface Indexer {
 }
 
 export abstract class BaseIndexer implements Indexer {
+  protected currentHeight: number;
   protected readonly node: NodeProvider;
-  protected readonly db: DoneraPrismaClient;
-  protected readonly chunkSize: number;
+  protected readonly db: PrismaClient;
 
   constructor(cfg: IndexerConfig) {
+    this.currentHeight = 0;
     this.node = cfg.node;
     this.db = cfg.db;
-    this.chunkSize = cfg.chunkSize;
   }
 
   async getCurrentHeight(): Promise<number> {
     return this.db.indexer.findFirstOrThrow().then((i) => i.height);
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  protected incrementHeight(): PrismaPromise<any> {
+    // use update many so we dont need a `where` clause
+    // there should only ever be one document
+    return this.db.indexer.updateMany({
+      data: {
+        height: {
+          increment: 1,
+        },
+      },
+    });
   }
 
   abstract start(): Promise<void>;

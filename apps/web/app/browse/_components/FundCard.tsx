@@ -10,10 +10,10 @@ type FundCardProps = {
 } & CardProps;
 
 export function FundCard({ fund, alphRaised, ...rest }: FundCardProps) {
-  const { name, goal, fundContractId, creationTx } = fund;
+  const { name, goal, id, organizer } = fund;
 
   return (
-    <Card {...rest} component={Link} href={`/funds/${fundContractId}`}>
+    <Card {...rest} component={Link} href={`/funds/${id}`}>
       <CardSection>
         <Image
           src="https://placehold.co/900x400?text=Placeholder"
@@ -25,7 +25,7 @@ export function FundCard({ fund, alphRaised, ...rest }: FundCardProps) {
         {name}
       </Text>
       <Text c="dimmed" size="xs">
-        by <AlphAddressText span address={creationTx.signerAddress} />
+        by <AlphAddressText span address={organizer} />
       </Text>
       <Space h="sm" />
       <FundProgress

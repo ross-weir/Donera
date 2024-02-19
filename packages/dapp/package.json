@@ -10,8 +10,9 @@
   },
   "exports": {
     ".": "./src/index.ts",
-    "./contracts/*": "./src/contracts/*.ts",
-    "./scripts": "./src/scripts.ts"
+    "./contracts": "./src/contracts/index.ts",
+    "./scripts": "./src/scripts.ts",
+    "./deploys": "./src/deploys.ts"
   },
   "devDependencies": {
     "@alephium/cli": "^0.29.2",

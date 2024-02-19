@@ -5,20 +5,16 @@ import { CreateFundResult } from "@donera/dapp";
 import { getClient } from "@donera/database";
 
 export async function saveFund(
-  { fundContractId, txId, ...rest }: CreateFundResult,
+  { fundContractId, ...rest }: CreateFundResult,
   signerAddress: string
 ) {
   const client = getClient();
   await client.fund.create({
     data: {
       ...rest,
-      fundContractId,
-      creationTx: {
-        id: txId,
-        signerAddress,
-        verified: false,
-        confirmed: false,
-      },
+      id: fundContractId,
+      verified: false,
+      organizer: signerAddress,
     },
   });
   redirect(`/funds/${fundContractId}`);

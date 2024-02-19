@@ -135,7 +135,6 @@ export class DoneraDapp {
     if (tokenId === ALPH_TOKEN_ID) {
       return ALPH;
     }
-
     return this.tokens.find((t) => t.id === tokenId);
   }
 
