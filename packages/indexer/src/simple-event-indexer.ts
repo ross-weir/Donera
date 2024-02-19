@@ -54,9 +54,13 @@ export class SimpleEventIndexer extends BaseIndexer {
       return;
     }
 
-    const txns = await Promise.all(events.map((e) => this.onEvent(e)));
-    await this.db.$transaction([...txns.flat(), this.updateHeight(nextStart)]);
-    this.currentHeight = nextStart;
+    // we need to handle events seqentially due to how we update balances currently
+    // if we get balances form node
+    for (const event of events) {
+      const txns = await this.onEvent(event);
+      await this.db.$transaction([...txns.flat(), this.incHeight()]);
+      this.currentHeight++;
+    }
   }
 
   private onEvent(contractEvent: node.ContractEvent): Promise<Tx[]> {
@@ -109,14 +113,51 @@ export class SimpleEventIndexer extends BaseIndexer {
     ];
   }
 
+  // when updating balances it might be better to just get the balances from
+  // the node instead of calculating it ourselves. Although would need to
+  // test, not sure what ordering is done. For example if we get a donation event
+  // would the contract balance already be updated?
+  //
+  // https://github.com/ross-weir/Donera/issues/31
   private async processDonation(event: DoneraTypes.DonationEvent): Promise<Tx[]> {
-    const { fundContractId, amount, ...rest } = event.fields;
+    const { fundContractId, amount, tokenId, ...rest } = event.fields;
+    // we need to do this because the balances are stored as strings
+    // can't do it on the db level
+    const existingBalance = await this.db.balance.findFirst({
+      where: {
+        tokenId,
+        fundId: fundContractId,
+      },
+    });
+    let newBalance = amount;
+    if (existingBalance) {
+      newBalance += BigInt(existingBalance.balance);
+    }
     return [
       this.db.donation.create({
         data: {
           amount: amount.toString(),
           fundId: fundContractId,
+          tokenId,
           ...rest,
+        },
+      }),
+      this.db.balance.upsert({
+        where: {
+          tokenId_fundId: {
+            tokenId,
+            fundId: fundContractId,
+          },
+        },
+        update: {
+          balance: {
+            set: newBalance.toString(),
+          },
+        },
+        create: {
+          tokenId,
+          fundId: fundContractId,
+          balance: newBalance.toString(),
         },
       }),
     ];

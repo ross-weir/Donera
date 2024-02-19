@@ -21,6 +21,7 @@ model Fund {
   beneficiary String
   organizer   String
   donations   Donation[]
+  balances    Balance[]
   // we eagerly create the fund before verifying the transaction actually exists
   // to provide a smooth ui when users are creating a new fund
   // if verified is false we have not actually seen the fund on the network yet
@@ -34,13 +35,23 @@ model Fund {
   confirmed   Boolean    @default(false)
 }
 
+model Balance {
+  id      String @id @default(auto()) @map("_id") @db.ObjectId
+  tokenId String
+  balance String
+  Fund    Fund   @relation(fields: [fundId], references: [id])
+  fundId  String
+
+  @@unique([tokenId, fundId])
+}
+
 model Donation {
-  id      String  @id @default(auto()) @map("_id") @db.ObjectId
+  id      String @id @default(auto()) @map("_id") @db.ObjectId
   donor   String
   tokenId String
   amount  String
-  Fund    Fund?   @relation(fields: [fundId], references: [id])
-  fundId  String?
+  Fund    Fund   @relation(fields: [fundId], references: [id])
+  fundId  String
 }
 
 model Indexer {

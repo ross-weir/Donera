@@ -7,7 +7,7 @@
     "build": "prisma generate",
     "fmt": "prisma format",
     "dev": "./scripts/start_local.sh",
-    "clean": "docker rm donera-db"
+    "clean": "docker rm donera-db && docker volume prune"
   },
   "exports": {
     ".": "./src/index.ts",
