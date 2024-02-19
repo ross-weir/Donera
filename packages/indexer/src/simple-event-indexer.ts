@@ -82,65 +82,58 @@ export class SimpleEventIndexer extends BaseIndexer {
 
   private async processFundListed(event: DoneraTypes.FundListedEvent): Promise<Tx[]> {
     const { name, description, fundContractId, goal, deadlineTimestamp, ...rest } = event.fields;
-
+    const data = {
+      name: hexToString(name),
+      description: hexToString(description),
+      goal: goal.toString(),
+      verified: true,
+      deadline: new Date(Number(deadlineTimestamp * 1000n)),
+      txId: event.txId,
+      ...rest,
+    };
     return [
       this.db.fund.upsert({
         where: {
           id: fundContractId,
         },
-        // update all the fields from the event, its the source of truth
+        // The previous values where provided by the client
+        // update them to ensure the client provided the right fields
         update: {
-          verified: true,
+          ...data,
         },
         create: {
           id: fundContractId,
-          name: hexToString(name),
-          description: hexToString(description),
-          goal: goal.toString(),
-          verified: true,
-          // maybe store as unix ts instead
-          deadline: new Date(Number(deadlineTimestamp * 1000n)),
-          txId: event.txId,
-          ...rest,
+          ...data,
         },
       }),
     ];
   }
 
   private async processDonation(event: DoneraTypes.DonationEvent): Promise<Tx[]> {
-    const { fundContractId, tokenId, amount } = event.fields;
-    const fund = await this.db.fund.findFirst({ where: { id: fundContractId } });
-    if (!fund) {
-      throw new Error(`Fund ${fundContractId} doesn't exist for donation`);
-    }
-    const tokens = fund.tokens ?? [];
-    const token = tokens.find((t) => t.id === tokenId);
-    if (token) {
-      const updatedBalance = BigInt(token.balance) + amount;
-      token.balance = updatedBalance.toString();
-    } else {
-      tokens.push({ id: tokenId, balance: amount.toString() });
-    }
-
+    const { fundContractId, amount, ...rest } = event.fields;
     return [
-      this.db.fund.update({
-        where: {
-          id: fundContractId,
-        },
+      this.db.donation.create({
         data: {
-          donationCount: {
-            increment: 1,
-          },
-          tokens: {
-            set: tokens,
-          },
+          amount: amount.toString(),
+          fundId: fundContractId,
+          ...rest,
         },
       }),
     ];
   }
 
   private async processFundFinalized(event: DoneraTypes.FundFinalizedEvent): Promise<Tx[]> {
-    console.log(event);
-    return [];
+    const { fundContractId, finalizer } = event.fields;
+    return [
+      this.db.fund.update({
+        where: {
+          id: fundContractId,
+        },
+        data: {
+          finalizedBy: finalizer,
+          finalized: true,
+        },
+      }),
+    ];
   }
 }

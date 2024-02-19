@@ -21,14 +21,12 @@ console.log(count);
 //     },
 //   },
 // });
-const values = await client.fund.findMany({
-  where: {
-    creationTx: {
-      is: {
-        id: "c",
-      },
+
+client.fund.findFirst({
+  include: {
+    _count: {
+      select: { donations: true },
     },
   },
+  where: {},
 });
-console.log(values);
-console.log("connected");
