@@ -6,6 +6,9 @@ import GitHubIcon from "./GitHubIcon";
 import ColorSchemeToggleIcon from "./ColorSchemeToggleIcon";
 import logo from "./logo.png";
 import Link from "next/link";
+import { LaunchFundButton } from "../LaunchFundButton";
+import { SearchBar } from "./SearchBar";
+import classes from "./Header.module.css";
 
 // Fixes the loading jank of wallet connect button.
 // Only noticable on first load in dev envs, maybe also on slow connections?
@@ -15,11 +18,11 @@ const WalletConnectButton = dynamic(() => import("./WalletConnectButton"), {
   ssr: false,
 });
 
-export default function Header() {
+export function Header() {
   return (
-    <Group h="100%" px="md" justify="space-between">
+    <Group className={classes.container} justify="space-between">
       <Group>
-        <Link href="/" style={{ textDecoration: "none", color: "unset" }}>
+        <Link href="/" className={classes.logoLink}>
           <Group>
             <Image src={logo} alt="Donera Logo" width={32} height={32} />
             <Title order={2}>Donera</Title>
@@ -27,8 +30,10 @@ export default function Header() {
         </Link>
       </Group>
       <Group>
-        {/** search funds bar */}
-        {/** create fund button */}
+        <LaunchFundButton style={{ border: "none" }} variant="default">
+          Launch fundraiser
+        </LaunchFundButton>
+        <SearchBar />
         <WalletConnectButton />
         <GitHubIcon />
         <ColorSchemeToggleIcon />

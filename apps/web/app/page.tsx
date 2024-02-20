@@ -2,6 +2,7 @@ import { Button, Container, Group, Text, Title } from "@mantine/core";
 import classes from "./page.module.css";
 import { IconSearch } from "@tabler/icons-react";
 import Link from "next/link";
+import { LaunchFundButton } from "./_components/LaunchFundButton";
 
 export default function LandingPage() {
   return (
@@ -30,16 +31,12 @@ export default function LandingPage() {
         >
           Browse
         </Button>
-        <Button
-          component={Link}
-          href="/create"
+        <LaunchFundButton
           size="xl"
           className={classes.control}
           variant="gradient"
           gradient={{ from: "blue", to: "cyan" }}
-        >
-          Launch fund
-        </Button>
+        />
       </Group>
     </Container>
   );
