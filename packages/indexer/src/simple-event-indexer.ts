@@ -3,6 +3,7 @@ import { BaseIndexer, IndexerConfig } from "./indexer";
 import { ALPH_TOKEN_ID, Contract, addressFromContractId, hexToString, node } from "@alephium/web3";
 import { PrismaPromise } from "@donera/database";
 import { Deployments } from "@donera/dapp/deploys";
+import { nanoid } from "nanoid";
 
 export type EventIndexerConfig = {
   intervalMs: number;
@@ -111,6 +112,7 @@ export class SimpleEventIndexer extends BaseIndexer {
         },
         create: {
           id: fundContractId,
+          shortId: nanoid(10),
           ...data,
         },
       }),
@@ -121,7 +123,6 @@ export class SimpleEventIndexer extends BaseIndexer {
     const { fundContractId, amount, tokenId, ...rest } = event.fields;
     const contractAddress = addressFromContractId(fundContractId);
     const group = this.deploys.contracts.Donera.contractInstance.groupIndex;
-    console.log(`GROUP ${group}`);
     const { asset } = await this.node.contracts.getContractsAddressState(contractAddress, {
       group,
     });
