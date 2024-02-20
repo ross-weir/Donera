@@ -15,6 +15,7 @@ import { Donera, DoneraInstance, DoneraTypes } from "./contracts/donera";
 import { Deployments, loadDeployments } from "./deploys";
 import { CreateFund, DonateToFund } from "./scripts";
 import { getTokensForNetwork } from "./tokens";
+import { stringToHex } from "@donera/core";
 
 export type CreateFundParam = {
   name: string;
@@ -68,8 +69,8 @@ export class DoneraDapp {
     const { txId } = await CreateFund.execute(signer, {
       initialFields: {
         donera: this.doneraInstance.contractId,
-        name: Buffer.from(params.name).toString("hex"),
-        description: Buffer.from(params.description).toString("hex"),
+        name: stringToHex(params.name),
+        description: stringToHex(params.description),
         beneficiary: params.beneficiary,
         goal: attoGoal,
         deadlineTimestamp: BigInt(deadlineUnixTs),
