@@ -10,6 +10,8 @@ datasource db {
 model Fund {
   // the funds contract id
   id          String     @id @map("_id")
+  // for sharable link
+  shortId     String
   name        String
   description String
   // In atto alph format

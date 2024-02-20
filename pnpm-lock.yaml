@@ -53,6 +53,9 @@ importers:
       dayjs:
         specifier: ^1.11.10
         version: 1.11.10
+      nanoid:
+        specifier: ^5.0.5
+        version: 5.0.5
       next:
         specifier: 14.1.0
         version: 14.1.0(@babel/core@7.23.9)(react-dom@18.2.0)(react@18.2.0)
@@ -69,6 +72,9 @@ importers:
       '@donera/typescript-config':
         specifier: workspace:^
         version: link:../../packages/typescript-config
+      '@types/nanoid':
+        specifier: ^3.0.0
+        version: 3.0.0
       '@types/node':
         specifier: ^20.11.17
         version: 20.11.17
@@ -197,6 +203,9 @@ importers:
       '@donera/database':
         specifier: workspace:^
         version: link:../database
+      nanoid:
+        specifier: ^5.0.5
+        version: 5.0.5
     devDependencies:
       '@donera/eslint-config':
         specifier: workspace:^
@@ -207,6 +216,9 @@ importers:
       '@types/bun':
         specifier: ^1.0.5
         version: 1.0.5
+      '@types/nanoid':
+        specifier: ^3.0.0
+        version: 3.0.0
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
@@ -1834,6 +1846,13 @@ packages:
 
   /@types/minimatch@3.0.5:
     resolution: {integrity: sha512-Klz949h02Gz2uZCMGwDUSDS1YBlTdDDgbWHi+81l29tQALUtvz4rAYi5uoVhE5Lagoq6DeqAUlbrHvW/mXDgdQ==}
+    dev: true
+
+  /@types/nanoid@3.0.0:
+    resolution: {integrity: sha512-UXitWSmXCwhDmAKe7D3hNQtQaHeHt5L8LO1CB8GF8jlYVzOv5cBWDNqiJ+oPEWrWei3i3dkZtHY/bUtd0R/uOQ==}
+    deprecated: This is a stub types definition. nanoid provides its own type definitions, so you do not need this installed.
+    dependencies:
+      nanoid: 5.0.5
     dev: true
 
   /@types/node@11.11.6:
@@ -5707,6 +5726,11 @@ packages:
   /nanoid@3.3.7:
     resolution: {integrity: sha512-eSRppjcPIatRIMC1U6UngP8XFcz8MQWGQdt1MTBQ7NaAmvXDfvNxbvWV3x2y6CdEUciCSsDHDQZbhYaB8QEo2g==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
+    hasBin: true
+
+  /nanoid@5.0.5:
+    resolution: {integrity: sha512-/Veqm+QKsyMY3kqi4faWplnY1u+VuKO3dD2binyPIybP31DRO29bPF+1mszgLnrR2KqSLceFLBNw0zmvDzN1QQ==}
+    engines: {node: ^18 || >=20}
     hasBin: true
 
   /napi-wasm@1.1.0:

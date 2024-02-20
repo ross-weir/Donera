@@ -26,6 +26,7 @@ export default async function FundDetailPage({ params }: { params: { fundContrac
 
   const {
     name,
+    shortId,
     description,
     createdAt,
     confirmed,
@@ -53,6 +54,7 @@ export default async function FundDetailPage({ params }: { params: { fundContrac
         <DonateSection
           w={450}
           fundContractId={fundContractId}
+          shortId={shortId}
           goal={goal}
           alphRaised={alphRaised(fund)}
           shadow="sm"

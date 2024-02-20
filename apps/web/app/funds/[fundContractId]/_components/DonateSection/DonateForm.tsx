@@ -67,7 +67,7 @@ export function DonateForm({ fundContractId }: DonateFormProps) {
           />
         </Grid.Col>
       </Grid>
-      <Button type="submit" mt="lg" fullWidth loading={isSubmitting}>
+      <Button type="submit" my="lg" fullWidth loading={isSubmitting}>
         Donate
       </Button>
     </form>
