@@ -43,12 +43,13 @@ type Balance {
 }
 
 model Donation {
-  id      String @id @default(auto()) @map("_id") @db.ObjectId
-  donor   String
-  tokenId String
-  amount  String
-  Fund    Fund   @relation(fields: [fundId], references: [id])
-  fundId  String
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  donor     String
+  tokenId   String
+  amount    String
+  createdAt DateTime @default(now())
+  Fund      Fund     @relation(fields: [fundId], references: [id])
+  fundId    String
 }
 
 model Indexer {
