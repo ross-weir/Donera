@@ -24,8 +24,10 @@ interface FormSchema {
   beneficiary: string;
 }
 
-function dateIsInFuture(date: Date): boolean {
-  return date > new Date();
+function validDeadline(date: Date): boolean {
+  const submitted = dayjs(date);
+
+  return submitted.isAfter(dayjs()) && submitted.isBefore(dayjs().add(3, "months"));
 }
 
 export default function CreateFundForm() {
@@ -42,7 +44,8 @@ export default function CreateFundForm() {
       name: isNotEmpty("Name cannot be empty"),
       description: hasLength({ min: 1 }, "You must provide a description"),
       goal: isInRange({ min: 1 }, "Goal must be 1 or more"),
-      deadline: (value: Date) => (!dateIsInFuture(value) ? "Deadline must be in the future" : null),
+      deadline: (value: Date) =>
+        !validDeadline(value) ? "Deadline must be within the next 3 months" : null,
       beneficiary: isNotEmpty("Beneficiary cannot be empty"),
     },
   });
@@ -124,6 +127,7 @@ export default function CreateFundForm() {
           label="Deadline"
           withAsterisk
           required
+          clearable
           description="The end time for the fundraiser"
           {...form.getInputProps("deadline")}
         />
