@@ -34,7 +34,7 @@ export function DonateSection({
     <Paper {...rest}>
       <FundProgress goal={goal} raised={alphRaised} labelProps={{ size: "xl" }} />
       <Text pt="xs" size="sm">
-        {donationCount} donation{donationCount > 1 ? "s" : ""}
+        {donationCount} donation{donationCount === 1 ? "" : "s"}
       </Text>
       <Space h="md" />
       <Title order={4}>Make a donation</Title>
