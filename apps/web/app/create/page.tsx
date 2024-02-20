@@ -9,7 +9,6 @@ export default function CreateFundPage() {
         <Title order={1}>Create a fund</Title>
       </Center>
       <Space h="xl" />
-      {/** handle onSubmit/onError and show notifications, etc */}
       <CreateFundForm />
     </Container>
   );

@@ -2,7 +2,6 @@ import {
   NetworkId,
   ONE_ALPH,
   SignerProvider,
-  stringToHex,
   web3,
   Contract,
   convertAlphAmountWithDecimals,
@@ -16,6 +15,7 @@ import { Donera, DoneraInstance, DoneraTypes } from "./contracts/donera";
 import { Deployments, loadDeployments } from "./deploys";
 import { CreateFund, DonateToFund } from "./scripts";
 import { getTokensForNetwork } from "./tokens";
+import { stringToHex } from "@donera/core";
 
 export type CreateFundParam = {
   name: string;

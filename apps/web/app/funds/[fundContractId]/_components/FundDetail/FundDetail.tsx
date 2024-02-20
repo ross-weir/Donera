@@ -2,6 +2,7 @@ import { BoxProps, Divider, Group, Image, Stack, Text, Title } from "@mantine/co
 import { UnverifiedAlert } from "./UnverifiedAlert";
 import { FundDetailField } from "./FundDetailField";
 import { AlphAddressText } from "@/_components/AlphAddressText";
+import classes from "./FundDetail.module.css";
 
 export type FundDetailProps = {
   name: string;
@@ -40,7 +41,7 @@ export function FundDetail({
           value={<AlphAddressText address={beneficiary} size="xs" />}
         />
         <FundDetailField
-          style={{ textAlign: "right" }}
+          className={classes.fundDetailRight}
           title="Created at"
           value={<Text size="xs">{createdAt}</Text>}
         />
@@ -51,13 +52,13 @@ export function FundDetail({
           value={<AlphAddressText address={organizer} size="xs" />}
         />
         <FundDetailField
-          style={{ textAlign: "right" }}
+          className={classes.fundDetailRight}
           title="Ends at"
           value={<Text size="xs">{deadline}</Text>}
         />
       </Group>
       <Divider my="md" />
-      <Text size="lg">{description}</Text>
+      <Text className={classes.description}>{description}</Text>
     </Stack>
   );
 }

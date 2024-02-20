@@ -1,0 +1,8 @@
+.fundDetailRight {
+  text-align: right;
+}
+
+.description {
+  white-space: pre-line;
+  font-size: var(--mantine-font-size-xl);
+}

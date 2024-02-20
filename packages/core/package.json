@@ -1,0 +1,15 @@
+{
+  "name": "@donera/core",
+  "private": true,
+  "version": "1.0.0",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "devDependencies": {
+    "@donera/eslint-config": "workspace:^",
+    "@donera/typescript-config": "workspace:^",
+    "@types/bun": "^1.0.5",
+    "eslint": "^8.56.0",
+    "typescript": "^5.3.3"
+  }
+}

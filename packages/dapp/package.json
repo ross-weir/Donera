@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "@alephium/token-list": "^0.0.14",
-    "@alephium/web3": "^0.29.2"
+    "@alephium/web3": "^0.29.2",
+    "@donera/core": "workspace:^"
   }
 }
