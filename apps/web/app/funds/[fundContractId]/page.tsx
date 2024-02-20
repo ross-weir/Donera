@@ -14,14 +14,17 @@ function alphRaised(fund: Fund): string {
 
 export default async function FundDetailPage({ params }: { params: { fundContractId: string } }) {
   const { fundContractId } = params;
-  const [fund, donationCount] = await Promise.all([
+  const [fund, donationCount] = await db.$transaction([
     db.fund.findFirst({
       where: {
         id: fundContractId,
       },
       include: {
         donations: {
-          take: 5,
+          take: 3,
+          orderBy: {
+            createdAt: "desc",
+          },
           select: {
             id: true,
             donor: true,
