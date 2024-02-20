@@ -1,11 +1,12 @@
-"use client";
-
-import { Title, Paper, PaperProps, Space, Button } from "@mantine/core";
+import { Title, Paper, PaperProps, Space, Divider, ThemeIcon, Text } from "@mantine/core";
 import { DonateForm } from "./DonateForm";
 import { FundProgress } from "@/_components/FundProgress";
 import { IconCheck, IconLink } from "@tabler/icons-react";
-import { useTimeout } from "@mantine/hooks";
-import { useState } from "react";
+import { ShareButton } from "./ShareButton";
+import { Donation } from "@donera/database";
+import { LatestDonationSection } from "./LatestDonationSection";
+
+type SimpleDonation = Omit<Donation, "fundId">;
 
 export type DonateSectionProps = {
   fundContractId: string;
@@ -15,6 +16,8 @@ export type DonateSectionProps = {
   // atto format
   alphRaised: string;
   assetsRaised?: unknown;
+  latestDonations: SimpleDonation[];
+  donationCount: number;
 } & PaperProps;
 
 export function DonateSection({
@@ -23,38 +26,36 @@ export function DonateSection({
   goal,
   alphRaised,
   assetsRaised,
+  latestDonations,
+  donationCount,
   ...rest
 }: DonateSectionProps) {
-  const [shareClicked, setShareClicked] = useState(false);
-  const { start } = useTimeout(() => setShareClicked(false), 2000);
-
-  function onShareClick() {
-    navigator.clipboard.writeText(`${window.location.origin}/f/${shortId}`);
-    setShareClicked(true);
-    start();
-  }
-
   return (
     <Paper {...rest}>
       <FundProgress goal={goal} raised={alphRaised} labelProps={{ size: "xl" }} />
+      <Text pt="xs" size="sm">
+        {donationCount} donation{donationCount > 1 ? "s" : ""}
+      </Text>
       <Space h="md" />
       <Title order={4}>Make a donation</Title>
       <Space h="md" />
       <DonateForm fundContractId={fundContractId} />
-      {shareClicked ? (
-        <Button variant="default" fullWidth leftSection={<IconCheck size={14} color="green" />}>
-          Copied to clipboard
-        </Button>
-      ) : (
-        <Button
-          variant="default"
-          fullWidth
-          leftSection={<IconLink size={14} />}
-          onClick={onShareClick}
-        >
-          Share
-        </Button>
-      )}
+      <ShareButton
+        shortId={shortId}
+        commonProps={{ variant: "default", fullWidth: true }}
+        clickedProps={{
+          leftSection: (
+            <ThemeIcon radius="xl" color="green" size={14}>
+              <IconCheck size={14} />
+            </ThemeIcon>
+          ),
+        }}
+        clickedText="Copied to clipboard"
+        defaultProps={{ leftSection: <IconLink size={14} /> }}
+        defaultText="Share link"
+      />
+      <Divider my="lg" />
+      <LatestDonationSection donations={latestDonations} />
     </Paper>
   );
 }

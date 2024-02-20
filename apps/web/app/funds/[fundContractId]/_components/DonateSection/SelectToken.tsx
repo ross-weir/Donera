@@ -1,5 +1,5 @@
+import { TokenIcon } from "@/_components/TokenIcon";
 import {
-  Avatar,
   Combobox,
   ComboboxDropdownProps,
   Group,
@@ -14,10 +14,10 @@ interface Item {
   imageSrc?: string;
 }
 
-function SelectOption({ symbol, imageSrc }: Item) {
+function SelectOption({ symbol, value }: Item) {
   return (
     <Group>
-      <Avatar size="xs" src={imageSrc} />
+      <TokenIcon tokenId={value} size="xs" />
       <Text fz="sm" fw={500}>
         {symbol}
       </Text>
