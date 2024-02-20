@@ -111,6 +111,9 @@ export default function CreateFundForm() {
           description="Describe the reason for creating the fund"
           withAsterisk
           required
+          autosize
+          minRows={8}
+          maxRows={8}
           {...form.getInputProps("description")}
         />
         <NumberInput

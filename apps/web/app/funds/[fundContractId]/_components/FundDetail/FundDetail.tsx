@@ -57,7 +57,9 @@ export function FundDetail({
         />
       </Group>
       <Divider my="md" />
-      <Text size="lg">{description}</Text>
+      <Text size="lg" style={{ whiteSpace: "pre-line" }}>
+        {description}
+      </Text>
     </Stack>
   );
 }

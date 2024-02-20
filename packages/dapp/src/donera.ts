@@ -69,8 +69,8 @@ export class DoneraDapp {
     const { txId } = await CreateFund.execute(signer, {
       initialFields: {
         donera: this.doneraInstance.contractId,
-        name: stringToHex(params.name),
-        description: stringToHex(params.description),
+        name: Buffer.from(params.name).toString("hex"),
+        description: Buffer.from(params.description).toString("hex"),
         beneficiary: params.beneficiary,
         goal: attoGoal,
         deadlineTimestamp: BigInt(deadlineUnixTs),
