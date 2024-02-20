@@ -2,7 +2,6 @@ import {
   NetworkId,
   ONE_ALPH,
   SignerProvider,
-  stringToHex,
   web3,
   Contract,
   convertAlphAmountWithDecimals,
