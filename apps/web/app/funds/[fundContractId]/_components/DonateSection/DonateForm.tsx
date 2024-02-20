@@ -1,3 +1,5 @@
+"use client";
+
 import { Button, Grid, NumberInput } from "@mantine/core";
 import { SelectToken } from "./SelectToken";
 import { useState } from "react";

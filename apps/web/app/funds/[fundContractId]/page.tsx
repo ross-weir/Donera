@@ -14,11 +14,25 @@ function alphRaised(fund: Fund): string {
 
 export default async function FundDetailPage({ params }: { params: { fundContractId: string } }) {
   const { fundContractId } = params;
-  const fund = await db.fund.findFirst({
-    where: {
-      id: fundContractId,
-    },
-  });
+  const [fund, donationCount] = await Promise.all([
+    db.fund.findFirst({
+      where: {
+        id: fundContractId,
+      },
+      include: {
+        donations: {
+          take: 5,
+          select: {
+            id: true,
+            donor: true,
+            tokenId: true,
+            amount: true,
+          },
+        },
+      },
+    }),
+    db.donation.count({ where: { fundId: fundContractId } }),
+  ]);
 
   if (!fund) {
     notFound();
@@ -35,6 +49,7 @@ export default async function FundDetailPage({ params }: { params: { fundContrac
     verified,
     deadline,
     goal,
+    donations,
   } = fund;
 
   return (
@@ -52,11 +67,13 @@ export default async function FundDetailPage({ params }: { params: { fundContrac
           createdAt={createdAt.toLocaleString()}
         />
         <DonateSection
-          w={450}
+          miw={450}
           fundContractId={fundContractId}
           shortId={shortId}
           goal={goal}
           alphRaised={alphRaised(fund)}
+          latestDonations={donations}
+          donationCount={donationCount}
           shadow="sm"
           p="xl"
           withBorder
