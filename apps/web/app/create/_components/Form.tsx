@@ -13,6 +13,8 @@ import { CreateFundResult } from "@donera/dapp";
 import { notifications } from "@mantine/notifications";
 import { IconCheck, IconExternalLink } from "@tabler/icons-react";
 import { handleTxSubmitError } from "@/_lib/client";
+import { TokenIcon } from "@/_components/TokenIcon";
+import { ALPH_TOKEN_ID } from "@alephium/web3";
 
 interface FormSchema {
   name: string;
@@ -77,6 +79,21 @@ export default function CreateFundForm() {
     getDoneraDapp().createFund(signer!, form).then(onSuccess).catch(onError);
   };
 
+  function SetBeneficiaryText() {
+    const onClick = () => {
+      if (!account) {
+        return;
+      }
+      form.setFieldValue("beneficiary", account.address);
+    };
+
+    return (
+      <Anchor size="xs" onClick={onClick}>
+        Set to my address
+      </Anchor>
+    );
+  }
+
   return (
     <form onSubmit={form.onSubmit(onSubmit)}>
       <Stack>
@@ -100,6 +117,7 @@ export default function CreateFundForm() {
           withAsterisk
           required
           hideControls
+          leftSection={<TokenIcon size="sm" tokenId={ALPH_TOKEN_ID} />}
           decimalScale={2}
           {...form.getInputProps("goal")}
         />
@@ -114,7 +132,8 @@ export default function CreateFundForm() {
           label="Beneficiary"
           withAsterisk
           required
-          description="The address of the beneficiary receiving the funds"
+          description={<SetBeneficiaryText />}
+          placeholder="Beneficiaries address"
           {...form.getInputProps("beneficiary")}
         />
         <Group justify="flex-end">
