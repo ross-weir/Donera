@@ -1,0 +1,10 @@
+.container {
+  height: 100%;
+  padding-left: var(--mantine-spacing-md);
+  padding-right: var(--mantine-spacing-md);
+}
+
+.logoLink {
+  text-decoration: none;
+  color: unset;
+}

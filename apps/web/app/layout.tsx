@@ -7,7 +7,7 @@ import type { Metadata } from "next";
 import { AppShellMain, ColorSchemeScript } from "@mantine/core";
 import { AppShell, AppShellHeader } from "@mantine/core";
 import DoneraProvider from "./_components/DoneraProvider";
-import Header from "./_components/Header";
+import { Header } from "./_components/Header";
 
 export const metadata: Metadata = {
   title: "Donera",
