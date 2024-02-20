@@ -26,11 +26,7 @@ export function DonateSection({
   ...rest
 }: DonateSectionProps) {
   const [shareClicked, setShareClicked] = useState(false);
-  const { start } = useTimeout(onClickTimeout, 2000);
-
-  function onClickTimeout() {
-    setShareClicked(false);
-  }
+  const { start } = useTimeout(() => setShareClicked(false), 2000);
 
   function onShareClick() {
     navigator.clipboard.writeText(`${window.location.origin}/f/${shortId}`);
