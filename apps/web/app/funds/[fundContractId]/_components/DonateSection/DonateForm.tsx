@@ -1,14 +1,16 @@
 "use client";
 
-import { Button, Grid, NumberInput } from "@mantine/core";
+import { Anchor, Button, Grid, NumberInput } from "@mantine/core";
 import { SelectToken } from "./SelectToken";
 import { useState } from "react";
 import { ALPH_TOKEN_ID } from "@alephium/web3";
 import { ALPH } from "@alephium/token-list";
 import { isInRange, useForm } from "@mantine/form";
-import { getDoneraDapp, getNetwork } from "../../../../_lib/donera";
+import { getDoneraDapp, getExternalLinkForTx, getNetwork } from "@/_lib/donera";
 import { getTokensForNetwork } from "@donera/dapp";
 import { useWallet } from "@alephium/web3-react";
+import { notifications } from "@mantine/notifications";
+import { IconExternalLink, IconX } from "@tabler/icons-react";
 
 const tokens = [
   {
@@ -41,16 +43,48 @@ export function DonateForm({ fundContractId }: DonateFormProps) {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const onSuccess = ({ txId }: { txId: string }) => {
+    form.reset();
+    notifications.show({
+      title: "Donation submitted! 🎉",
+      message: (
+        <span>
+          View your donation on the explorer{" "}
+          <Anchor href={getExternalLinkForTx(txId)} target="_blank" rel="noreferrer">
+            <IconExternalLink size={12} />.
+          </Anchor>
+        </span>
+      ),
+    });
+  };
+
+  // triggered on "user abort" cancelled transaction, probably dont
+  // want to treat this as an error
+  const onError = (e: Error) => {
+    // TODO: probably want to re-use this
+    if (e.message === "User abort") {
+      notifications.show({
+        title: "Donation aborted",
+        message: "Your donation was not submitted to the network",
+      });
+    } else {
+      notifications.show({
+        title: "An error occurred",
+        message: "Please try again soon.",
+        color: "red",
+        icon: <IconX size={12} />,
+      });
+    }
+  };
+
   const onSubmit = (data: FormSchema) => {
     setIsSubmitting(true);
     getDoneraDapp()
       .donateToFund(signer!, { fundContractId, ...data })
-      .then(() => form.reset())
-      .catch(console.error)
+      .then(onSuccess)
+      .catch(onError)
       .finally(() => setIsSubmitting(false));
   };
-  /** "donate" (or connect wallet) button, should be disabled if unconfirmed */
-  /** message that cant donate until confirmed */
 
   return (
     <form onSubmit={form.onSubmit(onSubmit)}>
@@ -66,7 +100,7 @@ export function DonateForm({ fundContractId }: DonateFormProps) {
           />
         </Grid.Col>
       </Grid>
-      <Button type="submit" my="lg" fullWidth loading={isSubmitting}>
+      <Button type="submit" my="lg" fullWidth loading={isSubmitting} disabled={!signer}>
         Donate
       </Button>
     </form>
