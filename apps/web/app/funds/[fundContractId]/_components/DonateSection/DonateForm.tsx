@@ -41,16 +41,13 @@ export function DonateForm({ fundContractId }: DonateFormProps) {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const onSubmit = (form: FormSchema) => {
-    console.log(form);
+  const onSubmit = (data: FormSchema) => {
     setIsSubmitting(true);
     getDoneraDapp()
-      .donateToFund(signer!, { fundContractId, ...form })
-      .then(console.log)
+      .donateToFund(signer!, { fundContractId, ...data })
+      .then(() => form.reset())
       .catch(console.error)
       .finally(() => setIsSubmitting(false));
-
-    setIsSubmitting(false);
   };
   /** "donate" (or connect wallet) button, should be disabled if unconfirmed */
   /** message that cant donate until confirmed */
