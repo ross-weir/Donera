@@ -6,7 +6,7 @@ import { ShareButton } from "./ShareButton";
 import { Donation } from "@donera/database";
 import { LatestDonationSection } from "./LatestDonationSection";
 
-type SimpleDonation = Omit<Donation, "fundId">;
+type SimpleDonation = Omit<Donation, "fundId" | "createdAt">;
 
 export type DonateSectionProps = {
   fundContractId: string;

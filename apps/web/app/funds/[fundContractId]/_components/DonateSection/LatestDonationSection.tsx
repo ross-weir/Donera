@@ -2,20 +2,10 @@ import { AlphAddressText } from "@/_components/AlphAddressText";
 import { TokenIcon } from "@/_components/TokenIcon";
 import { TokenValueText } from "@/_components/TokenValueText";
 import { Donation } from "@donera/database";
-import {
-  Box,
-  BoxComponentProps,
-  List,
-  ListItem,
-  Space,
-  Title,
-  Text,
-  Center,
-  Group,
-} from "@mantine/core";
-import { IconGif, IconGift, IconPigMoney } from "@tabler/icons-react";
+import { Box, BoxComponentProps, List, ListItem, Space, Title, Text, Center } from "@mantine/core";
+import { IconGift } from "@tabler/icons-react";
 
-type SimpleDonation = Omit<Donation, "fundId">;
+type SimpleDonation = Omit<Donation, "fundId" | "createdAt">;
 
 export type LatestDonationSectionProps = {
   donations: SimpleDonation[];

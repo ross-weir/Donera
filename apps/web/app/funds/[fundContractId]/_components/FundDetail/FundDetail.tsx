@@ -1,7 +1,7 @@
 import { BoxProps, Divider, Group, Image, Stack, Text, Title } from "@mantine/core";
-import { UnconfirmedLabel } from "./UnconfirmedLabel";
+import { UnverifiedAlert } from "./UnverifiedAlert";
 import { FundDetailField } from "./FundDetailField";
-import { AlphAddressText } from "../../../../_components/AlphAddressText";
+import { AlphAddressText } from "@/_components/AlphAddressText";
 
 export type FundDetailProps = {
   name: string;
@@ -11,7 +11,7 @@ export type FundDetailProps = {
   createdAt: string;
   deadline: string;
   description: string;
-  confirmed: boolean;
+  verified: boolean;
 } & BoxProps;
 
 export function FundDetail({
@@ -21,15 +21,15 @@ export function FundDetail({
   description,
   organizer,
   createdAt,
-  confirmed,
+  verified,
   deadline,
   ...rest
 }: FundDetailProps) {
   return (
     <Stack {...rest}>
+      {!verified && <UnverifiedAlert />}
       <Group>
         <Title>{name}</Title>
-        {!confirmed && <UnconfirmedLabel />}
       </Group>
       {/** TODO, move imageSrc to `src` */}
       {imageSrc && <Image alt="Fundraiser image" src={null} fallbackSrc={imageSrc} />}

@@ -46,7 +46,6 @@ export default async function FundDetailPage({ params }: { params: { fundContrac
     shortId,
     description,
     createdAt,
-    confirmed,
     beneficiary,
     organizer,
     verified,
@@ -66,7 +65,7 @@ export default async function FundDetailPage({ params }: { params: { fundContrac
           beneficiary={beneficiary}
           deadline={deadline.toLocaleString()}
           organizer={organizer}
-          confirmed={confirmed && verified}
+          verified={verified}
           createdAt={createdAt.toLocaleString()}
         />
         <DonateSection
