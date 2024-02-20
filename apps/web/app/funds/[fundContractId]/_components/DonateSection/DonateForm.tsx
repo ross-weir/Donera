@@ -10,7 +10,8 @@ import { getDoneraDapp, getExternalLinkForTx, getNetwork } from "@/_lib/donera";
 import { getTokensForNetwork } from "@donera/dapp";
 import { useWallet } from "@alephium/web3-react";
 import { notifications } from "@mantine/notifications";
-import { IconExternalLink, IconX } from "@tabler/icons-react";
+import { IconExternalLink } from "@tabler/icons-react";
+import { handleTxSubmitError } from "@/_lib/client";
 
 const tokens = [
   {
@@ -49,7 +50,7 @@ export function DonateForm({ fundContractId }: DonateFormProps) {
       title: "Donation submitted! 🎉",
       message: (
         <span>
-          View your donation on the explorer{" "}
+          View your transaction on the explorer{" "}
           <Anchor href={getExternalLinkForTx(txId)} target="_blank" rel="noreferrer">
             <IconExternalLink size={12} />.
           </Anchor>
@@ -58,23 +59,8 @@ export function DonateForm({ fundContractId }: DonateFormProps) {
     });
   };
 
-  // triggered on "user abort" cancelled transaction, probably dont
-  // want to treat this as an error
   const onError = (e: Error) => {
-    // TODO: probably want to re-use this
-    if (e.message === "User abort") {
-      notifications.show({
-        title: "Donation aborted",
-        message: "Your donation was not submitted to the network",
-      });
-    } else {
-      notifications.show({
-        title: "An error occurred",
-        message: "Please try again soon.",
-        color: "red",
-        icon: <IconX size={12} />,
-      });
-    }
+    handleTxSubmitError(e, "Donation");
   };
 
   const onSubmit = (data: FormSchema) => {

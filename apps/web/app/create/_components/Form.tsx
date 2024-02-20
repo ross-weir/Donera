@@ -2,13 +2,17 @@
 
 import { useState } from "react";
 import { useWallet } from "@alephium/web3-react";
-import { Button, Group, NumberInput, Stack, TextInput, Textarea } from "@mantine/core";
+import { Anchor, Button, Group, NumberInput, Stack, TextInput, Textarea } from "@mantine/core";
 import { DateTimePicker } from "@mantine/dates";
 import { useForm, isNotEmpty, hasLength, isInRange } from "@mantine/form";
-import { getDoneraDapp } from "@/_lib/donera";
+import { getDoneraDapp, getExternalLinkForTx } from "@/_lib/donera";
 import dayjs from "dayjs";
 import Link from "next/link";
 import { saveFund } from "../_actions/mutations";
+import { CreateFundResult } from "@donera/dapp";
+import { notifications } from "@mantine/notifications";
+import { IconCheck, IconExternalLink } from "@tabler/icons-react";
+import { handleTxSubmitError } from "@/_lib/client";
 
 interface FormSchema {
   name: string;
@@ -42,13 +46,35 @@ export default function CreateFundForm() {
     },
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const onSuccess = (result: CreateFundResult) => {
+    notifications.show({
+      color: "teal",
+      icon: <IconCheck size="1.1rem" />,
+      title: "Fund submitted",
+      message: (
+        <span>
+          View your transaction on the explorer{" "}
+          <Anchor href={getExternalLinkForTx(result.txId)} target="_blank" rel="noreferrer">
+            <IconExternalLink size={12} />.
+          </Anchor>
+        </span>
+      ),
+    });
+    saveFund(result);
+  };
+
+  const onError = (e: Error) => {
+    // only set isSubmitting on error
+    // so the loading state stays until the backend redirects the client
+    // in the `saveFund` function
+    setIsSubmitting(false);
+    handleTxSubmitError(e, "Fund creation");
+  };
+
   const onSubmit = async (form: FormSchema) => {
     setIsSubmitting(true);
-    getDoneraDapp()
-      .createFund(signer!, form)
-      .then((f) => saveFund(f))
-      .catch(console.error)
-      .finally(() => setIsSubmitting(false));
+    getDoneraDapp().createFund(signer!, form).then(onSuccess).catch(onError);
   };
 
   return (
