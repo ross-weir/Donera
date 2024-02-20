@@ -61,7 +61,7 @@ export default function CreateFundForm() {
         </span>
       ),
     });
-    saveFund(result);
+    saveFund(result).catch(onError);
   };
 
   const onError = (e: Error) => {
