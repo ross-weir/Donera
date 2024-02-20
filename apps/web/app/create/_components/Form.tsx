@@ -30,14 +30,13 @@ function dateIsInFuture(date: Date): boolean {
 
 export default function CreateFundForm() {
   const { signer, account } = useWallet();
-  const creatorAddress = account?.address ?? "";
   const form = useForm<FormSchema>({
     initialValues: {
       name: "",
       description: "",
       goal: 0,
       deadline: dayjs().add(1, "day").toDate(),
-      beneficiary: creatorAddress,
+      beneficiary: "",
     },
     validate: {
       name: isNotEmpty("Name cannot be empty"),
