@@ -45,7 +45,7 @@ export default async function BrowseFundsPage() {
       ) : (
         <Group justify="space-between">
           {funds.map((f) => (
-            <FundCard key={f.id} fund={f} alphRaised={alphRaised(f)} miw={400} />
+            <FundCard key={f.id} fund={f} alphRaised={alphRaised(f)} miw={400} maw={400} />
           ))}
         </Group>
       )}
