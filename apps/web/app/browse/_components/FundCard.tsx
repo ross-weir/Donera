@@ -10,7 +10,7 @@ type FundCardProps = {
 } & CardProps;
 
 export function FundCard({ fund, alphRaised, ...rest }: FundCardProps) {
-  const { name, goal, id, organizer } = fund;
+  const { name, goal, id, organizer, description } = fund;
 
   return (
     <Card {...rest} component={Link} href={`/funds/${id}`}>
@@ -21,12 +21,14 @@ export function FundCard({ fund, alphRaised, ...rest }: FundCardProps) {
           height={150}
         />
       </CardSection>
-      <Text pt="sm" fz="xl" fw={540}>
+      <Text pt="sm" fz="xl" fw={540} lineClamp={1}>
         {name}
       </Text>
       <Text c="dimmed" size="xs">
         by <AlphAddressText span address={organizer} />
       </Text>
+      <Space h="sm" />
+      <Text lineClamp={4}>{description}</Text>
       <Space h="sm" />
       <FundProgress
         goal={goal}
