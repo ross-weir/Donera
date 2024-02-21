@@ -12,6 +12,8 @@ import { useWallet } from "@alephium/web3-react";
 import { notifications } from "@mantine/notifications";
 import { IconExternalLink } from "@tabler/icons-react";
 import { handleTxSubmitError } from "@/_components/TxErrorNotification";
+import { ExtractProps } from "@/_lib/types";
+import { dynamicWalletButton } from "@/_components/Wallet/DynamicWalletButton";
 
 const tokens = [
   {
@@ -35,6 +37,13 @@ type FormSchema = {
 export type DonateFormProps = {
   fundContractId: string;
 };
+
+const donateButtonProps: ExtractProps<typeof Button> = {
+  my: "lg",
+  fullWidth: true,
+};
+
+const FallbackConnectButton = dynamicWalletButton(donateButtonProps);
 
 export function DonateForm({ fundContractId }: DonateFormProps) {
   const { signer } = useWallet();
@@ -89,9 +98,11 @@ export function DonateForm({ fundContractId }: DonateFormProps) {
           />
         </Grid.Col>
       </Grid>
-      <Button type="submit" my="lg" fullWidth loading={isSubmitting} disabled={!signer}>
-        Donate
-      </Button>
+      <FallbackConnectButton {...donateButtonProps}>
+        <Button type="submit" {...donateButtonProps} loading={isSubmitting}>
+          Donate
+        </Button>
+      </FallbackConnectButton>
     </form>
   );
 }
