@@ -15,6 +15,8 @@ import { IconCheck, IconExternalLink } from "@tabler/icons-react";
 import { handleTxSubmitError } from "@/_components/TxErrorNotification";
 import { TokenIcon } from "@/_components/TokenIcon";
 import { ALPH_TOKEN_ID } from "@alephium/web3";
+import { dynamicWalletButton } from "@/_components/Wallet/DynamicWalletButton";
+import { ExtractProps } from "@/_lib/types";
 
 interface FormSchema {
   name: string;
@@ -29,6 +31,12 @@ function validDeadline(date: Date): boolean {
 
   return submitted.isAfter(dayjs()) && submitted.isBefore(dayjs().add(3, "months"));
 }
+
+const commonButtonProps: ExtractProps<typeof Button> = {
+  miw: 120,
+};
+
+const FallbackConnectButton = dynamicWalletButton(commonButtonProps);
 
 export default function CreateFundForm() {
   const { signer, account } = useWallet();
@@ -144,13 +152,15 @@ export default function CreateFundForm() {
         />
         <Group justify="flex-end">
           <Link href="/">
-            <Button miw={120} variant="default">
+            <Button {...commonButtonProps} variant="default">
               Cancel
             </Button>
           </Link>
-          <Button type="submit" miw={120} disabled={!signer} loading={isSubmitting}>
-            Create
-          </Button>
+          <FallbackConnectButton {...commonButtonProps}>
+            <Button type="submit" {...commonButtonProps} disabled={!signer} loading={isSubmitting}>
+              Create
+            </Button>
+          </FallbackConnectButton>
         </Group>
       </Stack>
     </form>
