@@ -37,8 +37,11 @@ const getUiFee = (): UiFee => {
   const { deployerAddress } = loadDeployments(getNetwork());
 
   return {
+    // UI developers address
     uiDev: deployerAddress,
+    // Fee in full decimal format (atto format when the token id in ALPH, for example)
     uiFee: ONE_ALPH.toString(),
+    // Token ID that you want to accept in fees
     uiFeeToken: ALPH_TOKEN_ID,
   };
 };
