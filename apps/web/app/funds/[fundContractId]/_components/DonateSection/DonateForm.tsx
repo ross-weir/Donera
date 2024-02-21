@@ -50,12 +50,15 @@ export function DonateForm({ fundContractId }: DonateFormProps) {
       title: "Donation submitted! 🎉",
       message: (
         <span>
+          Your donation should be added to the fund shortly
+          <br />
           View your transaction on the explorer{" "}
           <Anchor href={getExternalLinkForTx(txId)} target="_blank" rel="noreferrer">
             <IconExternalLink size={12} />.
           </Anchor>
         </span>
       ),
+      autoClose: 7000,
     });
   };
 
