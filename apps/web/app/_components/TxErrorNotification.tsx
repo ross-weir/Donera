@@ -1,4 +1,5 @@
 import { notifications } from "@mantine/notifications";
+import { IconX } from "@tabler/icons-react";
 
 export function handleTxSubmitError(e: Error, operation: string) {
   // does this ONLY occur if the user clicks "cancel" in their wallet?
@@ -12,8 +13,8 @@ export function handleTxSubmitError(e: Error, operation: string) {
     notifications.show({
       title: "An error occurred",
       message: "Please try again soon.",
+      icon: <IconX size="1.1rem" />,
       color: "red",
-      icon: "❌",
     });
   }
 }
