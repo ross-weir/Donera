@@ -10,8 +10,8 @@ export function UnverifiedAlert({ ...rest }: AlertProps) {
       icon={<IconInfoCircle />}
       {...rest}
     >
-      Your fundraiser wont be searchable until it is verified by Donera. This normally happens
-      within a few minutes. Make a coffee and check back soon.
+      Your fundraiser wont be searchable until it is verified by Donera.
+      <br /> This normally happens within a few minutes.
     </Alert>
   );
 }
