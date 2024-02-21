@@ -12,7 +12,7 @@ import { saveFund } from "../_actions/mutations";
 import { CreateFundResult } from "@donera/dapp";
 import { notifications } from "@mantine/notifications";
 import { IconCheck, IconExternalLink } from "@tabler/icons-react";
-import { handleTxSubmitError } from "@/_lib/client";
+import { handleTxSubmitError } from "@/_components/TxErrorNotification";
 import { TokenIcon } from "@/_components/TokenIcon";
 import { ALPH_TOKEN_ID } from "@alephium/web3";
 

@@ -11,7 +11,7 @@ import { getTokensForNetwork } from "@donera/dapp";
 import { useWallet } from "@alephium/web3-react";
 import { notifications } from "@mantine/notifications";
 import { IconExternalLink } from "@tabler/icons-react";
-import { handleTxSubmitError } from "@/_lib/client";
+import { handleTxSubmitError } from "@/_components/TxErrorNotification";
 
 const tokens = [
   {

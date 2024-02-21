@@ -2,7 +2,6 @@ import { Group, Title } from "@mantine/core";
 import { WalletConnectButtonLoader } from "./WalletConnectButton";
 import dynamic from "next/dynamic";
 import Image from "next/image";
-import GitHubIcon from "./GitHubIcon";
 import ColorSchemeToggleIcon from "./ColorSchemeToggleIcon";
 import logo from "./logo.png";
 import Link from "next/link";
@@ -35,7 +34,6 @@ export function Header() {
         </LaunchFundButton>
         <SearchBar />
         <WalletConnectButton />
-        <GitHubIcon />
         <ColorSchemeToggleIcon />
       </Group>
     </Group>
