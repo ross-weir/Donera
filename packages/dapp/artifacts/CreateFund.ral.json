@@ -1,10 +1,13 @@
 {
   "version": "v2.8.2",
   "name": "CreateFund",
-  "bytecodeTemplate": "010103000100130c0d{0}010713c40de0b6b3a76400002a1700b41600a2{1}{2}{3}{4}{5}110c{0}0102",
+  "bytecodeTemplate": "0101030001001c{3}0c334c05b4{1}{2}{3}aa0c0d{0}010713c40de0b6b3a76400002a1700b41600a2{4}{5}{6}{7}{8}110c{0}0102",
   "fieldsSig": {
     "names": [
       "donera",
+      "uiDev",
+      "uiFeeToken",
+      "uiFee",
       "name",
       "description",
       "beneficiary",
@@ -13,6 +16,9 @@
     ],
     "types": [
       "ByteVec",
+      "Address",
+      "ByteVec",
+      "U256",
       "ByteVec",
       "ByteVec",
       "Address",
@@ -20,6 +26,9 @@
       "U256"
     ],
     "isMutable": [
+      false,
+      false,
+      false,
       false,
       false,
       false,

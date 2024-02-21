@@ -1,11 +1,18 @@
 TxScript CreateFund(
   donera: Donera,
+  uiDev: Address,
+  uiFeeToken: ByteVec,
+  uiFee: U256,
   name: ByteVec,
   description: ByteVec,
   beneficiary: Address,
   goal: U256,
   deadlineTimestamp: U256
 ) {
+  if (uiFee > 0) {
+    transferToken!(callerAddress!(), uiDev, uiFeeToken, uiFee)
+  }
+
   // 1 alph for the subcontract that's created
   let requiredAssets =  donera.getAttoListingFee() + 1 alph
   donera.createFund{callerAddress!() -> ALPH: requiredAssets}(
@@ -19,10 +26,17 @@ TxScript CreateFund(
 
 TxScript DonateToFund(
   donera: Donera,
+  uiDev: Address,
+  uiFeeToken: ByteVec,
+  uiFee: U256,
   fundContractId: ByteVec,
   tokenId: ByteVec,
   amount: U256
 ) {
+  if (uiFee > 0) {
+    transferToken!(callerAddress!(), uiDev, uiFeeToken, uiFee)
+  }
+
   donera.donateToFund{callerAddress!() -> tokenId: amount}(
     fundContractId,
     tokenId,
@@ -32,8 +46,15 @@ TxScript DonateToFund(
 
 TxScript FinalizeFund(
   donera: Donera,
+  uiDev: Address,
+  uiFeeToken: ByteVec,
+  uiFee: U256,
   fundContractId: ByteVec
 ) {
+  if (uiFee > 0) {
+    transferToken!(callerAddress!(), uiDev, uiFeeToken, uiFee)
+  }
+
   donera.finalizeFund(fundContractId)
 }
 

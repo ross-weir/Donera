@@ -16,6 +16,7 @@ import { Deployments, loadDeployments } from "./deploys";
 import { CreateFund, DonateToFund } from "./scripts";
 import { getTokensForNetwork } from "./tokens";
 import { stringToHex } from "@donera/core";
+import { NO_UI_FEE, UiFee, UiFeeOnchain, convertUiFeeToOnchain } from "./fees";
 
 export type CreateFundParam = {
   name: string;
@@ -47,16 +48,18 @@ export type DonateToFundResult = {
 };
 
 export class DoneraDapp {
+  private readonly uiFee: UiFeeOnchain;
   private readonly tokens: TokenInfo[];
   private readonly deploys: Deployments;
 
-  constructor(networkId: NetworkId, deploys: Deployments) {
+  constructor(networkId: NetworkId, deploys: Deployments, uiFee?: UiFee) {
+    this.uiFee = uiFee ? convertUiFeeToOnchain(uiFee) : NO_UI_FEE;
     this.tokens = getTokensForNetwork(networkId);
     this.deploys = deploys;
   }
 
-  static forNetwork(network: NetworkId): DoneraDapp {
-    return new DoneraDapp(network, loadDeployments(network));
+  static forNetwork(network: NetworkId, uiFee?: UiFee): DoneraDapp {
+    return new DoneraDapp(network, loadDeployments(network), uiFee);
   }
 
   public async createFund(
@@ -69,13 +72,14 @@ export class DoneraDapp {
     const { txId } = await CreateFund.execute(signer, {
       initialFields: {
         donera: this.doneraInstance.contractId,
+        ...this.uiFee,
         name: stringToHex(params.name),
         description: stringToHex(params.description),
         beneficiary: params.beneficiary,
         goal: attoGoal,
         deadlineTimestamp: BigInt(deadlineUnixTs),
       },
-      attoAlphAmount: listingFeeCall.returns + ONE_ALPH,
+      attoAlphAmount: listingFeeCall.returns + ONE_ALPH + this.uiFee.uiFee,
     });
     const { fields } = await this.getEventForTx<DoneraTypes.FundListedEvent, DoneraInstance>(
       txId,
@@ -111,11 +115,12 @@ export class DoneraDapp {
     const { txId } = await DonateToFund.execute(signer, {
       initialFields: {
         donera: this.doneraInstance.contractId,
+        ...this.uiFee,
         fundContractId,
         tokenId,
         amount: donateAmount,
       },
-      attoAlphAmount: donateAmount,
+      attoAlphAmount: donateAmount + this.uiFee.uiFee,
     });
 
     return { txId };

@@ -11,14 +11,14 @@
   "infos": {
     "CreateFund": {
       "sourceFile": "scripts.ral",
-      "sourceCodeHash": "2a8f762954b915de6be94d46395306f4aebe12c43408aae16bacb1e0d6237ea6",
+      "sourceCodeHash": "cb2942fbf98fae9336cea6163f1a7fd98968d302a7eeee9bc3502ed2678530e2",
       "bytecodeDebugPatch": "",
       "codeHashDebug": "",
       "warnings": []
     },
     "DonateToFund": {
       "sourceFile": "scripts.ral",
-      "sourceCodeHash": "2a8f762954b915de6be94d46395306f4aebe12c43408aae16bacb1e0d6237ea6",
+      "sourceCodeHash": "cb2942fbf98fae9336cea6163f1a7fd98968d302a7eeee9bc3502ed2678530e2",
       "bytecodeDebugPatch": "",
       "codeHashDebug": "",
       "warnings": []
@@ -32,7 +32,7 @@
     },
     "FinalizeFund": {
       "sourceFile": "scripts.ral",
-      "sourceCodeHash": "2a8f762954b915de6be94d46395306f4aebe12c43408aae16bacb1e0d6237ea6",
+      "sourceCodeHash": "cb2942fbf98fae9336cea6163f1a7fd98968d302a7eeee9bc3502ed2678530e2",
       "bytecodeDebugPatch": "",
       "codeHashDebug": "",
       "warnings": []
@@ -53,7 +53,7 @@
     },
     "SetAttoListingFee": {
       "sourceFile": "scripts.ral",
-      "sourceCodeHash": "2a8f762954b915de6be94d46395306f4aebe12c43408aae16bacb1e0d6237ea6",
+      "sourceCodeHash": "cb2942fbf98fae9336cea6163f1a7fd98968d302a7eeee9bc3502ed2678530e2",
       "bytecodeDebugPatch": "",
       "codeHashDebug": "",
       "warnings": []

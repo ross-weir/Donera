@@ -12,7 +12,8 @@
     ".": "./src/index.ts",
     "./contracts": "./src/contracts/index.ts",
     "./scripts": "./src/scripts.ts",
-    "./deploys": "./src/deploys.ts"
+    "./deploys": "./src/deploys.ts",
+    "./fees": "./src/fees.ts"
   },
   "devDependencies": {
     "@alephium/cli": "^0.29.2",

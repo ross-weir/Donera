@@ -18,6 +18,9 @@ import { default as SetAttoListingFeeScriptJson } from "../SetAttoListingFee.ral
 
 export const CreateFund = new ExecutableScript<{
   donera: HexString;
+  uiDev: Address;
+  uiFeeToken: HexString;
+  uiFee: bigint;
   name: HexString;
   description: HexString;
   beneficiary: Address;
@@ -26,12 +29,18 @@ export const CreateFund = new ExecutableScript<{
 }>(Script.fromJson(CreateFundScriptJson));
 export const DonateToFund = new ExecutableScript<{
   donera: HexString;
+  uiDev: Address;
+  uiFeeToken: HexString;
+  uiFee: bigint;
   fundContractId: HexString;
   tokenId: HexString;
   amount: bigint;
 }>(Script.fromJson(DonateToFundScriptJson));
 export const FinalizeFund = new ExecutableScript<{
   donera: HexString;
+  uiDev: Address;
+  uiFeeToken: HexString;
+  uiFee: bigint;
   fundContractId: HexString;
 }>(Script.fromJson(FinalizeFundScriptJson));
 export const SetAttoListingFee = new ExecutableScript<{
