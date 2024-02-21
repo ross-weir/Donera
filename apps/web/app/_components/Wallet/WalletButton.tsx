@@ -22,7 +22,11 @@ const baseButtonProps: ButtonProps = {
   leftSection: <IconWallet size={18} />,
 };
 
-function ConnectButton({ show, isConnecting, ...props }: ButtonProps & ConnectButtonRendererProps) {
+function ConnectButton({
+  show,
+  isConnecting,
+  ...props
+}: ButtonProps & Pick<ConnectButtonRendererProps, "show" | "isConnecting">) {
   return (
     <Button onClick={show} loading={isConnecting} {...props} {...baseButtonProps}>
       Connect
@@ -31,7 +35,7 @@ function ConnectButton({ show, isConnecting, ...props }: ButtonProps & ConnectBu
 }
 
 export function ConnectButtonLoader(props: ButtonProps = {}) {
-  return <Button {...baseButtonProps} {...props} loading />;
+  return <Button {...baseButtonProps} {...props} loading disabled />;
 }
 
 export default function FallbackConnectButton({
@@ -44,8 +48,8 @@ export default function FallbackConnectButton({
     <>{children}</>
   ) : (
     <AlephiumConnectButton.Custom>
-      {(connectProps: ConnectButtonRendererProps) => (
-        <ConnectButton {...connectProps} {...props} type="button" />
+      {({ show, isConnecting }: ConnectButtonRendererProps) => (
+        <ConnectButton show={show} isConnecting={isConnecting} {...props} type="button" />
       )}
     </AlephiumConnectButton.Custom>
   );

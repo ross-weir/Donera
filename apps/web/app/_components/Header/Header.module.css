@@ -8,3 +8,9 @@
   text-decoration: none;
   color: unset;
 }
+
+.icon {
+  width: rem(22px);
+  height: rem(22px);
+}
+
