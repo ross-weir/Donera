@@ -32,6 +32,7 @@ export namespace DoneraTypes {
   export type Fields = {
     selfFundTemplateId: HexString;
     selfAttoListingFee: bigint;
+    selfDeadlineLimit: bigint;
     selfOwner: Address;
   };
 
@@ -84,7 +85,6 @@ class Factory extends ContractFactory<DoneraInstance, DoneraTypes.Fields> {
 
   eventIndex = { FundListed: 0, Donation: 1, FundFinalized: 2 };
   consts = {
-    SelfDeadlineLimit: BigInt(7889229),
     DoneraError: { Forbidden: BigInt(0), InvalidDeadline: BigInt(1) },
     OwnedError: { Forbidden: BigInt(90) },
   };
@@ -160,6 +160,14 @@ class Factory extends ContractFactory<DoneraInstance, DoneraTypes.Fields> {
     ): Promise<TestContractResult<null>> => {
       return testMethod(this, "setSelfAttoListingFee", params);
     },
+    setSelfDeadlineLimit: async (
+      params: TestContractParams<
+        DoneraTypes.Fields,
+        { newDeadlineLimit: bigint }
+      >
+    ): Promise<TestContractResult<null>> => {
+      return testMethod(this, "setSelfDeadlineLimit", params);
+    },
   };
 }
 
@@ -168,7 +176,7 @@ export const Donera = new Factory(
   Contract.fromJson(
     DoneraContractJson,
     "",
-    "010657da2cbc73f32b09e2e1997c64a3bd172a53f84792e0e6cbd573147ffb8f"
+    "4a9e38d8277fd962cca8c7105df7ccef79b7d3c0e904aa069ca689db0bd2be13"
   )
 );
 

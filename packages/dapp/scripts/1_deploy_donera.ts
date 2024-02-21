@@ -7,6 +7,7 @@ const deploy: DeployFunction = async (deployer: Deployer): Promise<void> => {
   const initialFields: DoneraTypes.Fields = {
     selfFundTemplateId: fundTemplateResult.contractInstance.contractId,
     selfOwner: deployer.account.address,
+    selfDeadlineLimit: 7889229n, // 3 months
     selfAttoListingFee: convertAlphAmountWithDecimals(2)!,
   };
   const result = await deployer.deployContract(Donera, {

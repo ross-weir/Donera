@@ -1,6 +1,7 @@
 Contract Donera(
   mut selfFundTemplateId: ByteVec,
   mut selfAttoListingFee: U256, 
+  mut selfDeadlineLimit: U256,
   mut selfOwner: Address
 ) extends Owned(selfOwner) {
   event FundListed(
@@ -22,10 +23,6 @@ Contract Donera(
 
   event FundFinalized(finalizer: Address, fundContractId: ByteVec)
 
-  // Deadline must be between Now and SelfDeadlineLimit
-  // 3 months in unix time (seconds)
-  const SelfDeadlineLimit = 7889229
-
   // Donera error codes in the range of 0 - 10
   enum DoneraError {
     // An action was attempted by an unauthorized caller.
@@ -42,7 +39,7 @@ Contract Donera(
     goal: U256,
     deadlineTimestamp: U256
   ) -> () {
-    assert!(deadlineTimestamp <= blockTimeStamp!() + SelfDeadlineLimit, DoneraError.InvalidDeadline)
+    assert!(deadlineTimestamp <= blockTimeStamp!() + selfDeadlineLimit, DoneraError.InvalidDeadline)
 
     let organizer = callerAddress!()
 
@@ -148,5 +145,17 @@ Contract Donera(
   pub fn setSelfAttoListingFee(newAttoListingFee: U256) -> () {
     assertOwner(callerAddress!())
     selfAttoListingFee = newAttoListingFee
+  }
+
+  // Update the deadline limit for new funds.
+  //
+  // @throws {OwnedError.Forbidden} Caller must be the admin.
+  //
+  // @param newDeadlineLimit The new limit on fund deadlines.
+  // @returns unit
+  @using(updateFields = true)
+  pub fn setSelfDeadlineLimit(newDeadlineLimit: U256) -> () {
+    assertOwner(callerAddress!())
+    selfDeadlineLimit = newDeadlineLimit
   }
 }
