@@ -18,7 +18,6 @@ Interface IDonera {
 
   event FundFinalized(finalizer: Address, fundContractId: ByteVec)
 
-
   @using(preapprovedAssets = true, checkExternalCaller = false, assetsInContract = true)
   pub fn createFund(
     name: ByteVec,
