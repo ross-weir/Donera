@@ -71,7 +71,7 @@ describe("Fund", () => {
       await expectAssertionError(call, address, Fund.consts.FundError.FundInProgress);
     });
     // currently throwing an error about a contract not existing
-    it.todo("should transfer assets to recipient", async () => {
+    it("should transfer assets to recipient", async () => {
       const address = randomContractAddress();
       const result = await Fund.tests.finalize({
         address,
@@ -79,7 +79,7 @@ describe("Fund", () => {
         initialAsset: { alphAmount: ONE_ALPH },
         initialFields: {
           ...Fund.getInitialFieldsWithDefaultValues(),
-          selfRecipient: testAddress,
+          selfBeneficiary: testAddress,
           selfDeadline: 6n,
           selfOwner: testAddress,
         },

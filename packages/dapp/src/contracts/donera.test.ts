@@ -31,7 +31,7 @@ describe("Donera", () => {
         testArgs: {
           name: stringToHex("test"),
           description: stringToHex("testing description"),
-          recipient: testAddress,
+          beneficiary: testAddress,
           deadlineTimestamp: 5n,
           goal: convertAlphAmountWithDecimals(500)!,
         },
@@ -54,7 +54,7 @@ describe("Donera", () => {
         testArgs: {
           name: stringToHex("test"),
           description: stringToHex("testing description"),
-          recipient: testAddress,
+          beneficiary: testAddress,
           deadlineTimestamp: 5n,
           goal: convertAlphAmountWithDecimals(500)!,
         },

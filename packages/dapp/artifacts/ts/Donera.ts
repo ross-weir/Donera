@@ -84,7 +84,8 @@ class Factory extends ContractFactory<DoneraInstance, DoneraTypes.Fields> {
 
   eventIndex = { FundListed: 0, Donation: 1, FundFinalized: 2 };
   consts = {
-    DoneraError: { Forbidden: BigInt(0) },
+    SelfDeadlineLimit: BigInt(7889229),
+    DoneraError: { Forbidden: BigInt(0), InvalidDeadline: BigInt(1) },
     OwnedError: { Forbidden: BigInt(90) },
   };
 
@@ -167,7 +168,7 @@ export const Donera = new Factory(
   Contract.fromJson(
     DoneraContractJson,
     "",
-    "fc0d7c8138d8e175514d37521ca1d0de1041389dc99c1f739ac72c88e021a615"
+    "010657da2cbc73f32b09e2e1997c64a3bd172a53f84792e0e6cbd573147ffb8f"
   )
 );
 

@@ -22,10 +22,16 @@ Contract Donera(
 
   event FundFinalized(finalizer: Address, fundContractId: ByteVec)
 
+  // Deadline must be between Now and SelfDeadlineLimit
+  // 3 months in unix time (seconds)
+  const SelfDeadlineLimit = 7889229
+
   // Donera error codes in the range of 0 - 10
   enum DoneraError {
     // An action was attempted by an unauthorized caller.
     Forbidden = 0
+    // Deadline was more than SelfDeadlineLimit away
+    InvalidDeadline = 1
   }
 
   @using(preapprovedAssets = true, checkExternalCaller = false, assetsInContract = true)
@@ -36,11 +42,12 @@ Contract Donera(
     goal: U256,
     deadlineTimestamp: U256
   ) -> () {
+    assert!(deadlineTimestamp <= blockTimeStamp!() + SelfDeadlineLimit, DoneraError.InvalidDeadline)
+
     let organizer = callerAddress!()
 
     transferTokenToSelf!(organizer, ALPH, selfAttoListingFee)
 
-    // maybe should use a nounce or something for better uniqueness
     let pathHash = blake2b!(
       name ++
       description ++
