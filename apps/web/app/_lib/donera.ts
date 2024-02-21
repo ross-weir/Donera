@@ -32,6 +32,7 @@ export const getExternalLinkForTx = (txId: string): string => {
   return `${getExplorerUrl()}/transactions/${txId}`;
 };
 
+// Applied to every "fund create", "donate", "finalize fund" operation
 const getUiFee = (): UiFee => {
   const { deployerAddress } = loadDeployments(getNetwork());
 
