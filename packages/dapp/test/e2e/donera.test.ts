@@ -4,6 +4,7 @@ import { testNodeWallet } from "@alephium/web3-test";
 import { CreateFund, DonateToFund, FinalizeFund } from "../../src/scripts";
 import { Donera, DoneraTypes } from "../../src/contracts/donera";
 import { loadDeployments } from "../../artifacts/ts/deployments";
+import { NO_UI_FEE } from "../../src/fees";
 import {
   ONE_ALPH,
   stringToHex,
@@ -30,9 +31,10 @@ describe("end-to-end Donera", () => {
     const result = await CreateFund.execute(signer as unknown as SignerProvider, {
       initialFields: {
         donera,
+        ...NO_UI_FEE,
         name: stringToHex("test fund14"),
         description: stringToHex("testing a fund raiser"),
-        recipient: account.address,
+        beneficiary: account.address,
         goal: 1n,
         deadlineTimestamp: 5n,
       },
@@ -61,6 +63,7 @@ describe("end-to-end Donera", () => {
     const donateResult = await DonateToFund.execute(signer, {
       initialFields: {
         donera,
+        ...NO_UI_FEE,
         fundContractId: parsedEvent.fields.fundContractId,
         tokenId: ALPH_TOKEN_ID,
         amount: donateAmount,
@@ -86,6 +89,7 @@ describe("end-to-end Donera", () => {
     const finalizeResult = await FinalizeFund.execute(signer, {
       initialFields: {
         donera,
+        ...NO_UI_FEE,
         fundContractId: parsedEvent.fields.fundContractId,
       },
     });

@@ -1,6 +1,6 @@
 import { describe, it, beforeAll, expect } from "bun:test";
 import { randomContractAddress, testAddress } from "@alephium/web3-test";
-import { prepareForTests } from "./utils.test";
+import { expectAssertionError, prepareForTests } from "./utils.test";
 import { Donera } from "./donera";
 import {
   ALPH_TOKEN_ID,
@@ -9,6 +9,9 @@ import {
   stringToHex,
 } from "@alephium/web3";
 import { Fund } from "./fund";
+
+const THREE_MONTHS = 7889229n;
+const ONE_DAY = 86400n;
 
 describe("Donera", () => {
   beforeAll(async () => {
@@ -31,7 +34,7 @@ describe("Donera", () => {
         testArgs: {
           name: stringToHex("test"),
           description: stringToHex("testing description"),
-          recipient: testAddress,
+          beneficiary: testAddress,
           deadlineTimestamp: 5n,
           goal: convertAlphAmountWithDecimals(500)!,
         },
@@ -54,7 +57,7 @@ describe("Donera", () => {
         testArgs: {
           name: stringToHex("test"),
           description: stringToHex("testing description"),
-          recipient: testAddress,
+          beneficiary: testAddress,
           deadlineTimestamp: 5n,
           goal: convertAlphAmountWithDecimals(500)!,
         },
@@ -66,6 +69,56 @@ describe("Donera", () => {
       );
       expect(event).toBeDefined();
       // TODO: assert field values
+    });
+    it("should raise exception if deadline is invalid", async () => {
+      const fundTemplate = Fund.stateForTest(Fund.getInitialFieldsWithDefaultValues());
+      const doneraAddress = randomContractAddress();
+      const call = () =>
+        Donera.tests.createFund({
+          address: doneraAddress,
+          blockTimeStamp: 0,
+          initialFields: {
+            ...Donera.getInitialFieldsWithDefaultValues(),
+            selfDeadlineLimit: THREE_MONTHS,
+            selfAttoListingFee: convertAlphAmountWithDecimals(1)!,
+            selfFundTemplateId: fundTemplate.contractId,
+          },
+          testArgs: {
+            name: stringToHex("test"),
+            description: stringToHex("testing description"),
+            beneficiary: testAddress,
+            deadlineTimestamp: THREE_MONTHS + ONE_DAY,
+            goal: convertAlphAmountWithDecimals(500)!,
+          },
+          inputAssets: [{ address: testAddress, asset: { alphAmount: ONE_ALPH * 200n } }],
+          existingContracts: [fundTemplate],
+        });
+      await expectAssertionError(call, doneraAddress, Donera.consts.DoneraError.InvalidDeadline);
+    });
+    it("should succeed if deadline is within deadline limit", async () => {
+      const fundTemplate = Fund.stateForTest(Fund.getInitialFieldsWithDefaultValues());
+      const doneraAddress = randomContractAddress();
+      const call = () =>
+        Donera.tests.createFund({
+          address: doneraAddress,
+          blockTimeStamp: 0,
+          initialFields: {
+            ...Donera.getInitialFieldsWithDefaultValues(),
+            selfDeadlineLimit: THREE_MONTHS,
+            selfAttoListingFee: convertAlphAmountWithDecimals(1)!,
+            selfFundTemplateId: fundTemplate.contractId,
+          },
+          testArgs: {
+            name: stringToHex("test"),
+            description: stringToHex("testing description"),
+            beneficiary: testAddress,
+            deadlineTimestamp: THREE_MONTHS - ONE_DAY,
+            goal: convertAlphAmountWithDecimals(500)!,
+          },
+          inputAssets: [{ address: testAddress, asset: { alphAmount: ONE_ALPH * 200n } }],
+          existingContracts: [fundTemplate],
+        });
+      expect(call()).resolves.toBeDefined();
     });
   });
   describe("donateToFund())", () => {

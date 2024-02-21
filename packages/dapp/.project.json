@@ -25,9 +25,9 @@
     },
     "Donera": {
       "sourceFile": "donera.ral",
-      "sourceCodeHash": "43e0cd24af773064bab59a1da57101c10fccd23b322ae16442b5ec573e888ce7",
+      "sourceCodeHash": "d389614812a1d3badb7548404a80e0ef7a21851d54a4629580282f5e3bcbd778",
       "bytecodeDebugPatch": "",
-      "codeHashDebug": "fc0d7c8138d8e175514d37521ca1d0de1041389dc99c1f739ac72c88e021a615",
+      "codeHashDebug": "4a9e38d8277fd962cca8c7105df7ccef79b7d3c0e904aa069ca689db0bd2be13",
       "warnings": []
     },
     "FinalizeFund": {

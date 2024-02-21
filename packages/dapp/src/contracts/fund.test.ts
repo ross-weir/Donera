@@ -79,11 +79,12 @@ describe("Fund", () => {
         initialAsset: { alphAmount: ONE_ALPH },
         initialFields: {
           ...Fund.getInitialFieldsWithDefaultValues(),
-          selfRecipient: testAddress,
+          selfBeneficiary: testAddress,
           selfDeadline: 6n,
           selfOwner: testAddress,
         },
         inputAssets: [{ address: testAddress, asset: { alphAmount: ONE_ALPH * 200n } }],
+        callerAddress: testAddress,
       });
       console.log(result);
     });

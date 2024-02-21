@@ -5,6 +5,9 @@
       "dependsOn": ["^build"],
       "outputs": [".next/**", "!.next/cache/**", "dist/**"]
     },
+    "compile": {
+      "outputs": ["artifacts/**", ".project.json"]
+    },
     "deploy": {
       "dependsOn": ["build", "test", "lint"]
     },

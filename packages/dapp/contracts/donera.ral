@@ -1,6 +1,7 @@
 Contract Donera(
   mut selfFundTemplateId: ByteVec,
   mut selfAttoListingFee: U256, 
+  mut selfDeadlineLimit: U256,
   mut selfOwner: Address
 ) extends Owned(selfOwner) {
   event FundListed(
@@ -26,6 +27,8 @@ Contract Donera(
   enum DoneraError {
     // An action was attempted by an unauthorized caller.
     Forbidden = 0
+    // Deadline was more than SelfDeadlineLimit away
+    InvalidDeadline = 1
   }
 
   @using(preapprovedAssets = true, checkExternalCaller = false, assetsInContract = true)
@@ -36,11 +39,12 @@ Contract Donera(
     goal: U256,
     deadlineTimestamp: U256
   ) -> () {
+    assert!(deadlineTimestamp <= blockTimeStamp!() + selfDeadlineLimit, DoneraError.InvalidDeadline)
+
     let organizer = callerAddress!()
 
     transferTokenToSelf!(organizer, ALPH, selfAttoListingFee)
 
-    // maybe should use a nounce or something for better uniqueness
     let pathHash = blake2b!(
       name ++
       description ++
@@ -141,5 +145,17 @@ Contract Donera(
   pub fn setSelfAttoListingFee(newAttoListingFee: U256) -> () {
     assertOwner(callerAddress!())
     selfAttoListingFee = newAttoListingFee
+  }
+
+  // Update the deadline limit for new funds.
+  //
+  // @throws {OwnedError.Forbidden} Caller must be the admin.
+  //
+  // @param newDeadlineLimit The new limit on fund deadlines.
+  // @returns unit
+  @using(updateFields = true)
+  pub fn setSelfDeadlineLimit(newDeadlineLimit: U256) -> () {
+    assertOwner(callerAddress!())
+    selfDeadlineLimit = newDeadlineLimit
   }
 }
