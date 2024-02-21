@@ -1,8 +1,8 @@
 {
   "version": "v2.8.2",
   "name": "Donera",
-  "bytecode": "040a164028409740c140e540f3410041094116412300000101000ab4b24513405a7b1600a0034513405a7b010001010007b4a0034513405a7b1600a1030101050a00403c160456a0022a320d7bb417051605a001a91600160144160247441605474416034044160440444e1706160016011602160516031604130664b213016417081707160513c40de0b6b3a7640000a21606a00016071608c117090516001601160216051603160416097501030305001516001703b41704160416011602a31604160116020f0c160301070616011602160416006101000103001416001701b4170216020c0d16010105450c7b0c0c1601010807160216005f010201010005b40000a0031600a8010001010004b400001600a100010000000102a00102010001010004b400001600a101010001010004b400001600a102",
-  "codeHash": "4a9e38d8277fd962cca8c7105df7ccef79b7d3c0e904aa069ca689db0bd2be13",
+  "bytecode": "040c406f409940b240be40ce40e440f641044111411a412741340101050a00403c160456a0022a320c7bb417051605a001a91600160144160247441605474416034044160440444e1706160016011602160516031604130664b213016417081707160513c40de0b6b3a7640000a21606a00016071608c117090516001601160216051603160416097501030305001516001703b41704160416011602a31604160116020f0c160301000616011602160416006101000103000cb41701160017020c0c1602010107160116005f010001040004b400051600ba010003030006b40005160016011602bb00000101000ab4b24513405a7b1600a0034513405a7b010001010007b4a0034513405a7b1600a103010201010005b40005a0031600a8010001010004b400051600a100010000000102a00102010001010004b400051600a101010001010004b400051600a102",
+  "codeHash": "a7cbd4a05ef2cc664ba03734ced49445c4bea668b41b4658117db488ba931a47",
   "fieldsSig": {
     "names": [
       "selfFundTemplateId",
@@ -74,38 +74,6 @@
   ],
   "functions": [
     {
-      "name": "assertOwner",
-      "usePreapprovedAssets": false,
-      "useAssetsInContract": false,
-      "isPublic": false,
-      "paramNames": [
-        "caller"
-      ],
-      "paramTypes": [
-        "Address"
-      ],
-      "paramIsMutable": [
-        false
-      ],
-      "returnTypes": []
-    },
-    {
-      "name": "setOwner",
-      "usePreapprovedAssets": false,
-      "useAssetsInContract": false,
-      "isPublic": true,
-      "paramNames": [
-        "newOwner"
-      ],
-      "paramTypes": [
-        "Address"
-      ],
-      "paramIsMutable": [
-        false
-      ],
-      "returnTypes": []
-    },
-    {
       "name": "createFund",
       "usePreapprovedAssets": true,
       "useAssetsInContract": true,
@@ -165,6 +133,76 @@
       ],
       "paramTypes": [
         "ByteVec"
+      ],
+      "paramIsMutable": [
+        false
+      ],
+      "returnTypes": []
+    },
+    {
+      "name": "upgrade",
+      "usePreapprovedAssets": false,
+      "useAssetsInContract": false,
+      "isPublic": true,
+      "paramNames": [
+        "newCode"
+      ],
+      "paramTypes": [
+        "ByteVec"
+      ],
+      "paramIsMutable": [
+        false
+      ],
+      "returnTypes": []
+    },
+    {
+      "name": "upgradeWithFields",
+      "usePreapprovedAssets": false,
+      "useAssetsInContract": false,
+      "isPublic": true,
+      "paramNames": [
+        "newCode",
+        "newImmFieldsEncoded",
+        "newMutFieldsEncoded"
+      ],
+      "paramTypes": [
+        "ByteVec",
+        "ByteVec",
+        "ByteVec"
+      ],
+      "paramIsMutable": [
+        false,
+        false,
+        false
+      ],
+      "returnTypes": []
+    },
+    {
+      "name": "assertOwner",
+      "usePreapprovedAssets": false,
+      "useAssetsInContract": false,
+      "isPublic": false,
+      "paramNames": [
+        "caller"
+      ],
+      "paramTypes": [
+        "Address"
+      ],
+      "paramIsMutable": [
+        false
+      ],
+      "returnTypes": []
+    },
+    {
+      "name": "setOwner",
+      "usePreapprovedAssets": false,
+      "useAssetsInContract": false,
+      "isPublic": true,
+      "paramNames": [
+        "newOwner"
+      ],
+      "paramTypes": [
+        "Address"
       ],
       "paramIsMutable": [
         false
@@ -254,17 +292,10 @@
       "name": "DoneraError",
       "fields": [
         {
-          "name": "Forbidden",
-          "value": {
-            "type": "U256",
-            "value": "0"
-          }
-        },
-        {
           "name": "InvalidDeadline",
           "value": {
             "type": "U256",
-            "value": "1"
+            "value": "0"
           }
         }
       ]

@@ -6,7 +6,7 @@ Contract Fund(
   selfGoal: U256,
   selfDeadline: U256,
   mut selfOwner: Address // Central Donera contract
-) extends Owned(selfOwner) {
+) extends Owned(selfOwner) implements IFund {
   // Error codes in range 50 - 59
   enum FundError {
     // User tried to finalize fund before deadline was reached

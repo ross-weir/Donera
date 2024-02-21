@@ -1,0 +1,7 @@
+Interface IFund {
+  @using(preapprovedAssets = true, checkExternalCaller = false, assetsInContract = true)
+  pub fn donate(donor: Address, tokenId: ByteVec, amount: U256) -> ()
+
+  @using(assetsInContract = true)
+  pub fn finalize() -> ()
+}

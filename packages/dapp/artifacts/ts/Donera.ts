@@ -85,7 +85,7 @@ class Factory extends ContractFactory<DoneraInstance, DoneraTypes.Fields> {
 
   eventIndex = { FundListed: 0, Donation: 1, FundFinalized: 2 };
   consts = {
-    DoneraError: { Forbidden: BigInt(0), InvalidDeadline: BigInt(1) },
+    DoneraError: { InvalidDeadline: BigInt(0) },
     OwnedError: { Forbidden: BigInt(90) },
   };
 
@@ -94,16 +94,6 @@ class Factory extends ContractFactory<DoneraInstance, DoneraTypes.Fields> {
   }
 
   tests = {
-    assertOwner: async (
-      params: TestContractParams<DoneraTypes.Fields, { caller: Address }>
-    ): Promise<TestContractResult<null>> => {
-      return testMethod(this, "assertOwner", params);
-    },
-    setOwner: async (
-      params: TestContractParams<DoneraTypes.Fields, { newOwner: Address }>
-    ): Promise<TestContractResult<null>> => {
-      return testMethod(this, "setOwner", params);
-    },
     createFund: async (
       params: TestContractParams<
         DoneraTypes.Fields,
@@ -133,6 +123,33 @@ class Factory extends ContractFactory<DoneraInstance, DoneraTypes.Fields> {
       >
     ): Promise<TestContractResult<null>> => {
       return testMethod(this, "finalizeFund", params);
+    },
+    upgrade: async (
+      params: TestContractParams<DoneraTypes.Fields, { newCode: HexString }>
+    ): Promise<TestContractResult<null>> => {
+      return testMethod(this, "upgrade", params);
+    },
+    upgradeWithFields: async (
+      params: TestContractParams<
+        DoneraTypes.Fields,
+        {
+          newCode: HexString;
+          newImmFieldsEncoded: HexString;
+          newMutFieldsEncoded: HexString;
+        }
+      >
+    ): Promise<TestContractResult<null>> => {
+      return testMethod(this, "upgradeWithFields", params);
+    },
+    assertOwner: async (
+      params: TestContractParams<DoneraTypes.Fields, { caller: Address }>
+    ): Promise<TestContractResult<null>> => {
+      return testMethod(this, "assertOwner", params);
+    },
+    setOwner: async (
+      params: TestContractParams<DoneraTypes.Fields, { newOwner: Address }>
+    ): Promise<TestContractResult<null>> => {
+      return testMethod(this, "setOwner", params);
     },
     withdraw: async (
       params: TestContractParams<DoneraTypes.Fields, { amount: bigint }>
@@ -176,7 +193,7 @@ export const Donera = new Factory(
   Contract.fromJson(
     DoneraContractJson,
     "",
-    "4a9e38d8277fd962cca8c7105df7ccef79b7d3c0e904aa069ca689db0bd2be13"
+    "a7cbd4a05ef2cc664ba03734ced49445c4bea668b41b4658117db488ba931a47"
   )
 );
 

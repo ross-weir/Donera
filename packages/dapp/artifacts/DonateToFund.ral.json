@@ -1,7 +1,7 @@
 {
   "version": "v2.8.2",
   "name": "DonateToFund",
-  "bytecodeTemplate": "01010300000014{3}0c334c05b4{1}{2}{3}aab4{5}{6}a3{4}{5}{6}0f0c{0}0103",
+  "bytecodeTemplate": "01010300000014{3}0c334c05b4{1}{2}{3}aab4{5}{6}a3{4}{5}{6}0f0c{0}0101",
   "fieldsSig": {
     "names": [
       "donera",

@@ -1,0 +1,35 @@
+Interface IDonera {
+  event FundListed(
+    name: ByteVec,
+    description: ByteVec,
+    beneficiary: Address,
+    organizer: Address,
+    goal: U256,
+    deadlineTimestamp: U256,
+    fundContractId: ByteVec
+  )
+
+  event Donation(
+    tokenId: ByteVec,
+    amount: U256,
+    donor: Address,
+    fundContractId: ByteVec
+  )
+
+  event FundFinalized(finalizer: Address, fundContractId: ByteVec)
+
+  @using(preapprovedAssets = true, checkExternalCaller = false, assetsInContract = true)
+  pub fn createFund(
+    name: ByteVec,
+    description: ByteVec,
+    beneficiary: Address,
+    goal: U256,
+    deadlineTimestamp: U256
+  ) -> ()
+
+  @using(preapprovedAssets = true, checkExternalCaller = false)
+  pub fn donateToFund(fundContractId: ByteVec, tokenId: ByteVec, amount: U256) -> ()
+
+  @using(checkExternalCaller = false)
+  pub fn finalizeFund(fundContractId: ByteVec) -> ()
+}

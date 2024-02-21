@@ -1,8 +1,8 @@
 {
   "version": "v2.8.2",
   "name": "Fund",
-  "bytecode": "07091640284031403a4043404c40554065407800000101000ab4b24513405a7b1600a0004513405a7b010001010007b4a0004513405a7b1600a100010000000102ce0002010000000102ce0102010000000102ce0402010000000102ce0202010000000102ce0302010103030006b40000160016011602ac010200000009b4000056ce053413327bce02b0",
-  "codeHash": "b29972a121580acb2acdbcea1877588d3d0ee406b2a7f14d271b660e35a19600",
+  "bytecode": "07091040234039404b4054405d4066406f4078010103030006b40002160016011602ac010200000009b4000256ce053413327bce02b000000101000ab4b24513405a7b1600a0004513405a7b010001010007b4a0004513405a7b1600a100010000000102ce0002010000000102ce0102010000000102ce0402010000000102ce0202010000000102ce0302",
+  "codeHash": "d029c5f32519bc4a1639873afb0be1eb619a6bccd76846e5da6347e55bc25e63",
   "fieldsSig": {
     "names": [
       "selfName",
@@ -34,6 +34,38 @@
   },
   "eventsSig": [],
   "functions": [
+    {
+      "name": "donate",
+      "usePreapprovedAssets": true,
+      "useAssetsInContract": true,
+      "isPublic": true,
+      "paramNames": [
+        "donor",
+        "tokenId",
+        "amount"
+      ],
+      "paramTypes": [
+        "Address",
+        "ByteVec",
+        "U256"
+      ],
+      "paramIsMutable": [
+        false,
+        false,
+        false
+      ],
+      "returnTypes": []
+    },
+    {
+      "name": "finalize",
+      "usePreapprovedAssets": false,
+      "useAssetsInContract": true,
+      "isPublic": true,
+      "paramNames": [],
+      "paramTypes": [],
+      "paramIsMutable": [],
+      "returnTypes": []
+    },
     {
       "name": "assertOwner",
       "usePreapprovedAssets": false,
@@ -125,38 +157,6 @@
       "returnTypes": [
         "Address"
       ]
-    },
-    {
-      "name": "donate",
-      "usePreapprovedAssets": true,
-      "useAssetsInContract": true,
-      "isPublic": true,
-      "paramNames": [
-        "donor",
-        "tokenId",
-        "amount"
-      ],
-      "paramTypes": [
-        "Address",
-        "ByteVec",
-        "U256"
-      ],
-      "paramIsMutable": [
-        false,
-        false,
-        false
-      ],
-      "returnTypes": []
-    },
-    {
-      "name": "finalize",
-      "usePreapprovedAssets": false,
-      "useAssetsInContract": true,
-      "isPublic": true,
-      "paramNames": [],
-      "paramTypes": [],
-      "paramIsMutable": [],
-      "returnTypes": []
     }
   ],
   "constants": [],

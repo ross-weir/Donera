@@ -1,6 +1,6 @@
 import { describe, it, beforeAll, expect } from "bun:test";
 import { randomContractAddress, testAddress } from "@alephium/web3-test";
-import { expectAssertionError, prepareForTests } from "./utils.test";
+import { expectAssertionError, prepareForTests } from "./test-utils";
 import { Fund } from "./fund";
 import { ALPH_TOKEN_ID, ONE_ALPH } from "@alephium/web3";
 
