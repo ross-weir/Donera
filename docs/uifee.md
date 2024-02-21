@@ -10,6 +10,6 @@ You can configure fees to be paid in ALPH or any token of your choosing.
 
 Update the following as desired:
 
-<TODO>
+https://github.com/ross-weir/Donera/blob/8002b4b7363cd32aca62b140b96dde22d22b4808/apps/web/app/_lib/donera.ts#L35-L47
 
 And now you will receive the configured fee everytime someone uses your UI to create, donate or finalize a fund.
