@@ -1,17 +1,26 @@
 {
   "version": "v2.8.2",
   "name": "FinalizeFund",
-  "bytecodeTemplate": "01010300000005{1}0d0c{0}0104",
+  "bytecodeTemplate": "0101030000000e{3}0c334c05b4{1}{2}{3}aa{4}0d0c{0}0104",
   "fieldsSig": {
     "names": [
       "donera",
+      "uiDev",
+      "uiFeeToken",
+      "uiFee",
       "fundContractId"
     ],
     "types": [
       "ByteVec",
+      "Address",
+      "ByteVec",
+      "U256",
       "ByteVec"
     ],
     "isMutable": [
+      false,
+      false,
+      false,
       false,
       false
     ]

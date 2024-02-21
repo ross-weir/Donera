@@ -1,5 +1,7 @@
-import { NetworkId } from "@alephium/web3";
+import { ALPH_TOKEN_ID, NetworkId, ONE_ALPH } from "@alephium/web3";
 import { DoneraDapp } from "@donera/dapp";
+import { loadDeployments } from "@donera/dapp/deploys";
+import { UiFee } from "@donera/dapp/fees";
 
 export const getNetwork = (): NetworkId => {
   const networkId = process.env.NEXT_PUBLIC_DONERA_NETWORK;
@@ -30,6 +32,17 @@ export const getExternalLinkForTx = (txId: string): string => {
   return `${getExplorerUrl()}/transactions/${txId}`;
 };
 
+// Applied to every "fund create", "donate", "finalize fund" operation
+const getUiFee = (): UiFee => {
+  const { deployerAddress } = loadDeployments(getNetwork());
+
+  return {
+    uiDev: deployerAddress,
+    uiFee: ONE_ALPH.toString(),
+    uiFeeToken: ALPH_TOKEN_ID,
+  };
+};
+
 let donera: DoneraDapp | undefined;
 
 export const getDoneraDapp = (): DoneraDapp => {
@@ -37,7 +50,7 @@ export const getDoneraDapp = (): DoneraDapp => {
     return donera;
   }
 
-  donera = DoneraDapp.forNetwork(getNetwork());
+  donera = DoneraDapp.forNetwork(getNetwork(), getUiFee());
 
   return donera;
 };
