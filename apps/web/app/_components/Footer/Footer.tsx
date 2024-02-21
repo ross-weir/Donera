@@ -26,6 +26,10 @@ const links = [
     label: "Donate",
     link: "#",
   },
+  {
+    label: "Fees",
+    link: "#",
+  },
 ];
 
 export function Footer() {
