@@ -30,6 +30,10 @@ const links = [
     label: "Fees",
     link: "#",
   },
+  {
+    label: "Documentation",
+    link: "#",
+  },
 ];
 
 export function Footer() {

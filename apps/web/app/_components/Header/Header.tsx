@@ -6,6 +6,19 @@ import Link from "next/link";
 import { LaunchFundButton } from "../LaunchFundButton";
 import { SearchBar } from "./SearchBar";
 import classes from "./Header.module.css";
+import WalletIcon from "./WalletIcon";
+import cx from "clsx";
+
+const controlIconProps = {
+  iconProps: {
+    className: cx(classes.icon),
+    stroke: 1.5,
+  },
+  actionProps: {
+    variant: "default",
+    size: "lg",
+  },
+};
 
 export function Header() {
   return (
@@ -23,7 +36,8 @@ export function Header() {
           Launch fundraiser
         </LaunchFundButton>
         <SearchBar />
-        <ColorSchemeToggleIcon />
+        <WalletIcon {...controlIconProps} />
+        <ColorSchemeToggleIcon {...controlIconProps} />
       </Group>
     </Group>
   );
