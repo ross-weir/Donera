@@ -25,9 +25,9 @@
     },
     "Donera": {
       "sourceFile": "donera.ral",
-      "sourceCodeHash": "d389614812a1d3badb7548404a80e0ef7a21851d54a4629580282f5e3bcbd778",
+      "sourceCodeHash": "f676f468d21ad0299c9b9baf97595249eacc05602b2e2dfbd13a642cfb1af2c0",
       "bytecodeDebugPatch": "",
-      "codeHashDebug": "4a9e38d8277fd962cca8c7105df7ccef79b7d3c0e904aa069ca689db0bd2be13",
+      "codeHashDebug": "a7cbd4a05ef2cc664ba03734ced49445c4bea668b41b4658117db488ba931a47",
       "warnings": []
     },
     "FinalizeFund": {
@@ -39,9 +39,23 @@
     },
     "Fund": {
       "sourceFile": "fund.ral",
-      "sourceCodeHash": "306f5817842f39796d2e5a8aa0c1277cba0c192b548ddc12bebc1469cf74e4be",
+      "sourceCodeHash": "5121c2fffce6ca810eaa33f86679e97e30d9ce45fec5e22d520f62e028313dbf",
       "bytecodeDebugPatch": "",
-      "codeHashDebug": "b29972a121580acb2acdbcea1877588d3d0ee406b2a7f14d271b660e35a19600",
+      "codeHashDebug": "d029c5f32519bc4a1639873afb0be1eb619a6bccd76846e5da6347e55bc25e63",
+      "warnings": []
+    },
+    "IDonera": {
+      "sourceFile": "donera_interface.ral",
+      "sourceCodeHash": "0546cced1c1fca29c5de76b750cb4492371f21d8f815c670b5ab27d69b7916dd",
+      "bytecodeDebugPatch": "",
+      "codeHashDebug": "",
+      "warnings": []
+    },
+    "IFund": {
+      "sourceFile": "fund_interface.ral",
+      "sourceCodeHash": "00f7c8623b8a4bb4a6f647d9c19d956e7566c0c3ef4d9ed1444eb1efa5bdc7dc",
+      "bytecodeDebugPatch": "",
+      "codeHashDebug": "",
       "warnings": []
     },
     "Owned": {
@@ -54,6 +68,13 @@
     "SetAttoListingFee": {
       "sourceFile": "scripts.ral",
       "sourceCodeHash": "cb2942fbf98fae9336cea6163f1a7fd98968d302a7eeee9bc3502ed2678530e2",
+      "bytecodeDebugPatch": "",
+      "codeHashDebug": "",
+      "warnings": []
+    },
+    "Upgradeable": {
+      "sourceFile": "traits/upgradeable.ral",
+      "sourceCodeHash": "be35242608aeaa61507373eaf2f4aedaf0a1de90091810a10952cbcb04ff840b",
       "bytecodeDebugPatch": "",
       "codeHashDebug": "",
       "warnings": []

@@ -92,6 +92,19 @@ class Factory extends ContractFactory<FundInstance, FundTypes.Fields> {
   }
 
   tests = {
+    donate: async (
+      params: TestContractParams<
+        FundTypes.Fields,
+        { donor: Address; tokenId: HexString; amount: bigint }
+      >
+    ): Promise<TestContractResult<null>> => {
+      return testMethod(this, "donate", params);
+    },
+    finalize: async (
+      params: Omit<TestContractParams<FundTypes.Fields, never>, "testArgs">
+    ): Promise<TestContractResult<null>> => {
+      return testMethod(this, "finalize", params);
+    },
     assertOwner: async (
       params: TestContractParams<FundTypes.Fields, { caller: Address }>
     ): Promise<TestContractResult<null>> => {
@@ -127,19 +140,6 @@ class Factory extends ContractFactory<FundInstance, FundTypes.Fields> {
     ): Promise<TestContractResult<Address>> => {
       return testMethod(this, "getOrganizer", params);
     },
-    donate: async (
-      params: TestContractParams<
-        FundTypes.Fields,
-        { donor: Address; tokenId: HexString; amount: bigint }
-      >
-    ): Promise<TestContractResult<null>> => {
-      return testMethod(this, "donate", params);
-    },
-    finalize: async (
-      params: Omit<TestContractParams<FundTypes.Fields, never>, "testArgs">
-    ): Promise<TestContractResult<null>> => {
-      return testMethod(this, "finalize", params);
-    },
   };
 }
 
@@ -148,7 +148,7 @@ export const Fund = new Factory(
   Contract.fromJson(
     FundContractJson,
     "",
-    "b29972a121580acb2acdbcea1877588d3d0ee406b2a7f14d271b660e35a19600"
+    "d029c5f32519bc4a1639873afb0be1eb619a6bccd76846e5da6347e55bc25e63"
   )
 );
 

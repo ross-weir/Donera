@@ -1,0 +1,18 @@
+Abstract Contract Upgradeable(
+  mut selfOwner: Address
+) extends Owned(selfOwner) {
+  pub fn upgrade(newCode: ByteVec) -> () {
+    assertOwner(callerAddress!())
+    migrate!(newCode)
+  }
+  
+  @using(updateFields = true)
+  pub fn upgradeWithFields(
+    newCode: ByteVec,
+    newImmFieldsEncoded: ByteVec,
+    newMutFieldsEncoded: ByteVec
+  ) -> () {
+    assertOwner(callerAddress!())
+    migrateWithFields!(newCode, newImmFieldsEncoded, newMutFieldsEncoded)
+  }
+}
