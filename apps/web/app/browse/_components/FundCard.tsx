@@ -18,7 +18,7 @@ export function FundCard({ fund, alphRaised, ...rest }: FundCardProps) {
         <Image
           src="https://placehold.co/900x400?text=Placeholder"
           alt="Running challenge"
-          height={150}
+          height={200}
         />
       </CardSection>
       <Text pt="sm" fz="xl" fw={540} lineClamp={1}>

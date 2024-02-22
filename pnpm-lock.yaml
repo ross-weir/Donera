@@ -15,14 +15,14 @@ importers:
   apps/web:
     dependencies:
       '@alephium/token-list':
-        specifier: ^0.0.14
-        version: 0.0.14
+        specifier: ^0.0.15
+        version: 0.0.15
       '@alephium/web3':
-        specifier: ^0.30.1
-        version: 0.30.1
+        specifier: ^0.31.0
+        version: 0.31.0
       '@alephium/web3-react':
-        specifier: ^0.30.1
-        version: 0.30.1(@babel/core@7.23.9)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)
+        specifier: ^0.31.0
+        version: 0.31.0(@babel/core@7.23.9)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)
       '@donera/alephium-config':
         specifier: workspace:^
         version: link:../../packages/alephium-config
@@ -112,8 +112,8 @@ importers:
   packages/alephium-config:
     devDependencies:
       '@alephium/cli':
-        specifier: ^0.30.1
-        version: 0.30.1(@types/node@20.11.17)(node-fetch@3.3.2)
+        specifier: ^0.31.0
+        version: 0.31.0(@types/node@20.11.17)(node-fetch@3.3.2)
       '@types/node':
         specifier: ^20.11.17
         version: 20.11.17
@@ -139,21 +139,21 @@ importers:
   packages/dapp:
     dependencies:
       '@alephium/token-list':
-        specifier: ^0.0.14
-        version: 0.0.14
+        specifier: ^0.0.15
+        version: 0.0.15
       '@alephium/web3':
-        specifier: ^0.30.1
-        version: 0.30.1
+        specifier: ^0.31.0
+        version: 0.31.0
       '@donera/core':
         specifier: workspace:^
         version: link:../core
     devDependencies:
       '@alephium/cli':
-        specifier: ^0.30.1
-        version: 0.30.1(@types/node@20.11.17)(node-fetch@3.3.2)
+        specifier: ^0.31.0
+        version: 0.31.0(node-fetch@3.3.2)
       '@alephium/web3-test':
-        specifier: ^0.30.1
-        version: 0.30.1
+        specifier: ^0.31.0
+        version: 0.31.0
       '@donera/alephium-config':
         specifier: workspace:^
         version: link:../alephium-config
@@ -222,8 +222,8 @@ importers:
   packages/indexer:
     dependencies:
       '@alephium/web3':
-        specifier: ^0.30.1
-        version: 0.30.1
+        specifier: ^0.31.0
+        version: 0.31.0
       '@donera/alephium-config':
         specifier: workspace:^
         version: link:../alephium-config
@@ -269,13 +269,13 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: true
 
-  /@alephium/cli@0.30.1(@types/node@20.11.17)(node-fetch@3.3.2):
-    resolution: {integrity: sha512-AY+qsfagH0H+WlZ9NZOBenzOZcwsP848s3wkubUbN1z3gM3qArTNwHVDlL2gUfrsCHUmIlf5gxNgxq8wumua6A==}
+  /@alephium/cli@0.31.0(@types/node@20.11.17)(node-fetch@3.3.2):
+    resolution: {integrity: sha512-3C3bNHK6gb3cXXJaLq2NE6i5vaBxF/TMegvWDLtUA4TihcCoDS/P6qplKJ1UKlE/QA9WmUyaIxpAwpd8ZWbu3g==}
     engines: {node: '>=14.0.0', npm: '>=7.0.0'}
     hasBin: true
     dependencies:
-      '@alephium/web3': 0.30.1
-      '@alephium/web3-wallet': 0.30.1
+      '@alephium/web3': 0.31.0
+      '@alephium/web3-wallet': 0.31.0
       '@swc/core': 1.4.2
       commander: 9.5.0
       cross-fetch: 3.1.8
@@ -298,17 +298,46 @@ packages:
       - ts-node
     dev: true
 
-  /@alephium/get-extension-wallet@0.30.1:
-    resolution: {integrity: sha512-2R/lSyHg5rWNZ10qEg6aCrPYNHfkv5l8XK46RIGfASYxfcOzSmTvEjx/CZKKjkPVbU0ci7Kh+xAFhP7I5K8uRA==}
+  /@alephium/cli@0.31.0(node-fetch@3.3.2):
+    resolution: {integrity: sha512-3C3bNHK6gb3cXXJaLq2NE6i5vaBxF/TMegvWDLtUA4TihcCoDS/P6qplKJ1UKlE/QA9WmUyaIxpAwpd8ZWbu3g==}
+    engines: {node: '>=14.0.0', npm: '>=7.0.0'}
+    hasBin: true
     dependencies:
-      '@alephium/web3': 0.30.1
+      '@alephium/web3': 0.31.0
+      '@alephium/web3-wallet': 0.31.0
+      '@swc/core': 1.4.2
+      commander: 9.5.0
+      cross-fetch: 3.1.8
+      crypto-js: 4.2.0
+      fetch-retry: 5.0.6
+      fs-extra: 10.1.0
+      ipfs-http-client: 56.0.3(node-fetch@3.3.2)
+      jest: 28.1.3
+      openai: 3.3.0
+      prettier: 2.8.8
+      yaml: 2.3.4
+    transitivePeerDependencies:
+      - '@swc/helpers'
+      - '@types/node'
+      - debug
+      - encoding
+      - node-fetch
+      - node-notifier
+      - supports-color
+      - ts-node
+    dev: true
+
+  /@alephium/get-extension-wallet@0.31.0:
+    resolution: {integrity: sha512-dzPERt+yiq/L18FZYI9Y3yeBM2LusTWNmx3UNIsT/u7xm2gw/DwqaTnfFY8XZV/3Wg/i9BMaFM+sEGbaIINmQA==}
+    dependencies:
+      '@alephium/web3': 0.31.0
       bowser: 2.11.0
     transitivePeerDependencies:
       - encoding
     dev: false
 
-  /@alephium/token-list@0.0.14:
-    resolution: {integrity: sha512-47x/cp367ObF1C8zheVo5ITsbarAOToQsvvRnHCnZbf0IE4Ri2jQhcQtKfqFK5i9288+/jrCy2ldPcG8SqVBTg==}
+  /@alephium/token-list@0.0.15:
+    resolution: {integrity: sha512-ujOWIdT2cK/7x4lFo/SphoARbHr3QsjY99FX8vIGkDFh8wSRp3y2XUK1MmhF6OvcxK6SscIEhZH3JAStNyU9dg==}
     engines: {node: '>=16', npm: '>=8'}
     dependencies:
       cross-fetch: 3.1.8
@@ -316,12 +345,12 @@ packages:
       - encoding
     dev: false
 
-  /@alephium/walletconnect-provider@0.30.1:
-    resolution: {integrity: sha512-o8GnPXGi7zXXUe3PhEk+++27y7iP72cQ/yDhoVpnEsjq4uXH+6rDx2cTYatuZHXk2sITA50EG4wbeJp6SYnd2A==}
+  /@alephium/walletconnect-provider@0.31.0:
+    resolution: {integrity: sha512-84Zwb5RtOynfcPY0fl6glDKYInn16R7/zeva833zkCrP3jEcvTmQfn0uWfbr/E3xjgUYErSQxhZAGKT2dYBaug==}
     engines: {node: '>=14.0.0', npm: '>=7.0.0'}
     dependencies:
-      '@alephium/web3': 0.30.1
-      '@alephium/web3-wallet': 0.30.1
+      '@alephium/web3': 0.31.0
+      '@alephium/web3-wallet': 0.31.0
       '@walletconnect/core': 2.11.0
       '@walletconnect/keyvaluestorage': 1.1.1
       '@walletconnect/sign-client': 2.11.0
@@ -358,15 +387,15 @@ packages:
       qrcode: 1.4.4
     dev: false
 
-  /@alephium/web3-react@0.30.1(@babel/core@7.23.9)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-Mmnv2aUgUeX0M0RzQvQGh53LTeERHOweP+bftV149CEcOD+dXjvqi0uFYWmg6Bc5XRw25rbptRze/vrZr+qKAA==}
+  /@alephium/web3-react@0.31.0(@babel/core@7.23.9)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-lrD9Y2S3NA0eGf8ynxnZptn3//o4w/zYhTZ7SUfKJdJo+EzS6I6JT+dwokkOrhDVbLL8/vzq86+WSbxkagH+vg==}
     engines: {node: '>=12.4'}
     peerDependencies:
       react: 17.x || 18.x
       react-dom: 17.x || 18.x
     dependencies:
-      '@alephium/get-extension-wallet': 0.30.1
-      '@alephium/walletconnect-provider': 0.30.1
+      '@alephium/get-extension-wallet': 0.31.0
+      '@alephium/walletconnect-provider': 0.31.0
       '@alephium/walletconnect-qrcode-modal': 0.1.0
       buffer: 6.0.3
       detect-browser: 5.3.0
@@ -399,23 +428,23 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@alephium/web3-test@0.30.1:
-    resolution: {integrity: sha512-xQPVEuo26zSW1NckSgvgj8rrt3DQn2JQYq8wvsNDPMElDe4C4CxFhURROATE0OfulAv/UtcBOwu0ygd6iIh47g==}
+  /@alephium/web3-test@0.31.0:
+    resolution: {integrity: sha512-CVhWvGaKTUwY6b2PdKxu75SJK5g2zlwRa0Kv1buK5Cdqq3+EA8LI0oFnjAGm0IK7aHSNQmawLQ9HtPrUbpwhIg==}
     engines: {node: '>=14.0.0', npm: '>=7.0.0'}
     dependencies:
-      '@alephium/web3': 0.30.1
-      '@alephium/web3-wallet': 0.30.1
+      '@alephium/web3': 0.31.0
+      '@alephium/web3-wallet': 0.31.0
     transitivePeerDependencies:
       - encoding
     dev: true
 
-  /@alephium/web3-wallet@0.30.1:
-    resolution: {integrity: sha512-gJKgb71NSV3gdNIYPrliOLLqfpk8ksJrH6J0ZmQ8B4L3Z3vPjJmL85t1Dhe1/dw54CDJCnJyExJ1aEUisJYCFw==}
+  /@alephium/web3-wallet@0.31.0:
+    resolution: {integrity: sha512-FsSnuBBaZN7d7rnAbjrB2m0IbFJHNJNuZxzf81rM7CoAtHrmIqUrA79POyzylzebewbui+m8380rq5vqnGOzSQ==}
     engines: {node: '>=14.0.0', npm: '>=7.0.0'}
     dependencies:
-      '@alephium/web3': 0.30.1
+      '@alephium/web3': 0.31.0
       '@noble/secp256k1': 1.7.1
-      '@types/node': 16.18.82
+      '@types/node': 16.18.83
       bip32: 3.1.0
       bip39: 3.0.4
       buffer: 6.0.3
@@ -424,8 +453,8 @@ packages:
     transitivePeerDependencies:
       - encoding
 
-  /@alephium/web3@0.30.1:
-    resolution: {integrity: sha512-VbdexhcxgoVfDhZqyj83nPhGtA9pzXGViw2xX+YwPjuCEggNQAkgVGAmpMBAkm5RnFwmXhncf89HNGRFfb9V6A==}
+  /@alephium/web3@0.31.0:
+    resolution: {integrity: sha512-tzVC38g8ax1e0NKwtv/bNXOJVcKJtICDJx+0z0zKY4/UhChBAvc9IYhV7Wzg7Gnslz6vgXgISV/Dk21d/esNww==}
     engines: {node: '>=14.0.0', npm: '>=7.0.0'}
     dependencies:
       '@noble/secp256k1': 1.7.1
@@ -1216,7 +1245,7 @@ packages:
     dependencies:
       '@jest/fake-timers': 28.1.3
       '@jest/types': 28.1.3
-      '@types/node': 20.11.19
+      '@types/node': 20.11.20
       jest-mock: 28.1.3
     dev: true
 
@@ -1243,7 +1272,7 @@ packages:
     dependencies:
       '@jest/types': 28.1.3
       '@sinonjs/fake-timers': 9.1.2
-      '@types/node': 20.11.19
+      '@types/node': 20.11.20
       jest-message-util: 28.1.3
       jest-mock: 28.1.3
       jest-util: 28.1.3
@@ -2237,8 +2266,8 @@ packages:
   /@types/node@11.11.6:
     resolution: {integrity: sha512-Exw4yUWMBXM3X+8oqzJNRqZSwUAaS4+7NdvHqQuFi/d+synz++xmX3QIf+BFqneW8N31R8Ky+sikfZUXq07ggQ==}
 
-  /@types/node@16.18.82:
-    resolution: {integrity: sha512-pcDZtkx9z8XYV+ius2P3Ot2VVrcYOfXffBQUBuiszrlUzKSmoDYqo+mV+IoL8iIiIjjtOMvNSmH1hwJ+Q+f96Q==}
+  /@types/node@16.18.83:
+    resolution: {integrity: sha512-TmBqzDY/GeCEmLob/31SunOQnqYE3ZiiuEh1U9o3HqE1E2cqKZQA5RQg4krEguCY3StnkXyDmCny75qyFLx/rA==}
 
   /@types/node@20.11.17:
     resolution: {integrity: sha512-QmgQZGWu1Yw9TDyAP9ZzpFJKynYNeOvwMJmaxABfieQoVoiVOS6MN1WSpqpRcbeA5+RW82kraAVxCCJg+780Qw==}
@@ -2246,8 +2275,8 @@ packages:
       undici-types: 5.26.5
     dev: true
 
-  /@types/node@20.11.19:
-    resolution: {integrity: sha512-7xMnVEcZFu0DikYjWOlRq7NTPETrm7teqUT2WkQjrTIkEgUyyGdWsj/Zg8bEJt5TNklzbPD1X3fqfsHw3SpapQ==}
+  /@types/node@20.11.20:
+    resolution: {integrity: sha512-7/rR21OS+fq8IyHTgtLkDK949uzsa6n8BkziAKtPVpugIkO6D+/ooXMvzXxDnZrmtXVfjb1bKQafYpb8s89LOg==}
     dependencies:
       undici-types: 5.26.5
     dev: true
@@ -3193,8 +3222,8 @@ packages:
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
     dependencies:
-      caniuse-lite: 1.0.30001588
-      electron-to-chromium: 1.4.677
+      caniuse-lite: 1.0.30001589
+      electron-to-chromium: 1.4.680
       node-releases: 2.0.14
       update-browserslist-db: 1.0.13(browserslist@4.23.0)
 
@@ -3301,8 +3330,8 @@ packages:
     resolution: {integrity: sha512-HMFNotUmLXn71BQxg8cijvqxnIAofforZOwGsxyXJ0qugTdspUF4sPSJ2vhgprHCB996tIDzEq1ubumPDV8ULA==}
     dev: false
 
-  /caniuse-lite@1.0.30001588:
-    resolution: {integrity: sha512-+hVY9jE44uKLkH0SrUTqxjxqNTOWHsbnQDIKjwkZ3lNTzUUVdBLBGXtj/q5Mp5u98r3droaZAewQuEDzjQdZlQ==}
+  /caniuse-lite@1.0.30001589:
+    resolution: {integrity: sha512-vNQWS6kI+q6sBlHbh71IIeC+sRwK2N3EDySc/updIGhIee2x5z00J4c1242/5/d6EpEMdOnk/m+6tuk4/tcsqg==}
 
   /cborg@1.10.2:
     resolution: {integrity: sha512-b3tFPA9pUr2zCUiCfRd2+wok2/LBSNUMKOuRRok+WlvvAgEt/PlbgPTsZUcwCOs53IJvLgTp0eotwtosE6njug==}
@@ -3804,8 +3833,8 @@ packages:
       encoding: 0.1.13
     dev: true
 
-  /electron-to-chromium@1.4.677:
-    resolution: {integrity: sha512-erDa3CaDzwJOpyvfKhOiJjBVNnMM0qxHq47RheVVwsSQrgBA9ZSGV9kdaOfZDPXcHzhG7lBxhj6A7KvfLJBd6Q==}
+  /electron-to-chromium@1.4.680:
+    resolution: {integrity: sha512-4nToZ5jlPO14W82NkF32wyjhYqQByVaDmLy4J2/tYcAbJfgO2TKJC780Az1V13gzq4l73CJ0yuyalpXvxXXD9A==}
 
   /elliptic@6.5.4:
     resolution: {integrity: sha512-iLhC6ULemrljPZb+QutR5TQGB+pdW6KGD5RSegS+8sorOZT+rdQFbsQFJgvN3eRqNALqJer4oQ16YvJHlU8hzQ==}
@@ -5402,6 +5431,34 @@ packages:
       - supports-color
     dev: true
 
+  /jest-cli@28.1.3:
+    resolution: {integrity: sha512-roY3kvrv57Azn1yPgdTebPAXvdR2xfezaKKYzVxZ6It/5NCxzJym6tUI5P1zkdWhfUYkxEI9uZWcQdaFLo8mJQ==}
+    engines: {node: ^12.13.0 || ^14.15.0 || ^16.10.0 || >=17.0.0}
+    hasBin: true
+    peerDependencies:
+      node-notifier: ^8.0.1 || ^9.0.0 || ^10.0.0
+    peerDependenciesMeta:
+      node-notifier:
+        optional: true
+    dependencies:
+      '@jest/core': 28.1.3
+      '@jest/test-result': 28.1.3
+      '@jest/types': 28.1.3
+      chalk: 4.1.2
+      exit: 0.1.2
+      graceful-fs: 4.2.11
+      import-local: 3.1.0
+      jest-config: 28.1.3(@types/node@20.11.20)
+      jest-util: 28.1.3
+      jest-validate: 28.1.3
+      prompts: 2.4.2
+      yargs: 17.7.2
+    transitivePeerDependencies:
+      - '@types/node'
+      - supports-color
+      - ts-node
+    dev: true
+
   /jest-cli@28.1.3(@types/node@20.11.17):
     resolution: {integrity: sha512-roY3kvrv57Azn1yPgdTebPAXvdR2xfezaKKYzVxZ6It/5NCxzJym6tUI5P1zkdWhfUYkxEI9uZWcQdaFLo8mJQ==}
     engines: {node: ^12.13.0 || ^14.15.0 || ^16.10.0 || >=17.0.0}
@@ -5446,6 +5503,45 @@ packages:
       '@jest/test-sequencer': 28.1.3
       '@jest/types': 28.1.3
       '@types/node': 20.11.17
+      babel-jest: 28.1.3(@babel/core@7.23.9)
+      chalk: 4.1.2
+      ci-info: 3.9.0
+      deepmerge: 4.3.1
+      glob: 7.2.3
+      graceful-fs: 4.2.11
+      jest-circus: 28.1.3
+      jest-environment-node: 28.1.3
+      jest-get-type: 28.0.2
+      jest-regex-util: 28.0.2
+      jest-resolve: 28.1.3
+      jest-runner: 28.1.3
+      jest-util: 28.1.3
+      jest-validate: 28.1.3
+      micromatch: 4.0.5
+      parse-json: 5.2.0
+      pretty-format: 28.1.3
+      slash: 3.0.0
+      strip-json-comments: 3.1.1
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
+  /jest-config@28.1.3(@types/node@20.11.20):
+    resolution: {integrity: sha512-MG3INjByJ0J4AsNBm7T3hsuxKQqFIiRo/AUqb1q9LRKI5UU6Aar9JHbr9Ivn1TVwfUD9KirRoM/T6u8XlcQPHQ==}
+    engines: {node: ^12.13.0 || ^14.15.0 || ^16.10.0 || >=17.0.0}
+    peerDependencies:
+      '@types/node': '*'
+      ts-node: '>=9.0.0'
+    peerDependenciesMeta:
+      '@types/node':
+        optional: true
+      ts-node:
+        optional: true
+    dependencies:
+      '@babel/core': 7.23.9
+      '@jest/test-sequencer': 28.1.3
+      '@jest/types': 28.1.3
+      '@types/node': 20.11.20
       babel-jest: 28.1.3(@babel/core@7.23.9)
       chalk: 4.1.2
       ci-info: 3.9.0
@@ -5571,7 +5667,7 @@ packages:
     engines: {node: ^12.13.0 || ^14.15.0 || ^16.10.0 || >=17.0.0}
     dependencies:
       '@jest/types': 28.1.3
-      '@types/node': 20.11.19
+      '@types/node': 20.11.20
     dev: true
 
   /jest-pnp-resolver@1.2.3(jest-resolve@28.1.3):
@@ -5625,7 +5721,7 @@ packages:
       '@jest/test-result': 28.1.3
       '@jest/transform': 28.1.3
       '@jest/types': 28.1.3
-      '@types/node': 20.11.19
+      '@types/node': 20.11.20
       chalk: 4.1.2
       emittery: 0.10.2
       graceful-fs: 4.2.11
@@ -5751,6 +5847,26 @@ packages:
       '@types/node': 20.11.17
       merge-stream: 2.0.0
       supports-color: 8.1.1
+    dev: true
+
+  /jest@28.1.3:
+    resolution: {integrity: sha512-N4GT5on8UkZgH0O5LUavMRV1EDEhNTL0KEfRmDIeZHSV7p2XgLoY9t9VDUgL6o+yfdgYHVxuz81G8oB9VG5uyA==}
+    engines: {node: ^12.13.0 || ^14.15.0 || ^16.10.0 || >=17.0.0}
+    hasBin: true
+    peerDependencies:
+      node-notifier: ^8.0.1 || ^9.0.0 || ^10.0.0
+    peerDependenciesMeta:
+      node-notifier:
+        optional: true
+    dependencies:
+      '@jest/core': 28.1.3
+      '@jest/types': 28.1.3
+      import-local: 3.1.0
+      jest-cli: 28.1.3
+    transitivePeerDependencies:
+      - '@types/node'
+      - supports-color
+      - ts-node
     dev: true
 
   /jest@28.1.3(@types/node@20.11.17):
@@ -5913,7 +6029,7 @@ packages:
       h3: 1.10.2
       http-shutdown: 1.2.2
       jiti: 1.21.0
-      mlly: 1.5.0
+      mlly: 1.6.0
       node-forge: 1.3.1
       pathe: 1.1.2
       std-env: 3.7.0
@@ -6093,8 +6209,8 @@ packages:
     engines: {node: '>=16 || 14 >=14.17'}
     dev: true
 
-  /mlly@1.5.0:
-    resolution: {integrity: sha512-NPVQvAY1xr1QoVeG0cy8yUYC7FQcOx6evl/RjT1wL5FvzPnzOysoqB/jmx/DhssT2dYa8nxECLAaFI/+gVLhDQ==}
+  /mlly@1.6.0:
+    resolution: {integrity: sha512-YOvg9hfYQmnaB56Yb+KrJE2u0Yzz5zR+sLejEvF4fzwzV1Al6hkf2vyHTwqCRyv0hCi9rVCqVoXpyYevQIRwLQ==}
     dependencies:
       acorn: 8.11.3
       pathe: 1.1.2
@@ -6589,7 +6705,7 @@ packages:
     resolution: {integrity: sha512-nN7pYi0AQqJnoLPC9eHFQ8AcyaixBUOwvqc5TDnIKCMEE6I0y8P7OKA7fPexsXGCGxQDl/cmrLAp26LhcwxZ4A==}
     dependencies:
       jsonc-parser: 3.2.1
-      mlly: 1.5.0
+      mlly: 1.6.0
       pathe: 1.1.2
     dev: false
 
