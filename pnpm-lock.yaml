@@ -78,6 +78,9 @@ importers:
       '@donera/typescript-config':
         specifier: workspace:^
         version: link:../../packages/typescript-config
+      '@prisma/nextjs-monorepo-workaround-plugin':
+        specifier: ^5.10.2
+        version: 5.10.2
       '@types/nanoid':
         specifier: ^3.0.0
         version: 3.0.0
@@ -1820,6 +1823,10 @@ packages:
     resolution: {integrity: sha512-6OQsNxTyhvG+T2Ksr8FPFpuPeL4r9u0JF0OZHUBI/Uy9SS43sPyAIutt4ZEAyqWQt104ERh70EZedkHZKsnNbg==}
     dependencies:
       '@prisma/debug': 5.9.1
+
+  /@prisma/nextjs-monorepo-workaround-plugin@5.10.2:
+    resolution: {integrity: sha512-eZnYMgmiZfW3beqvkA+Xerubi9J//S/CSGevzbd+E48sKSjiRysKq91PWcdoENOSYZirdsAdGCx+q+sgXxqR9w==}
+    dev: true
 
   /@protobufjs/aspromise@1.1.2:
     resolution: {integrity: sha512-j+gKExEuLmKwvz3OgROXtrJ2UG2x8Ch2YZUxahh+s1F2HZ+wAceUNLkvy6zKCPVRkU++ZWQrdxsUeQXmcg4uoQ==}
