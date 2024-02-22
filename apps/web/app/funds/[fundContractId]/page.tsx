@@ -1,10 +1,11 @@
 import db, { Fund } from "@donera/database";
-import { Container, Flex, Group } from "@mantine/core";
+import { Container, Flex } from "@mantine/core";
 import { notFound } from "next/navigation";
 import { FundDetail } from "./_components/FundDetail";
 import classes from "./page.module.css";
 import { DonateSection } from "./_components/DonateSection";
 import { ALPH_TOKEN_ID } from "@alephium/web3";
+import { fundSummary } from "@donera/database/funds";
 
 export const dynamic = "force-dynamic";
 
@@ -14,28 +15,7 @@ function alphRaised(fund: Fund): string {
 
 export default async function FundDetailPage({ params }: { params: { fundContractId: string } }) {
   const { fundContractId } = params;
-  const [fund, donationCount] = await db.$transaction([
-    db.fund.findFirst({
-      where: {
-        id: fundContractId,
-      },
-      include: {
-        donations: {
-          take: 3,
-          orderBy: {
-            createdAt: "desc",
-          },
-          select: {
-            id: true,
-            donor: true,
-            tokenId: true,
-            amount: true,
-          },
-        },
-      },
-    }),
-    db.donation.count({ where: { fundId: fundContractId } }),
-  ]);
+  const { fund, donationCount } = await fundSummary(db, fundContractId);
 
   if (!fund) {
     notFound();
