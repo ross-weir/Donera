@@ -1,3 +1,5 @@
+import { Prisma } from ".";
+
 // poor mans search
 export function fundTextSearch(term: string = "") {
   if (!term) {
@@ -9,25 +11,25 @@ export function fundTextSearch(term: string = "") {
       {
         description: {
           contains: term,
-          mode: "insensitive",
+          mode: "insensitive" as Prisma.QueryMode,
         },
       },
       {
         name: {
           contains: term,
-          mode: "insensitive",
+          mode: "insensitive" as Prisma.QueryMode,
         },
       },
       {
         organizer: {
           contains: term,
-          mode: "insensitive",
+          mode: "insensitive" as Prisma.QueryMode,
         },
       },
       {
         beneficiary: {
           contains: term,
-          mode: "insensitive",
+          mode: "insensitive" as Prisma.QueryMode,
         },
       },
     ],
