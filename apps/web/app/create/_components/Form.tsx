@@ -100,6 +100,7 @@ export default function CreateFundForm() {
 
   const onSuccess = (result: CreateFundResult) => {
     notifications.show({
+      withBorder: true,
       color: "teal",
       icon: <IconCheck size="1.1rem" />,
       title: "Fund submitted",

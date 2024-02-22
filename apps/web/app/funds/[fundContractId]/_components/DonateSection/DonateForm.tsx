@@ -56,6 +56,7 @@ export function DonateForm({ fundContractId }: DonateFormProps) {
   const onSuccess = ({ txId }: { txId: string }) => {
     form.reset();
     notifications.show({
+      withBorder: true,
       title: "Donation submitted! 🎉",
       message: (
         <span>

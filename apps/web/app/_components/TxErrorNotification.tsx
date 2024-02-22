@@ -7,6 +7,7 @@ export function handleTxSubmitError(e: Error, operation: string) {
     notifications.show({
       title: `${operation} aborted`,
       message: "No transaction was submitted to the network",
+      withBorder: true,
     });
   } else {
     console.error(e);
@@ -15,6 +16,7 @@ export function handleTxSubmitError(e: Error, operation: string) {
       message: "Please try again soon.",
       icon: <IconX size="1.1rem" />,
       color: "red",
+      withBorder: true,
     });
   }
 }
