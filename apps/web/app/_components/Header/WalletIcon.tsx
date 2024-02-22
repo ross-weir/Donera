@@ -16,20 +16,18 @@ export default function WalletIcon({ actionProps, iconProps }: WalletIconProps) 
   const { disconnect, connect } = useConnect();
   const connected = connectionStatus === "connected";
   const connecting = connectionStatus === "connecting";
-
   const onIconClick = () => {
     if (!connected) {
       connect();
     }
   };
-
-  return (
-    <WalletMenu disabled={!connected} disconnect={disconnect}>
-      <Indicator processing={connecting} color={connected ? "green" : "red"} onClick={onIconClick}>
-        <ActionIcon {...actionProps} aria-label="Wallet icon button">
-          <IconWallet {...iconProps} />
-        </ActionIcon>
-      </Indicator>
-    </WalletMenu>
+  const icon = (
+    <Indicator processing={connecting} color={connected ? "green" : "red"} onClick={onIconClick}>
+      <ActionIcon {...actionProps} aria-label="Wallet icon button">
+        <IconWallet {...iconProps} />
+      </ActionIcon>
+    </Indicator>
   );
+
+  return connected ? <WalletMenu disconnect={disconnect}>{icon}</WalletMenu> : <>{icon}</>;
 }
