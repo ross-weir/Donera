@@ -1,44 +1,35 @@
 "use client";
 
-import { Button, ButtonProps, ElementProps } from "@mantine/core";
+import { Button, Popover, Text } from "@mantine/core";
 import { useTimeout } from "@mantine/hooks";
+import { IconLink } from "@tabler/icons-react";
 import { useState } from "react";
 
-type BaseProps = ElementProps<"button"> & ButtonProps;
-
 export type ShareButtonProps = {
+  // parent component is rendered on server, no window object
   shortId: string;
-  commonProps: BaseProps;
-  clickedProps: BaseProps;
-  defaultProps: BaseProps;
-  defaultText: string;
-  clickedText: string;
 };
 
-export function ShareButton({
-  shortId,
-  commonProps,
-  clickedProps,
-  defaultProps,
-  defaultText,
-  clickedText,
-}: ShareButtonProps) {
-  const [activeClick, setActiveClick] = useState(false);
-  const { start } = useTimeout(() => setActiveClick(false), 2000);
+export function ShareButton({ shortId }: ShareButtonProps) {
+  const [popup, setPopup] = useState(false);
+  const { start } = useTimeout(() => setPopup(false), 2000);
 
   function onClick() {
     navigator.clipboard.writeText(`${window.location.origin}/f/${shortId}`);
-    setActiveClick(true);
+    setPopup(true);
     start();
   }
 
-  return activeClick ? (
-    <Button {...commonProps} {...clickedProps}>
-      {clickedText}
-    </Button>
-  ) : (
-    <Button {...commonProps} {...defaultProps} onClick={onClick}>
-      {defaultText}
-    </Button>
+  return (
+    <Popover opened={popup}>
+      <Popover.Target>
+        <Button variant="default" fullWidth leftSection={<IconLink size={14} />} onClick={onClick}>
+          Share Link
+        </Button>
+      </Popover.Target>
+      <Popover.Dropdown>
+        <Text size="sm">Copied to clipboard</Text>
+      </Popover.Dropdown>
+    </Popover>
   );
 }
