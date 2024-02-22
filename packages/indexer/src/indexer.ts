@@ -1,5 +1,5 @@
 import { NodeProvider } from "@alephium/web3";
-import { PrismaClient, PrismaPromise } from "@donera/database";
+import { PrismaClient, PrismaPromise, configure } from "@donera/database";
 
 export type IndexerConfig = {
   db: PrismaClient;
@@ -26,13 +26,8 @@ export abstract class BaseIndexer implements Indexer {
     return this.db.indexer.findFirstOrThrow().then((i) => i.height);
   }
 
-  // ensure the indexer is initialized in the db
   protected async maybeInit(): Promise<void> {
-    const exists = (await this.db.indexer.count()) > 0;
-    if (exists) {
-      return;
-    }
-    await this.db.indexer.create({});
+    return configure(this.db);
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

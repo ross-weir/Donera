@@ -1,7 +1,7 @@
 import { NetworkId } from "@alephium/web3";
 import tokenMetadata, { TokenInfo } from "@alephium/token-list";
 
-const devnetTokens = [];
+const devnetTokens: TokenInfo[] = [];
 
 export function getTokensForNetwork(networkId: NetworkId): TokenInfo[] {
   if (networkId === "devnet") {
