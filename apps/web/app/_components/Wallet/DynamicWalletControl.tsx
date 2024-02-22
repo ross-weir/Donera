@@ -9,6 +9,7 @@ import { ExtractProps } from "@/_lib/types";
 import { Button } from "@mantine/core";
 import { ConnectButtonLoader } from "./WalletButton";
 import dynamic from "next/dynamic";
+import { WalletIconLoader, WalletIconProps } from "./WalletIcon";
 
 type ButtonProps = ExtractProps<typeof Button>;
 
@@ -16,4 +17,10 @@ export const dynamicWalletButton = (loaderProps: ButtonProps = {}) =>
   dynamic<ButtonProps>(() => import("./WalletButton"), {
     ssr: false,
     loading: () => <ConnectButtonLoader {...loaderProps} />,
+  });
+
+export const dynamicWalletIcon = (loaderProps: WalletIconProps) =>
+  dynamic(() => import("./WalletIcon"), {
+    ssr: false,
+    loading: () => <WalletIconLoader {...loaderProps} />,
   });

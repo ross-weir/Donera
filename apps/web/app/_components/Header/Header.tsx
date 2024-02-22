@@ -6,8 +6,8 @@ import Link from "next/link";
 import { LaunchFundButton } from "../LaunchFundButton";
 import { SearchBar } from "./SearchBar";
 import classes from "./Header.module.css";
-import WalletIcon from "./WalletIcon";
 import cx from "clsx";
+import { dynamicWalletIcon } from "../Wallet/DynamicWalletControl";
 
 const controlIconProps = {
   iconProps: {
@@ -19,6 +19,8 @@ const controlIconProps = {
     size: "lg",
   },
 };
+
+const WalletIcon = dynamicWalletIcon(controlIconProps);
 
 export function Header() {
   return (

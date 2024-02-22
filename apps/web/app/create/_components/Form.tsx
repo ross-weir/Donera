@@ -2,7 +2,17 @@
 
 import { useState } from "react";
 import { useWallet } from "@alephium/web3-react";
-import { Anchor, Button, Group, NumberInput, Stack, TextInput, Textarea } from "@mantine/core";
+import {
+  Anchor,
+  Button,
+  Group,
+  NumberInput,
+  Popover,
+  Stack,
+  TextInput,
+  Textarea,
+  Text,
+} from "@mantine/core";
 import { DateTimePicker } from "@mantine/dates";
 import { useForm, isNotEmpty, hasLength, isInRange } from "@mantine/form";
 import { getDoneraDapp, getExternalLinkForTx } from "@/_lib/donera";
@@ -15,8 +25,9 @@ import { IconCheck, IconExternalLink } from "@tabler/icons-react";
 import { handleTxSubmitError } from "@/_components/TxErrorNotification";
 import { TokenIcon } from "@/_components/TokenIcon";
 import { ALPH_TOKEN_ID } from "@alephium/web3";
-import { dynamicWalletButton } from "@/_components/Wallet/DynamicWalletButton";
+import { dynamicWalletButton } from "@/_components/Wallet/DynamicWalletControl";
 import { ExtractProps } from "@/_lib/types";
+import { useTimeout } from "@mantine/hooks";
 
 interface FormSchema {
   name: string;
@@ -38,8 +49,36 @@ const commonButtonProps: ExtractProps<typeof Button> = {
 
 const FallbackConnectButton = dynamicWalletButton(commonButtonProps);
 
+function SetBeneficiaryText({ form }: { form: any }) {
+  const [popup, setPopup] = useState(false);
+  const { start } = useTimeout(() => setPopup(false), 2000);
+  const { account } = useWallet();
+
+  const onClick = () => {
+    if (!account) {
+      start();
+      setPopup(true);
+      return;
+    }
+    form.setFieldValue("beneficiary", account.address);
+  };
+
+  return (
+    <Popover withArrow disabled={!!account} opened={popup}>
+      <Popover.Target>
+        <Anchor size="xs" onClick={onClick}>
+          Set to my address
+        </Anchor>
+      </Popover.Target>
+      <Popover.Dropdown>
+        <Text size="sm">Connect your wallet first</Text>
+      </Popover.Dropdown>
+    </Popover>
+  );
+}
+
 export default function CreateFundForm() {
-  const { signer, account } = useWallet();
+  const { signer } = useWallet();
   const form = useForm<FormSchema>({
     initialValues: {
       name: "",
@@ -89,21 +128,6 @@ export default function CreateFundForm() {
     getDoneraDapp().createFund(signer!, form).then(onSuccess).catch(onError);
   };
 
-  function SetBeneficiaryText() {
-    const onClick = () => {
-      if (!account) {
-        return;
-      }
-      form.setFieldValue("beneficiary", account.address);
-    };
-
-    return (
-      <Anchor size="xs" onClick={onClick}>
-        Set to my address
-      </Anchor>
-    );
-  }
-
   return (
     <form onSubmit={form.onSubmit(onSubmit)}>
       <Stack>
@@ -146,7 +170,7 @@ export default function CreateFundForm() {
           label="Beneficiary"
           withAsterisk
           required
-          description={<SetBeneficiaryText />}
+          description={<SetBeneficiaryText form={form} />}
           placeholder="Beneficiaries address"
           {...form.getInputProps("beneficiary")}
         />
