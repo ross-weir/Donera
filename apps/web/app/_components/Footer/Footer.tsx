@@ -65,9 +65,9 @@ export function Footer() {
         <Group gap={1}>{socialIcons}</Group>
         <Group>{textLinks}</Group>
         <Group gap={1}>
-          <Text span c="dimmed">
+          <Anchor c="dimmed" href="https://alephium.org/" target="_blank" rel="noreferrer">
             Powered by Alephium
-          </Text>
+          </Anchor>
           <TokenIcon size="sm" tokenId={ALPH_TOKEN_ID} />
         </Group>
       </Stack>
