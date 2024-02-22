@@ -1,10 +1,9 @@
-import { Group, Title } from "@mantine/core";
+import { Button, Group, Title } from "@mantine/core";
 import Image from "next/image";
 import ColorSchemeToggleIcon from "./ColorSchemeToggleIcon";
 import logo from "./logo.png";
 import Link from "next/link";
 import { LaunchFundButton } from "../LaunchFundButton";
-import { SearchBar } from "./SearchBar";
 import classes from "./Header.module.css";
 import cx from "clsx";
 import { dynamicWalletIcon } from "../Wallet/DynamicWalletControl";
@@ -34,10 +33,10 @@ export function Header() {
         </Link>
       </Group>
       <Group>
-        <LaunchFundButton style={{ border: "none" }} variant="default">
-          Launch fundraiser
-        </LaunchFundButton>
-        <SearchBar />
+        <LaunchFundButton variant="subtle">Launch fundraiser</LaunchFundButton>
+        <Button component={Link} href="/browse" style={{ border: "none" }} variant="default">
+          Discover fundraisers
+        </Button>
         <WalletIcon {...controlIconProps} />
         <ColorSchemeToggleIcon {...controlIconProps} />
       </Group>
