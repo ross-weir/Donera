@@ -67,7 +67,7 @@ export function DonateForm({ fundContractId }: DonateFormProps) {
           </Anchor>
         </span>
       ),
-      autoClose: 7000,
+      autoClose: 6000,
     });
   };
 

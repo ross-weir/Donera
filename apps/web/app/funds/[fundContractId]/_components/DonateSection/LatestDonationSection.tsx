@@ -21,7 +21,7 @@ function DonationText({ amount, tokenId, donor }: DonationTextProps) {
   return (
     <>
       <Text pt="sm">
-        <TokenValueText span tokenId={tokenId} amount={amount} /> donated
+        <TokenValueText span tokenId={tokenId} amount={amount} useCurrencySymbol={false} /> donated
       </Text>
       <Text c="dimmed" size="xs">
         by <AlphAddressText size="sm" span address={donor} />
