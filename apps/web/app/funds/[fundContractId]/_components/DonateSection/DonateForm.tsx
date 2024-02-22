@@ -13,7 +13,7 @@ import { notifications } from "@mantine/notifications";
 import { IconExternalLink } from "@tabler/icons-react";
 import { handleTxSubmitError } from "@/_components/TxErrorNotification";
 import { ExtractProps } from "@/_lib/types";
-import { dynamicWalletButton } from "@/_components/Wallet/DynamicWalletButton";
+import { dynamicWalletButton } from "@/_components/Wallet/DynamicWalletControl";
 
 const tokens = [
   {
@@ -67,7 +67,7 @@ export function DonateForm({ fundContractId }: DonateFormProps) {
           </Anchor>
         </span>
       ),
-      autoClose: 7000,
+      autoClose: 6000,
     });
   };
 

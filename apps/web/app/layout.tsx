@@ -27,7 +27,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <AppShellHeader>
               <Header />
             </AppShellHeader>
-            <AppShellMain>{children}</AppShellMain>
+            <AppShellMain pt="xl">{children}</AppShellMain>
             <AppShellFooter>
               <Footer />
             </AppShellFooter>
