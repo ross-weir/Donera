@@ -1,6 +1,11 @@
 import { Center, Container, Space, Title } from "@mantine/core";
 import CreateFundForm from "./_components/Form";
 import classes from "./page.module.css";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Donera - Create fundraiser",
+};
 
 export default function CreateFundPage() {
   return (
