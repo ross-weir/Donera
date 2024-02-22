@@ -1,4 +1,4 @@
-import { Center, Container, Space, Title, Text, Stack, Flex } from "@mantine/core";
+import { Center, Container, Space, Title, Text, Stack, SimpleGrid } from "@mantine/core";
 import db, { Fund } from "@donera/database";
 import classes from "./page.module.css";
 import { FundCard } from "./_components/FundCard";
@@ -47,11 +47,11 @@ export default async function BrowseFundsPage({ searchParams }: { searchParams: 
       {!funds.length ? (
         <EmptyPlaceholder text="No fundraisers found" />
       ) : (
-        <Flex gap="md" justify="space-between" align="flex-start" wrap="wrap">
-          {funds.map((f) => (
-            <FundCard key={f.id} fund={f} alphRaised={alphRaised(f)} miw={400} maw={400} />
+        <SimpleGrid cols={2} spacing="xl" verticalSpacing="xl">
+          {funds.map((fund) => (
+            <FundCard key={fund.id} fund={fund} alphRaised={alphRaised(fund)} />
           ))}
-        </Flex>
+        </SimpleGrid>
       )}
     </Container>
   );
