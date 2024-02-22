@@ -5,7 +5,6 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { ExtractProps } from "@/_lib/types";
 import { IconSearch } from "@tabler/icons-react";
-import classes from "./SearchInput.module.css";
 
 export function SearchInput(
   props: Omit<ExtractProps<typeof TextInput>, "defaultValue" | "onChange">
@@ -21,7 +20,6 @@ export function SearchInput(
   return (
     <TextInput
       {...props}
-      className={classes.root}
       autoFocus
       placeholder="Search fundraisers"
       leftSection={<IconSearch size={14} />}
