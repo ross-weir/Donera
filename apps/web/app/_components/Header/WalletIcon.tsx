@@ -1,9 +1,10 @@
 "use client";
 
 import { ExtractProps } from "@/_lib/types";
-import { useBalance, useConnect, useWallet } from "@alephium/web3-react";
+import { useConnect, useWallet } from "@alephium/web3-react";
 import { ActionIcon, Indicator } from "@mantine/core";
 import { IconWallet, TablerIconsProps } from "@tabler/icons-react";
+import { WalletMenu } from "../Wallet";
 
 export type WalletIconProps = {
   actionProps: ExtractProps<typeof ActionIcon>;
@@ -12,12 +13,23 @@ export type WalletIconProps = {
 
 export default function WalletIcon({ actionProps, iconProps }: WalletIconProps) {
   const { connectionStatus } = useWallet();
+  const { disconnect, connect } = useConnect();
+  const connected = connectionStatus === "connected";
+  const connecting = connectionStatus === "connecting";
+
+  const onIconClick = () => {
+    if (!connected) {
+      connect();
+    }
+  };
 
   return (
-    <Indicator color={connectionStatus === "connected" ? "green" : "red"}>
-      <ActionIcon {...actionProps} aria-label="Wallet icon button">
-        <IconWallet {...iconProps} />
-      </ActionIcon>
-    </Indicator>
+    <WalletMenu disabled={!connected} disconnect={disconnect}>
+      <Indicator processing={connecting} color={connected ? "green" : "red"} onClick={onIconClick}>
+        <ActionIcon {...actionProps} aria-label="Wallet icon button">
+          <IconWallet {...iconProps} />
+        </ActionIcon>
+      </Indicator>
+    </WalletMenu>
   );
 }
