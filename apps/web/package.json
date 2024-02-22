@@ -9,9 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@alephium/token-list": "^0.0.14",
-    "@alephium/web3": "^0.30.1",
-    "@alephium/web3-react": "^0.30.1",
+    "@alephium/token-list": "^0.0.15",
+    "@alephium/web3": "^0.31.0",
+    "@alephium/web3-react": "^0.31.0",
     "@donera/alephium-config": "workspace:^",
     "@donera/dapp": "workspace:^",
     "@donera/database": "workspace:^",

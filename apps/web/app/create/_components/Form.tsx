@@ -24,7 +24,7 @@ import { notifications } from "@mantine/notifications";
 import { IconCheck, IconExternalLink } from "@tabler/icons-react";
 import { handleTxSubmitError } from "@/_components/TxErrorNotification";
 import { TokenIcon } from "@/_components/TokenIcon";
-import { ALPH_TOKEN_ID } from "@alephium/web3";
+import { ALPH_TOKEN_ID, validateAddress } from "@alephium/web3";
 import { dynamicWalletButton } from "@/_components/Wallet/DynamicWalletControl";
 import { ExtractProps } from "@/_lib/types";
 import { useTimeout } from "@mantine/hooks";
@@ -41,6 +41,15 @@ function validDeadline(date: Date): boolean {
   const submitted = dayjs(date);
 
   return submitted.isAfter(dayjs()) && submitted.isBefore(dayjs().add(3, "months"));
+}
+
+function validBeneficiary(value: string): boolean {
+  try {
+    validateAddress(value);
+  } catch (e: unknown) {
+    return false;
+  }
+  return true;
 }
 
 const commonButtonProps: ExtractProps<typeof Button> = {
@@ -93,7 +102,7 @@ export default function CreateFundForm() {
       goal: isInRange({ min: 1 }, "Goal must be 1 or more"),
       deadline: (value: Date) =>
         !validDeadline(value) ? "Deadline must be within the next 3 months" : null,
-      beneficiary: isNotEmpty("Beneficiary cannot be empty"),
+      beneficiary: (value) => (!validBeneficiary(value) ? "Invalid Alephium address" : null),
     },
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
