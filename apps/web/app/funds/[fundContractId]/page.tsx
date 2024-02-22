@@ -1,5 +1,5 @@
 import db, { Fund } from "@donera/database";
-import { Container, Group } from "@mantine/core";
+import { Container, Flex, Group } from "@mantine/core";
 import { notFound } from "next/navigation";
 import { FundDetail } from "./_components/FundDetail";
 import classes from "./page.module.css";
@@ -56,7 +56,7 @@ export default async function FundDetailPage({ params }: { params: { fundContrac
 
   return (
     <Container fluid className={classes.container}>
-      <Group justify="center" gap="xl">
+      <Flex justify="center" align="start" gap="xl">
         <FundDetail
           w={650}
           name={name}
@@ -80,7 +80,7 @@ export default async function FundDetailPage({ params }: { params: { fundContrac
           p="xl"
           withBorder
         />
-      </Group>
+      </Flex>
     </Container>
   );
 }
