@@ -1,4 +1,4 @@
-import { Button, Center, Container, Group, Title } from "@mantine/core";
+import { Button, Container, Group, Title } from "@mantine/core";
 import Image from "next/image";
 import ColorSchemeToggleIcon from "./ColorSchemeToggleIcon";
 import logo from "./logo.png";

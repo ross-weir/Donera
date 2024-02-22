@@ -7,11 +7,14 @@
     "build": "prisma generate",
     "fmt": "prisma format",
     "dev": "./scripts/start_local.sh",
-    "clean": "docker rm donera-db && docker volume prune"
+    "clean": "docker rm donera-db && docker volume prune",
+    "studio": "DATABASE_URL=mongodb://localhost:27017/donera npx prisma studio",
+    "shell": "docker exec -it donera-db mongosh"
   },
   "exports": {
     ".": "./src/index.ts",
-    "./funds": "./src/funds.ts"
+    "./funds": "./src/funds.ts",
+    "./search": "./src/search.ts"
   },
   "devDependencies": {
     "@donera/eslint-config": "workspace:^",

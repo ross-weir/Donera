@@ -21,5 +21,5 @@ export function convertUiFeeToOnchain({ uiFee, ...rest }: UiFee): UiFeeOnchain {
 export const NO_UI_FEE: Readonly<UiFeeOnchain> = Object.freeze({
   uiDev: "",
   uiFeeToken: ALPH_TOKEN_ID,
-  uiFee: 0n,
+  uiFee: BigInt(0),
 });
