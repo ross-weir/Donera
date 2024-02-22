@@ -6,16 +6,44 @@ import classes from "./page.module.css";
 import { DonateSection } from "./_components/DonateSection";
 import { ALPH_TOKEN_ID } from "@alephium/web3";
 import { fundSummary } from "@donera/database/funds";
+import { unstable_cache } from "next/cache";
+import { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
+
+const fundSummaryCached = unstable_cache(
+  (fundId: string) => fundSummary(db, fundId),
+  ["fund-detail"]
+);
+
+type SearchParam = {
+  fundContractId: string;
+};
+
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams: SearchParam;
+}): Promise<Metadata> {
+  const { fund } = await fundSummaryCached(searchParams.fundContractId);
+  let title = "Donera";
+
+  if (fund) {
+    title += ` - ${fund.name}`;
+  }
+
+  return {
+    title,
+  };
+}
 
 function alphRaised(fund: Fund): string {
   return fund.balances?.find((b) => b.id === ALPH_TOKEN_ID)?.amount ?? "0";
 }
 
-export default async function FundDetailPage({ params }: { params: { fundContractId: string } }) {
+export default async function FundDetailPage({ params }: { params: SearchParam }) {
   const { fundContractId } = params;
-  const { fund, donationCount } = await fundSummary(db, fundContractId);
+  const { fund, donationCount } = await fundSummaryCached(fundContractId);
 
   if (!fund) {
     notFound();

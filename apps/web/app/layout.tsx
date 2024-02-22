@@ -11,7 +11,7 @@ import { Header } from "./_components/Header";
 import { Footer } from "./_components/Footer";
 
 export const metadata: Metadata = {
-  title: "Donera",
+  title: "Donera - Decentralized crowdfunding",
   description: "A decentralized crowdfunding platform built on Alephium",
 };
 
