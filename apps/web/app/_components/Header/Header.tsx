@@ -7,6 +7,7 @@ import { LaunchFundButton } from "../LaunchFundButton";
 import classes from "./Header.module.css";
 import cx from "clsx";
 import { dynamicWalletIcon } from "../Wallet/DynamicWalletControl";
+import { IconSearch } from "@tabler/icons-react";
 
 const controlIconProps = {
   iconProps: {
@@ -34,8 +35,15 @@ export function Header() {
       </Group>
       <Group>
         <LaunchFundButton variant="subtle">Launch fundraiser</LaunchFundButton>
-        <Button component={Link} href="/browse" style={{ border: "none" }} variant="default">
-          Discover fundraisers
+        <Button
+          miw={150}
+          component={Link}
+          href="/browse"
+          style={{ border: "none" }}
+          variant="default"
+          leftSection={<IconSearch size={18} />}
+        >
+          Discover
         </Button>
         <WalletIcon {...controlIconProps} />
         <ColorSchemeToggleIcon {...controlIconProps} />
