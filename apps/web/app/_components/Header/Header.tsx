@@ -1,4 +1,4 @@
-import { Button, Group, Title } from "@mantine/core";
+import { Button, Center, Container, Group, Title } from "@mantine/core";
 import Image from "next/image";
 import ColorSchemeToggleIcon from "./ColorSchemeToggleIcon";
 import logo from "./logo.png";
@@ -24,30 +24,32 @@ const WalletIcon = dynamicWalletIcon(controlIconProps);
 
 export function Header() {
   return (
-    <Group className={classes.container} justify="space-between">
-      <Group>
-        <Link href="/" className={classes.logoLink}>
-          <Group>
-            <Image src={logo} alt="Donera Logo" width={32} height={32} />
-            <Title order={2}>Donera</Title>
-          </Group>
-        </Link>
+    <Container size="xl" className={classes.container}>
+      <Group className={classes.container} justify="space-between">
+        <Group>
+          <Link href="/" className={classes.logoLink}>
+            <Group>
+              <Image src={logo} alt="Donera Logo" width={32} height={32} />
+              <Title order={2}>Donera</Title>
+            </Group>
+          </Link>
+        </Group>
+        <Group>
+          <LaunchFundButton variant="subtle">Launch fundraiser</LaunchFundButton>
+          <Button
+            miw={150}
+            component={Link}
+            href="/browse"
+            style={{ border: "none" }}
+            variant="default"
+            leftSection={<IconSearch size={18} />}
+          >
+            Discover
+          </Button>
+          <WalletIcon {...controlIconProps} />
+          <ColorSchemeToggleIcon {...controlIconProps} />
+        </Group>
       </Group>
-      <Group>
-        <LaunchFundButton variant="subtle">Launch fundraiser</LaunchFundButton>
-        <Button
-          miw={150}
-          component={Link}
-          href="/browse"
-          style={{ border: "none" }}
-          variant="default"
-          leftSection={<IconSearch size={18} />}
-        >
-          Discover
-        </Button>
-        <WalletIcon {...controlIconProps} />
-        <ColorSchemeToggleIcon {...controlIconProps} />
-      </Group>
-    </Group>
+    </Container>
   );
 }
