@@ -2,7 +2,7 @@ import { Readable } from "stream";
 
 export type PutBody = string | Readable | Buffer | Blob | ArrayBuffer | ReadableStream | File;
 export type PutResult = {
-  downloadUrl: string;
+  url: string;
   contentType: string;
 };
 

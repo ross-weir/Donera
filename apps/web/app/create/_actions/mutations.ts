@@ -4,16 +4,29 @@ import { redirect } from "next/navigation";
 import { CreateFundResult } from "@donera/dapp";
 import db from "@donera/database";
 import { nanoid } from "nanoid";
+import { blob } from "@/_lib/donera";
 
 export async function saveFund({ fundContractId, ...rest }: CreateFundResult, formData: FormData) {
-  console.log(formData);
-  // upload image
-  await db.fund.create({
-    data: {
+  const file = formData.get("image") as File;
+  const { url } = await blob.put(fundContractId, file);
+  const metadata = { image: { url } };
+
+  // there's a race condition where the indexer can insert the record before
+  // we have a chance to optimistically create it. Use upsert.
+  // Not sure if this is just a devnet thing or realistic
+  await db.fund.upsert({
+    where: {
+      id: fundContractId,
+    },
+    update: {
+      metadata,
+    },
+    create: {
       ...rest,
       id: fundContractId,
       shortId: nanoid(10),
       verified: false,
+      metadata,
     },
   });
   redirect(`/funds/${fundContractId}`);

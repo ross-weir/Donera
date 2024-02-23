@@ -1,4 +1,5 @@
 import { BoxProps, Divider, Group, Image, Stack, Text, Title } from "@mantine/core";
+import NextImage from "next/image";
 import { UnverifiedAlert } from "./UnverifiedAlert";
 import { FundDetailField } from "./FundDetailField";
 import { AlphAddressText } from "@/_components/AlphAddressText";
@@ -33,8 +34,16 @@ export function FundDetail({
       <Group>
         <Title className={classes.text}>{name}</Title>
       </Group>
-      {/** TODO, move imageSrc to `src` */}
-      {imageSrc && <Image alt="Fundraiser image" src={null} fallbackSrc={imageSrc} />}
+      {imageSrc && (
+        <Image
+          component={NextImage}
+          alt="Fundraiser image"
+          src={imageSrc}
+          width={400}
+          height={600}
+          radius="md"
+        />
+      )}
       <Divider my="md" />
       <Group justify="space-between">
         <FundDetailField
