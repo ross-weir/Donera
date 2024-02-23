@@ -5,7 +5,9 @@ import { CreateFundResult } from "@donera/dapp";
 import db from "@donera/database";
 import { nanoid } from "nanoid";
 
-export async function saveFund({ fundContractId, ...rest }: CreateFundResult) {
+export async function saveFund({ fundContractId, ...rest }: CreateFundResult, formData: FormData) {
+  console.log(formData);
+  // upload image
   await db.fund.create({
     data: {
       ...rest,

@@ -2,6 +2,7 @@ import { BoxProps, Divider, Group, Image, Stack, Text, Title } from "@mantine/co
 import { UnverifiedAlert } from "./UnverifiedAlert";
 import { FundDetailField } from "./FundDetailField";
 import { AlphAddressText } from "@/_components/AlphAddressText";
+import cx from "clsx";
 import classes from "./FundDetail.module.css";
 
 export type FundDetailProps = {
@@ -30,7 +31,7 @@ export function FundDetail({
     <Stack {...rest}>
       {!verified && <UnverifiedAlert />}
       <Group>
-        <Title>{name}</Title>
+        <Title className={classes.text}>{name}</Title>
       </Group>
       {/** TODO, move imageSrc to `src` */}
       {imageSrc && <Image alt="Fundraiser image" src={null} fallbackSrc={imageSrc} />}
@@ -58,7 +59,7 @@ export function FundDetail({
         />
       </Group>
       <Divider my="md" />
-      <Text className={classes.description}>{description}</Text>
+      <Text className={cx(classes.description, classes.text)}>{description}</Text>
     </Stack>
   );
 }

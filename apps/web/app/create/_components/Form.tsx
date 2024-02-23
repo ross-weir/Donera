@@ -12,6 +12,7 @@ import {
   TextInput,
   Textarea,
   Text,
+  FileInput,
 } from "@mantine/core";
 import { DateTimePicker } from "@mantine/dates";
 import { useForm, isNotEmpty, hasLength, isInRange } from "@mantine/form";
@@ -35,6 +36,7 @@ interface FormSchema {
   goal: number;
   deadline: Date;
   beneficiary: string;
+  image?: File;
 }
 
 function validDeadline(date: Date): boolean {
@@ -50,6 +52,26 @@ function validBeneficiary(value: string): boolean {
     return false;
   }
   return true;
+}
+const IMAGE_MIME_TYPES = [
+  "image/png",
+  "image/gif",
+  "image/jpeg",
+  "image/svg+xml",
+  "image/webp",
+  "image/avif",
+];
+function validImage(value?: File): string | null {
+  if (!value) {
+    return "Fundraisers must include a image";
+  }
+  if (!value.type) {
+    return "Invalid filetype";
+  }
+  if (value.size > 4.5 * 1024 ** 2) {
+    return "Images must be less than 4.5mb";
+  }
+  return null;
 }
 
 const commonButtonProps: ExtractProps<typeof Button> = {
@@ -95,6 +117,7 @@ export default function CreateFundForm() {
       goal: 0,
       deadline: dayjs().add(1, "day").toDate(),
       beneficiary: "",
+      image: undefined,
     },
     validate: {
       name: isNotEmpty("Name cannot be empty"),
@@ -103,6 +126,7 @@ export default function CreateFundForm() {
       deadline: (value: Date) =>
         !validDeadline(value) ? "Deadline must be within the next 3 months" : null,
       beneficiary: (value) => (!validBeneficiary(value) ? "Invalid Alephium address" : null),
+      image: (value) => validImage(value),
     },
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -122,7 +146,9 @@ export default function CreateFundForm() {
         </span>
       ),
     });
-    saveFund(result).catch(onError);
+    const formData = new FormData();
+    formData.set("image", form.values.image!);
+    saveFund(result, formData).catch(onError);
   };
 
   const onError = (e: Error) => {
@@ -147,6 +173,17 @@ export default function CreateFundForm() {
           withAsterisk
           required
           {...form.getInputProps("name")}
+        />
+        <FileInput
+          label="Upload image"
+          description="Upload a image that will be shown on the fundraisers page. 4.5mb max size limit."
+          placeholder="Fundraiser image"
+          required
+          withAsterisk
+          accept={IMAGE_MIME_TYPES.join(",")}
+          clearable
+          multiple={false}
+          {...form.getInputProps("image")}
         />
         <Textarea
           label="Description"

@@ -5,15 +5,12 @@ import { FundDetail } from "./_components/FundDetail";
 import { DonateSection } from "./_components/DonateSection";
 import { ALPH_TOKEN_ID } from "@alephium/web3";
 import { fundSummary } from "@donera/database/funds";
-import { unstable_cache } from "next/cache";
 import { Metadata } from "next";
+import { cache } from "react";
 
 export const dynamic = "force-dynamic";
 
-const fundSummaryCached = unstable_cache(
-  (fundId: string) => fundSummary(db, fundId),
-  ["fund-detail"]
-);
+const fundSummaryCached = cache(async (id: string) => fundSummary(db, id));
 
 type SearchParam = {
   fundContractId: string;

@@ -13,6 +13,7 @@
     "@alephium/web3": "^0.31.0",
     "@alephium/web3-react": "^0.31.0",
     "@donera/alephium-config": "workspace:^",
+    "@donera/blob-store": "workspace:^",
     "@donera/dapp": "workspace:^",
     "@donera/database": "workspace:^",
     "@mantine/core": "^7.5.3",
