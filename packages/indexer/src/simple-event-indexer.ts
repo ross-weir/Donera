@@ -122,10 +122,7 @@ export class SimpleEventIndexer extends BaseIndexer {
   private async processDonation(event: DoneraTypes.DonationEvent): Promise<Tx[]> {
     const { fundContractId, amount, tokenId, ...rest } = event.fields;
     const contractAddress = addressFromContractId(fundContractId);
-    const group = this.deploys.contracts.Donera.contractInstance.groupIndex;
-    const { asset } = await this.node.contracts.getContractsAddressState(contractAddress, {
-      group,
-    });
+    const { asset } = await this.node.contracts.getContractsAddressState(contractAddress);
     const balances = [{ id: ALPH_TOKEN_ID, amount: asset.attoAlphAmount }, ...(asset.tokens ?? [])];
     return [
       this.db.donation.create({

@@ -1,0 +1,3 @@
+[submodule "vendor/alephium-stack"]
+	path = vendor/alephium-stack
+	url = git@github.com:alephium/alephium-stack.git

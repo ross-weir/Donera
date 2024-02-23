@@ -1,5 +1,5 @@
 {
-  "fullNodeVersion": "v2.8.2",
+  "fullNodeVersion": "v2.8.5",
   "compilerOptionsUsed": {
     "ignoreUnusedConstantsWarnings": false,
     "ignoreUnusedVariablesWarnings": false,
@@ -46,7 +46,7 @@
     },
     "IDonera": {
       "sourceFile": "donera_interface.ral",
-      "sourceCodeHash": "0546cced1c1fca29c5de76b750cb4492371f21d8f815c670b5ab27d69b7916dd",
+      "sourceCodeHash": "20d450372c76e6e15243e0f8a9c4722dcb5a672e2afebe26f9468fb14fb42bc1",
       "bytecodeDebugPatch": "",
       "codeHashDebug": "",
       "warnings": []

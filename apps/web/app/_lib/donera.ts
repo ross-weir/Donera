@@ -2,6 +2,7 @@ import { ALPH_TOKEN_ID, NetworkId, ONE_ALPH } from "@alephium/web3";
 import { DoneraDapp } from "@donera/dapp";
 import { loadDeployments } from "@donera/dapp/deploys";
 import { UiFee } from "@donera/dapp/fees";
+import { getBlobStore } from "@donera/blob-store";
 
 export const getNetwork = (): NetworkId => {
   const networkId = process.env.NEXT_PUBLIC_DONERA_NETWORK;
@@ -57,3 +58,5 @@ export const getDoneraDapp = (): DoneraDapp => {
 
   return donera;
 };
+
+export const blob = getBlobStore();
