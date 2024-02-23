@@ -38,7 +38,7 @@ export default async function BrowseFundsPage({ searchParams }: { searchParams: 
       </Center>
       <Space h="lg" />
       <Suspense>
-        <Container size={400}>
+        <Container size={600}>
           <SearchInput />
         </Container>
       </Suspense>

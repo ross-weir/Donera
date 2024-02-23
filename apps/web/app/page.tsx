@@ -20,7 +20,7 @@ export default function LandingPage() {
         ensures your campaign is secure, transparent, and accessible to a worldwide audience.
       </Text>
 
-      <Group className={classes.controls}>
+      <Group className={classes.controls} justify="flex-end">
         <Button
           component={Link}
           href="/browse"

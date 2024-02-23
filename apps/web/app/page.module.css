@@ -1,12 +1,6 @@
 .container {
-  position: relative;
-  padding-top: rem(170px);
-  padding-bottom: rem(120px);
-
-  @media (max-width: $mantine-breakpoint-sm) {
-    padding-bottom: rem(80px);
-    padding-top: rem(80px);
-  }
+  margin-top: 5vh;
+  margin-bottom: 10vh;
 }
 
 .title {
