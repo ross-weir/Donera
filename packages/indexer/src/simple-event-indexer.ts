@@ -123,7 +123,7 @@ export class SimpleEventIndexer extends BaseIndexer {
     const { fundContractId, amount, tokenId, ...rest } = event.fields;
     const contractAddress = addressFromContractId(fundContractId);
     const group = this.deploys.contracts.Donera.contractInstance.groupIndex;
-    const { asset } = await this.node.contracts.getContractsAddressState(contractAddress, {
+    const { asset } = await this.getContractState(contractAddress, {
       group,
     });
     const balances = [{ id: ALPH_TOKEN_ID, amount: asset.attoAlphAmount }, ...(asset.tokens ?? [])];
@@ -162,5 +162,13 @@ export class SimpleEventIndexer extends BaseIndexer {
         },
       }),
     ];
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  private async getContractState(address: string, query: { group?: number } = {}): Promise<any> {
+    const response = await fetch(
+      `http://127.0.0.1:22973/contracts/${address}/state?group=${query.group!}`
+    );
+    return response.json();
   }
 }
