@@ -1,5 +1,4 @@
-import { BoxProps, Divider, Group, Image, Stack, Text, Title } from "@mantine/core";
-import NextImage from "next/image";
+import { BoxProps, Divider, Group, Stack, Text, Title } from "@mantine/core";
 import { UnverifiedAlert } from "./UnverifiedAlert";
 import { FundDetailField } from "./FundDetailField";
 import { AlphAddressText } from "@/_components/AlphAddressText";
@@ -8,7 +7,7 @@ import classes from "./FundDetail.module.css";
 
 export type FundDetailProps = {
   name: string;
-  imageSrc?: string;
+  image: React.ReactNode;
   beneficiary: string;
   organizer: string;
   createdAt: string;
@@ -19,7 +18,7 @@ export type FundDetailProps = {
 
 export function FundDetail({
   name,
-  imageSrc,
+  image,
   beneficiary,
   description,
   organizer,
@@ -34,16 +33,7 @@ export function FundDetail({
       <Group>
         <Title className={classes.text}>{name}</Title>
       </Group>
-      {imageSrc && (
-        <Image
-          component={NextImage}
-          alt="Fundraiser image"
-          src={imageSrc}
-          width={500}
-          height={500}
-          radius="md"
-        />
-      )}
+      {image}
       <Divider my="md" />
       <Group justify="space-between">
         <FundDetailField
