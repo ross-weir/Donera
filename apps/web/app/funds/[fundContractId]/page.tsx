@@ -7,6 +7,7 @@ import { ALPH_TOKEN_ID } from "@alephium/web3";
 import { fundSummary } from "@donera/database/funds";
 import { Metadata } from "next";
 import { cache } from "react";
+import { ImageWithPlaceholder } from "@/_components/ImageWithPlaceholder";
 
 export const dynamic = "force-dynamic";
 
@@ -56,7 +57,6 @@ export default async function FundDetailPage({ params }: { params: SearchParam }
     deadline,
     goal,
     donations,
-    metadata,
   } = fund;
 
   return (
@@ -64,7 +64,7 @@ export default async function FundDetailPage({ params }: { params: SearchParam }
       <Flex justify="center" align="start" gap="xl">
         <FundDetail
           name={name}
-          imageSrc={metadata.image?.url}
+          image={<ImageWithPlaceholder height="425px" src={fund.metadata.image!.url} />}
           w={750}
           description={description}
           beneficiary={beneficiary}
