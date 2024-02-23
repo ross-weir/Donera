@@ -2,7 +2,6 @@ import db, { Fund } from "@donera/database";
 import { Container, Flex } from "@mantine/core";
 import { notFound } from "next/navigation";
 import { FundDetail } from "./_components/FundDetail";
-import classes from "./page.module.css";
 import { DonateSection } from "./_components/DonateSection";
 import { ALPH_TOKEN_ID } from "@alephium/web3";
 import { fundSummary } from "@donera/database/funds";
@@ -63,7 +62,7 @@ export default async function FundDetailPage({ params }: { params: SearchParam }
   } = fund;
 
   return (
-    <Container fluid className={classes.container}>
+    <Container fluid>
       <Flex justify="center" align="start" gap="xl">
         <FundDetail
           w={650}

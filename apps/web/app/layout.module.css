@@ -1,0 +1,10 @@
+.appContainer {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.mainWrapper {
+  margin-top: calc(var(--mantine-spacing-lg) * 2);
+  margin-bottom: calc(var(--mantine-spacing-lg) * 2);
+}
