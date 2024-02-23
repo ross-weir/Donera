@@ -113,6 +113,7 @@ export class SimpleEventIndexer extends BaseIndexer {
         create: {
           id: fundContractId,
           shortId: nanoid(10),
+          metadata: {},
           ...data,
         },
       }),

@@ -35,6 +35,7 @@ model Fund {
   // TODO get timestamp from blockchain?
   createdAt   DateTime   @default(now())
   confirmed   Boolean    @default(false)
+  metadata    Metadata
 }
 
 type Balance {
@@ -50,6 +51,14 @@ model Donation {
   createdAt DateTime @default(now())
   Fund      Fund     @relation(fields: [fundId], references: [id])
   fundId    String
+}
+
+type Image {
+  url String
+}
+
+type Metadata {
+  image Image?
 }
 
 model Indexer {

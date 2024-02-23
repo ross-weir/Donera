@@ -1,0 +1,7 @@
+.text {
+  /* older browsers */
+  word-wrap: break-word;
+  /* newer standard */
+  overflow-wrap: break-word;
+  word-break: break-word;
+}

@@ -56,15 +56,16 @@ export default async function FundDetailPage({ params }: { params: SearchParam }
     deadline,
     goal,
     donations,
+    metadata,
   } = fund;
 
   return (
     <Container fluid>
       <Flex justify="center" align="start" gap="xl">
         <FundDetail
-          w={650}
           name={name}
-          imageSrc="https://placehold.co/900x400?text=Placeholder"
+          imageSrc={metadata.image?.url}
+          w={750}
           description={description}
           beneficiary={beneficiary}
           deadline={deadline.toLocaleString()}

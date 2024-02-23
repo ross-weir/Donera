@@ -2,6 +2,15 @@ import { PrismaPlugin } from "@prisma/nextjs-monorepo-workaround-plugin";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  images: {
+    remotePatterns: [
+      // local testing
+      {
+        protocol: "https",
+        hostname: "bcwg8zddhjdrrpcs.public.blob.vercel-storage.com",
+      },
+    ],
+  },
   experimental: {
     // https://github.com/vercel/next.js/discussions/46987
     serverComponentsExternalPackages: ["pino", "pino-pretty"],
