@@ -23,6 +23,8 @@ async function imagePlaceholder(src: string) {
 
 // this compnent needs a lot of work to be generalized, currently just works well
 // for image on fund detail page. Doesn't work well for images on search/list page
+// This isn't as much of an issue though, i haven't noticed much loading jank on the browse
+// page whereas it was very noticable on the detail page
 export async function ImageWithPlaceholder({ height, src }: ImageWithPlaceholderProps) {
   const { base64, img } = await imagePlaceholder(src);
 
