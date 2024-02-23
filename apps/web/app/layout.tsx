@@ -26,7 +26,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <DoneraProvider>
           <AppShell
             styles={{
-              main: { flex: 1, minHeight: 0 },
+              header: {
+                height: 60,
+              },
+              main: {
+                flex: 1,
+                minHeight: 0,
+                paddingTop: 60,
+              },
               footer: { position: "relative" },
             }}
           >
@@ -34,7 +41,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <AppShellHeader>
                 <Header />
               </AppShellHeader>
-              <AppShellMain>{children}</AppShellMain>
+              <AppShellMain className={classes.mainWrapper}>{children}</AppShellMain>
               <AppShellFooter>
                 <Footer />
               </AppShellFooter>

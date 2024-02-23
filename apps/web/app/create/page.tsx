@@ -1,6 +1,5 @@
 import { Center, Container, Space, Title } from "@mantine/core";
 import CreateFundForm from "./_components/Form";
-import classes from "./page.module.css";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -9,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function CreateFundPage() {
   return (
-    <Container className={classes.container} size={700}>
+    <Container size={700}>
       <Center>
         <Title order={1}>Create a fund</Title>
       </Center>

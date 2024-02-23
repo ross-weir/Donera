@@ -1,6 +1,5 @@
 import { Center, Container, Space, Title, Text, Stack, SimpleGrid } from "@mantine/core";
 import db, { Fund } from "@donera/database";
-import classes from "./page.module.css";
 import { FundCard } from "./_components/FundCard";
 import { ALPH_TOKEN_ID } from "@alephium/web3";
 import { EmptyPlaceholder } from "./_components/EmptyPlaceholder";
@@ -30,7 +29,7 @@ export default async function BrowseFundsPage({ searchParams }: { searchParams: 
   });
 
   return (
-    <Container className={classes.container} size={1000}>
+    <Container size={1000}>
       <Center style={{ textAlign: "center" }}>
         <Stack>
           <Title order={1}>Browse fundraisers listed on Donera</Title>

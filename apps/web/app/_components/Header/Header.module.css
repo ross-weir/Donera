@@ -2,8 +2,6 @@
   height: 100%;
   padding-left: var(--mantine-spacing-md);
   padding-right: var(--mantine-spacing-md);
-  padding-top: 0.4rem;
-  padding-bottom: 0.4rem;
 }
 
 .logoLink {
