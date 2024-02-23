@@ -15,7 +15,7 @@ export function FundCard({ fund, alphRaised, ...rest }: FundCardProps) {
   const { name, goal, id, organizer, metadata } = fund;
 
   return (
-    <Card radius="md" {...rest} component={Link} href={`/funds/${id}`}>
+    <Card radius="md" {...rest} component={Link} href={`/funds/${id}`} withBorder>
       <CardSection>
         <Image
           component={NextImage}
