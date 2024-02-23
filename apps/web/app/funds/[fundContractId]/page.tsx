@@ -75,6 +75,7 @@ export default async function FundDetailPage({ params }: { params: SearchParam }
         />
         <DonateSection
           miw={450}
+          mt={60}
           fundContractId={fundContractId}
           shortId={shortId}
           goal={goal}

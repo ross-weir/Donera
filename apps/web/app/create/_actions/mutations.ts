@@ -8,7 +8,8 @@ import { blob } from "@/_lib/donera";
 
 export async function saveFund({ fundContractId, ...rest }: CreateFundResult, formData: FormData) {
   const file = formData.get("image") as File;
-  const { url } = await blob.put(fundContractId, file);
+  // https://github.com/vercel/storage/issues/595#issuecomment-1939452486
+  const { url } = await blob.put(fundContractId, await file.arrayBuffer());
   const metadata = { image: { url } };
 
   // there's a race condition where the indexer can insert the record before
