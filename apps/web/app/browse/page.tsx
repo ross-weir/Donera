@@ -29,7 +29,7 @@ export default async function BrowseFundsPage({ searchParams }: { searchParams: 
   });
 
   return (
-    <Container size={1000}>
+    <Container size={1200}>
       <Center style={{ textAlign: "center" }}>
         <Stack>
           <Title order={1}>Browse fundraisers listed on Donera</Title>
