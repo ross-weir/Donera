@@ -1,5 +1,4 @@
 .text {
-  --text-line-clamp: 4;
   /* older browsers */
   word-wrap: break-word;
   /* newer standard */
