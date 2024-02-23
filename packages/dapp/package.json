@@ -2,7 +2,7 @@
   "name": "@donera/dapp",
   "version": "1.0.0",
   "scripts": {
-    "build": "cli compile",
+    "compile": "cli compile",
     "deploy": "cli deploy",
     "test": "bun test src",
     "test:e2e": "bun test test/e2e/",
