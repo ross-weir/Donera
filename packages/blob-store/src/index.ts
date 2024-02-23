@@ -1,6 +1,7 @@
-import { VercelBlobStore } from "./vercel";
 import { BlobStore } from "./blob";
+import { S3BlobStore } from "./s3";
 
 export function getBlobStore(): BlobStore {
-  return new VercelBlobStore();
+  console.log("Using s3 backend for blob store");
+  return new S3BlobStore();
 }
