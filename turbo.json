@@ -3,10 +3,7 @@
   "pipeline": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": [".next/**", "!.next/cache/**", "dist/**"]
-    },
-    "compile": {
-      "outputs": ["artifacts/**", ".project.json"]
+      "outputs": [".next/**", "!.next/cache/**", "dist/**", "artifacts/**", ".project.json"]
     },
     "deploy": {
       "dependsOn": ["build", "test", "lint"]
