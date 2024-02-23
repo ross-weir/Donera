@@ -1,4 +1,4 @@
-import { Text, Card, CardProps, Space, Image, CardSection, Stack } from "@mantine/core";
+import { Text, Card, CardProps, Image, CardSection } from "@mantine/core";
 import { Fund } from "@donera/database";
 import Link from "next/link";
 import NextImage from "next/image";
@@ -12,7 +12,7 @@ type FundCardProps = {
 } & CardProps;
 
 export function FundCard({ fund, alphRaised, ...rest }: FundCardProps) {
-  const { name, goal, id, organizer, description, metadata } = fund;
+  const { name, goal, id, organizer, metadata } = fund;
 
   return (
     <Card radius="md" {...rest} component={Link} href={`/funds/${id}`}>
@@ -21,8 +21,8 @@ export function FundCard({ fund, alphRaised, ...rest }: FundCardProps) {
           component={NextImage}
           src={metadata.image?.url}
           alt="Fundraiser hero image"
-          height={300}
-          width={300}
+          height={400}
+          width={400}
           radius="md"
         />
       </CardSection>
@@ -32,20 +32,12 @@ export function FundCard({ fund, alphRaised, ...rest }: FundCardProps) {
       <Text c="dimmed" size="xs">
         by <AlphAddressText span address={organizer} />
       </Text>
-      <Space h="sm" />
-      <Stack justify="space-around">
-        <Text lineClamp={4} className={classes.text}>
-          {description}
-        </Text>
-        <Space h="sm" />
-        <FundProgress
-          goal={goal}
-          raised={alphRaised}
-          showTarget={false}
-          textPosition="below"
-          labelProps={{ mt: "xs" }}
-        />
-      </Stack>
+      <FundProgress
+        goal={goal}
+        raised={alphRaised}
+        textPosition="below"
+        progressProps={{ mt: "xl", mb: "xs" }}
+      />
     </Card>
   );
 }

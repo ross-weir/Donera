@@ -39,8 +39,8 @@ export function FundDetail({
           component={NextImage}
           alt="Fundraiser image"
           src={imageSrc}
-          width={400}
-          height={600}
+          width={500}
+          height={500}
           radius="md"
         />
       )}

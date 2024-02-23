@@ -10,7 +10,7 @@ export default function CreateFundPage() {
   return (
     <Container size={700}>
       <Center>
-        <Title order={1}>Create a fund</Title>
+        <Title order={1}>Start a new fundraiser</Title>
       </Center>
       <Space h="xl" />
       <CreateFundForm />

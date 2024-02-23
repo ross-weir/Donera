@@ -1,5 +1,5 @@
 import { prettifyAttoAlphAmount } from "@alephium/web3";
-import { Progress, Text, TextProps } from "@mantine/core";
+import { Progress, ProgressProps, Text, TextProps } from "@mantine/core";
 
 export type FundProgressProps = {
   raised: string;
@@ -8,6 +8,7 @@ export type FundProgressProps = {
   textPosition?: "above" | "below";
   showTarget?: boolean;
   labelProps?: TextProps;
+  progressProps?: Partial<ProgressProps>;
 };
 
 export function FundProgress({
@@ -16,6 +17,7 @@ export function FundProgress({
   raised,
   goal,
   labelProps = {},
+  progressProps = {},
 }: FundProgressProps) {
   const progress = Number((BigInt(raised) * BigInt(100)) / BigInt(goal));
   const text = (
@@ -36,7 +38,7 @@ export function FundProgress({
   return (
     <>
       {textPosition === "above" && text}
-      <Progress value={progress} color="green" />
+      <Progress {...progressProps} value={progress} color="green" />
       {textPosition === "below" && text}
     </>
   );
