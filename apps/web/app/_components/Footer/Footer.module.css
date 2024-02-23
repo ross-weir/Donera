@@ -1,4 +1,7 @@
 .footer {
   height: 100%;
   background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-6));
+  padding-top: var(--mantine-spacing-xl);
+  padding-bottom: var(--mantine-spacing-xl);
+  position: relative;
 }

@@ -9,6 +9,7 @@ import { AppShell, AppShellHeader } from "@mantine/core";
 import DoneraProvider from "./_components/DoneraProvider";
 import { Header } from "./_components/Header";
 import { Footer } from "./_components/Footer";
+import classes from "./layout.module.css";
 
 export const metadata: Metadata = {
   title: "Donera - Decentralized crowdfunding",
@@ -23,14 +24,21 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body>
         <DoneraProvider>
-          <AppShell header={{ height: 60 }} footer={{ height: 200 }}>
-            <AppShellHeader>
-              <Header />
-            </AppShellHeader>
-            <AppShellMain pt="xl">{children}</AppShellMain>
-            <AppShellFooter>
-              <Footer />
-            </AppShellFooter>
+          <AppShell
+            styles={{
+              main: { flex: 1, minHeight: 0 },
+              footer: { position: "relative" },
+            }}
+          >
+            <div className={classes.appContainer}>
+              <AppShellHeader>
+                <Header />
+              </AppShellHeader>
+              <AppShellMain>{children}</AppShellMain>
+              <AppShellFooter>
+                <Footer />
+              </AppShellFooter>
+            </div>
           </AppShell>
         </DoneraProvider>
       </body>

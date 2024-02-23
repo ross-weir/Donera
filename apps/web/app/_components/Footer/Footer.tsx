@@ -1,4 +1,4 @@
-import { ActionIcon, Anchor, Center, Group, Stack, Tooltip, rem, Text } from "@mantine/core";
+import { ActionIcon, Anchor, Center, Group, Stack, Tooltip, rem } from "@mantine/core";
 import classes from "./Footer.module.css";
 import { IconBrandGithub, IconBrandX } from "@tabler/icons-react";
 import { TokenIcon } from "../TokenIcon";
