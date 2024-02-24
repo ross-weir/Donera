@@ -1,0 +1,8 @@
+{
+  "extends": "@donera/typescript-config/bun.json",
+  "compilerOptions": {
+    "outDir": "dist"
+  },
+  "include": ["src", "bin"],
+  "exclude": ["node_modules", "dist"]
+}

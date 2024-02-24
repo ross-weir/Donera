@@ -1,0 +1,25 @@
+{
+  "name": "@donera/cli",
+  "version": "0.1.0",
+  "description": "",
+  "scripts": {
+    "build": "bun build ./src/index.ts --compile --outfile donera"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@donera/eslint-config": "workspace:^",
+    "@donera/typescript-config": "workspace:^",
+    "@types/bun": "^1.0.5",
+    "@types/yargs": "^17.0.32",
+    "eslint": "^8.56.0",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "@donera/integrations": "workspace:^",
+    "find-up": "^7.0.0",
+    "yargs": "^17.7.2",
+    "zod-validation-error": "^3.0.2"
+  }
+}
