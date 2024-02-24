@@ -54,7 +54,7 @@ export class DoneraIntegration implements Lifecycle {
     }
 
     if (!this.integrations) {
-      throw new Error(`no integrations initialzed`);
+      throw new Error("no integrations initialzed");
     }
 
     this.subscription = this.donera.subscribeAllEvents({
