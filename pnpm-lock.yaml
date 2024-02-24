@@ -298,6 +298,9 @@ importers:
       '@alephium/web3':
         specifier: ^0.31.0
         version: 0.31.0
+      '@donera/core':
+        specifier: workspace:^
+        version: link:../core
       '@donera/dapp':
         specifier: workspace:^
         version: link:../dapp

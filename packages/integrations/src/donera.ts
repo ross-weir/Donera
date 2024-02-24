@@ -4,7 +4,7 @@ import pino from "pino";
 import { Integration } from "./integration";
 import { DiscordIntegration } from "./impls/discord";
 import { EventSubscription, Subscription } from "@alephium/web3";
-import { Lifecycle } from "./lifecycle";
+import { Lifecycle } from "@donera/core";
 
 type DoneraEvent =
   | DoneraTypes.FundListedEvent

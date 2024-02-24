@@ -2,7 +2,7 @@ import pino from "pino";
 import { DiscordIntegrationConfig } from "../config";
 import { Integration } from "../integration";
 import { DoneraTypes } from "@donera/dapp/contracts";
-import { Lifecycle } from "../lifecycle";
+import { Lifecycle } from "@donera/core";
 
 export class DiscordIntegration implements Integration, Lifecycle {
   private readonly cfg: DiscordIntegrationConfig;
