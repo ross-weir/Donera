@@ -1,0 +1,21 @@
+{
+  "name": "@donera/integrations",
+  "version": "1.0.0",
+  "private": true,
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "devDependencies": {
+    "@donera/eslint-config": "workspace:^",
+    "@donera/typescript-config": "workspace:^",
+    "@types/bun": "^1.0.5",
+    "eslint": "^8.56.0",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "@alephium/web3": "^0.31.0",
+    "@donera/dapp": "workspace:^",
+    "pino": "^8.19.0",
+    "zod": "^3.22.4"
+  }
+}
