@@ -1,3 +1,4 @@
+import { validateAddress } from "@alephium/web3";
 import { DoneraTypes } from "@donera/dapp/contracts";
 import { z } from "zod";
 
@@ -16,7 +17,16 @@ const integrationsSchema = z.object({
 
 export const doneraIntegrationSchema = z.object({
   // contract address of the deployed donera instance
-  donera: z.string(),
+  donera: z.string().superRefine((val, ctx) => {
+    try {
+      validateAddress(val);
+    } catch (e: unknown) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: (e as Error).message,
+      });
+    }
+  }),
   integrations: integrationsSchema,
   filters: filterSchema.optional(),
 });
