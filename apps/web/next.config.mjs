@@ -5,7 +5,6 @@ import withPlaiceholder from "@plaiceholder/next";
 const nextConfig = {
   images: {
     remotePatterns: [
-      // local testing
       {
         protocol: "https",
         hostname: "ipfs.chainsafe.io",
