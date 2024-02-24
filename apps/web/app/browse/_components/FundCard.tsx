@@ -5,6 +5,7 @@ import NextImage from "next/image";
 import { FundProgress } from "@/_components/FundProgress";
 import { AlphAddressText } from "@/_components/AlphAddressText";
 import classes from "./FundCard.module.css";
+import { cidToUrl } from "@/_lib/donera";
 
 type FundCardProps = {
   fund: Fund;
@@ -13,13 +14,16 @@ type FundCardProps = {
 
 export function FundCard({ fund, alphRaised, ...rest }: FundCardProps) {
   const { name, goal, id, organizer, metadata } = fund;
+  // fallback to url
+  // https://github.com/ross-weir/Donera/issues/73
+  const image = cidToUrl(metadata.image?.cid) || metadata.image?.url;
 
   return (
     <Card radius="md" {...rest} component={Link} href={`/funds/${id}`} withBorder>
       <CardSection>
         <Image
           component={NextImage}
-          src={metadata.image?.url}
+          src={image}
           alt="Fundraiser hero image"
           height={400}
           width={400}

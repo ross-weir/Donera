@@ -54,7 +54,10 @@ model Donation {
 }
 
 type Image {
-  url String
+  cid String?
+  // storing url to ensure there's a way to get the image until the cid is stored onchain
+  // https://github.com/ross-weir/Donera/issues/73
+  url String?
 }
 
 type Metadata {

@@ -8,6 +8,7 @@ import { fundSummary } from "@donera/database/funds";
 import { Metadata } from "next";
 import { cache } from "react";
 import { ImageWithPlaceholder } from "@/_components/ImageWithPlaceholder";
+import { cidToUrl } from "@/_lib/donera";
 
 export const dynamic = "force-dynamic";
 
@@ -57,14 +58,18 @@ export default async function FundDetailPage({ params }: { params: SearchParam }
     deadline,
     goal,
     donations,
+    metadata,
   } = fund;
+  // fallback to url
+  // https://github.com/ross-weir/Donera/issues/73
+  const image = cidToUrl(metadata.image?.cid) || metadata.image?.url;
 
   return (
     <Container fluid>
       <Flex justify="center" align="start" gap="xl">
         <FundDetail
           name={name}
-          image={<ImageWithPlaceholder height="425px" src={fund.metadata.image!.url} />}
+          image={<ImageWithPlaceholder height="425px" src={image!} />}
           w={750}
           description={description}
           beneficiary={beneficiary}

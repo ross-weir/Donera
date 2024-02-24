@@ -5,10 +5,9 @@ import withPlaiceholder from "@plaiceholder/next";
 const nextConfig = {
   images: {
     remotePatterns: [
-      // local testing
       {
         protocol: "https",
-        hostname: "bcwg8zddhjdrrpcs.public.blob.vercel-storage.com",
+        hostname: "ipfs.chainsafe.io",
       },
     ],
   },

@@ -4,13 +4,15 @@ import { redirect } from "next/navigation";
 import { CreateFundResult } from "@donera/dapp";
 import db from "@donera/database";
 import { nanoid } from "nanoid";
-import { blob } from "@/_lib/donera";
+import { blob } from "@/_lib/server";
+import { cidToUrl } from "@/_lib/donera";
 
 export async function saveFund({ fundContractId, ...rest }: CreateFundResult, formData: FormData) {
   const file = formData.get("image") as File;
-  // https://github.com/vercel/storage/issues/595#issuecomment-1939452486
-  const { url } = await blob.put(fundContractId, await file.arrayBuffer());
-  const metadata = { image: { url } };
+  const { id } = await blob.put(fundContractId, await file.arrayBuffer());
+  // storing url to ensure there's a way to get the image until the cid is stored onchain
+  // https://github.com/ross-weir/Donera/issues/73
+  const metadata = { image: { cid: id, url: cidToUrl(id) } };
 
   // there's a race condition where the indexer can insert the record before
   // we have a chance to optimistically create it. Use upsert.

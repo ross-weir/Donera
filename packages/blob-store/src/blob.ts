@@ -1,12 +1,10 @@
-import { Readable } from "stream";
-
-export type PutBody = string | Readable | Buffer | Blob | ArrayBuffer | ReadableStream | File;
 export type PutResult = {
-  url: string;
-  contentType: string;
+  // cid in the case of ipfs
+  // could have different meaning depending on the blob storage
+  id: string;
 };
 
 export interface BlobStore {
   get<T>(key: string): Promise<T>;
-  put(key: string, body: PutBody): Promise<PutResult>;
+  put(key: string, buffer: ArrayBuffer): Promise<PutResult>;
 }
