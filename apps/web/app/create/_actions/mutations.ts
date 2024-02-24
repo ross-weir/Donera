@@ -8,9 +8,8 @@ import { blob } from "@/_lib/server";
 
 export async function saveFund({ fundContractId, ...rest }: CreateFundResult, formData: FormData) {
   const file = formData.get("image") as File;
-  // todo, we should return a cid instead
-  const { url } = await blob.put(fundContractId, await file.arrayBuffer());
-  const metadata = { image: { url } };
+  const { id } = await blob.put(fundContractId, await file.arrayBuffer());
+  const metadata = { image: { cid: id } };
 
   // there's a race condition where the indexer can insert the record before
   // we have a chance to optimistically create it. Use upsert.

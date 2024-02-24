@@ -57,3 +57,6 @@ export const getDoneraDapp = (): DoneraDapp => {
 
   return donera;
 };
+
+export const cidToUrl = (cid?: string | null) =>
+  cid ? `${process.env.NEXT_PUBLIC_IPFS_GATEWAY_URL}/${cid}` : "";
