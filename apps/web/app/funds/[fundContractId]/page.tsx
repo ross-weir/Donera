@@ -69,7 +69,7 @@ export default async function FundDetailPage({ params }: { params: SearchParam }
       <Flex justify="center" align="start" gap="xl">
         <FundDetail
           name={name}
-          image={<ImageWithPlaceholder height="425px" src={image!} />}
+          image={<ImageWithPlaceholder height="425px" sizes="500px" src={image!} />}
           w={750}
           description={description}
           beneficiary={beneficiary}
