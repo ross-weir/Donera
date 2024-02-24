@@ -41,8 +41,6 @@ function alphRaised(fund: Fund): string {
 
 export default async function FundDetailPage({ params }: { params: SearchParam }) {
   const { fundContractId } = params;
-  // fallback to url
-  // https://github.com/ross-weir/Donera/issues/73
   const { fund, donationCount } = await fundSummaryCached(fundContractId);
 
   if (!fund) {
@@ -62,6 +60,8 @@ export default async function FundDetailPage({ params }: { params: SearchParam }
     donations,
     metadata,
   } = fund;
+  // fallback to url
+  // https://github.com/ross-weir/Donera/issues/73
   const image = cidToUrl(metadata.image?.cid) || metadata.image?.url;
 
   return (
