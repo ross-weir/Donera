@@ -17,7 +17,7 @@ const integrationsSchema = z.object({
 
 export const doneraIntegrationSchema = z.object({
   // contract address of the deployed donera instance
-  donera: z.string().superRefine((val, ctx) => {
+  doneraAddress: z.string().superRefine((val, ctx) => {
     try {
       validateAddress(val);
     } catch (e: unknown) {
@@ -34,7 +34,7 @@ export const doneraIntegrationSchema = z.object({
 type InferredConfig = z.infer<typeof doneraIntegrationSchema>;
 
 export type DoneraIntegrationConfig = {
-  donera: InferredConfig["donera"];
+  doneraAddress: InferredConfig["doneraAddress"];
   integrations: InferredConfig["integrations"];
   // This instead of zod infer so we can get strong typing on filter callbacks
   filters?: {
