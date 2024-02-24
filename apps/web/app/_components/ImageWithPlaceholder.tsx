@@ -6,6 +6,7 @@ export type ImageWithPlaceholderProps = {
   height?: any;
   width?: any;
   src: string;
+  sizes: string;
 };
 
 async function imagePlaceholder(src: string) {
@@ -25,7 +26,7 @@ async function imagePlaceholder(src: string) {
 // for image on fund detail page. Doesn't work well for images on search/list page
 // This isn't as much of an issue though, i haven't noticed much loading jank on the browse
 // page whereas it was very noticable on the detail page
-export async function ImageWithPlaceholder({ height, src }: ImageWithPlaceholderProps) {
+export async function ImageWithPlaceholder({ height, src, sizes }: ImageWithPlaceholderProps) {
   const { base64, img } = await imagePlaceholder(src);
 
   return (
@@ -37,6 +38,7 @@ export async function ImageWithPlaceholder({ height, src }: ImageWithPlaceholder
         alt="Fundraiser image"
         placeholder="blur"
         blurDataURL={base64}
+        sizes={sizes}
         fill
         style={{
           objectFit: "contain",
