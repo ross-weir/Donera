@@ -8,7 +8,7 @@ const nextConfig = {
       // local testing
       {
         protocol: "https",
-        hostname: "bcwg8zddhjdrrpcs.public.blob.vercel-storage.com",
+        hostname: "ipfs.chainsafe.io",
       },
     ],
   },

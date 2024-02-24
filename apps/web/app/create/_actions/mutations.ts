@@ -4,11 +4,11 @@ import { redirect } from "next/navigation";
 import { CreateFundResult } from "@donera/dapp";
 import db from "@donera/database";
 import { nanoid } from "nanoid";
-import { blob } from "@/_lib/donera";
+import { blob } from "@/_lib/server";
 
 export async function saveFund({ fundContractId, ...rest }: CreateFundResult, formData: FormData) {
   const file = formData.get("image") as File;
-  // https://github.com/vercel/storage/issues/595#issuecomment-1939452486
+  // todo, we should return a cid instead
   const { url } = await blob.put(fundContractId, await file.arrayBuffer());
   const metadata = { image: { url } };
 

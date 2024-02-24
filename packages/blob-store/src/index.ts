@@ -1,6 +1,6 @@
-import { VercelBlobStore } from "./vercel";
 import { BlobStore } from "./blob";
+import { ChainsafeBlobStore } from "./chainsafe";
 
-export function getBlobStore(): BlobStore {
-  return new VercelBlobStore();
+export function newBlobStore(): BlobStore {
+  return new ChainsafeBlobStore();
 }
