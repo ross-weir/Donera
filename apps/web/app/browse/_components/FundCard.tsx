@@ -14,7 +14,9 @@ type FundCardProps = {
 
 export function FundCard({ fund, alphRaised, ...rest }: FundCardProps) {
   const { name, goal, id, organizer, metadata } = fund;
-  const image = cidToUrl(metadata.image?.cid);
+  // fallback to url
+  // https://github.com/ross-weir/Donera/issues/73
+  const image = cidToUrl(metadata.image?.cid) || metadata.image?.url;
 
   return (
     <Card radius="md" {...rest} component={Link} href={`/funds/${id}`} withBorder>
