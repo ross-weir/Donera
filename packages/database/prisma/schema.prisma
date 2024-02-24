@@ -54,7 +54,7 @@ model Donation {
 }
 
 type Image {
-  url String
+  cid String?
 }
 
 type Metadata {

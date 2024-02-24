@@ -4,17 +4,14 @@ import { BlobStore, PutResult } from "./blob";
 export class ChainsafeBlobStore implements BlobStore {
   private readonly apiUrl: string;
   private readonly bucketId: string;
-  private readonly ipfsGateway: string;
 
   constructor() {
     this.apiUrl = getEnvVarOrThrow("CHAINSAFE_API_URL");
     this.bucketId = getEnvVarOrThrow("CHAINSAFE_BUCKET_ID");
-    this.ipfsGateway = getEnvVarOrThrow("IPFS_GATEWAY_URL");
   }
 
-  get<T>(key: string): Promise<T> {
+  get<T>(): Promise<T> {
     throw new Error("Method not implemented.");
-    console.log(key);
   }
 
   async put(key: string, buffer: ArrayBuffer): Promise<PutResult> {
@@ -33,7 +30,6 @@ export class ChainsafeBlobStore implements BlobStore {
     const json = await response.json();
     const data = json.files_details[0]!;
 
-    // TODO: eventually just store cid
-    return { url: `${this.ipfsGateway}/${data.cid}` };
+    return { id: data.cid };
   }
 }

@@ -1,5 +1,7 @@
 export type PutResult = {
-  url: string;
+  // cid in the case of ipfs
+  // could have different meaning depending on the blob storage
+  id: string;
 };
 
 export interface BlobStore {
