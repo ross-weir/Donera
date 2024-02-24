@@ -1,12 +1,12 @@
 import db, { Fund } from "@donera/database";
-import { Container, Flex } from "@mantine/core";
+import { Container, Flex, Skeleton } from "@mantine/core";
 import { notFound } from "next/navigation";
 import { FundDetail } from "./_components/FundDetail";
 import { DonateSection } from "./_components/DonateSection";
 import { ALPH_TOKEN_ID } from "@alephium/web3";
 import { fundSummary } from "@donera/database/funds";
 import { Metadata } from "next";
-import { cache } from "react";
+import { Suspense, cache } from "react";
 import { ImageWithPlaceholder } from "@/_components/ImageWithPlaceholder";
 import { cidToUrl } from "@/_lib/donera";
 
@@ -69,7 +69,11 @@ export default async function FundDetailPage({ params }: { params: SearchParam }
       <Flex justify="center" align="start" gap="xl">
         <FundDetail
           name={name}
-          image={<ImageWithPlaceholder height="425px" sizes="500px" src={image!} />}
+          image={
+            <Suspense fallback={<Skeleton height="425px" />}>
+              <ImageWithPlaceholder height="425px" sizes="500px" src={image!} />
+            </Suspense>
+          }
           w={750}
           description={description}
           beneficiary={beneficiary}
