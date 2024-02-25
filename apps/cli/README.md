@@ -65,7 +65,7 @@ const config: DoneraConfig = {
   networkId: "devnet",
   integrations: {
     services: {
-      discord: {},
+      discord: { webhooks: ["MY_DISCORD_WEBHOOK"] },
     },
     filters: {
       // if a preddicate returns `true` the event will be filtered out and not passed to the services
