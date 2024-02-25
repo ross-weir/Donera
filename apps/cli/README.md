@@ -4,6 +4,8 @@
 
 This package contains the `Donera` cli application. The cli is a general purpose application anyone can use to run off-chain supporting infrastructure or pushing live updates to social media integrations, for example.
 
+This tool will primarily be focused on enabling users of Donera to enhance their fundraising expereince.
+
 ## Installation
 
 The cli can be installed via NPM (soon) like so:
