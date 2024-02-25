@@ -3,8 +3,11 @@
   "version": "0.1.0",
   "description": "",
   "scripts": {
-    "build": "bun build ./src/index.ts --compile --outfile donera"
+    "types": "tsc -p ./tsconfig.types.json",
+    "build": "bun build ./src/bin.ts --compile --outfile ./bin/donera"
   },
+  "types": "./dist/index.d.ts",
+  "bin": "./bin/donera",
   "keywords": [],
   "author": "",
   "license": "ISC",
