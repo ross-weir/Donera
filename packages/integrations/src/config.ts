@@ -7,7 +7,9 @@ const filterSchema = z.object({
   finalization: z.array(z.function()).optional(),
 });
 
-export const discordIntegrationSchema = z.object({});
+export const discordIntegrationSchema = z.object({
+  webhooks: z.array(z.string()).min(1),
+});
 export type DiscordIntegrationConfig = z.infer<typeof discordIntegrationSchema>;
 
 const servicesIntegrationsSchema = z.object({
