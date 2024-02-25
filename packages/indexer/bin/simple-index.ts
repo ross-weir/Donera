@@ -4,14 +4,12 @@ import alephiumConfig from "@donera/alephium-config/default";
 import { NetworkId, web3 } from "@alephium/web3";
 import db from "@donera/database";
 
-const networkId: NetworkId = "devnet";
+const networkId = process.env.DONERA_NETWORK_ID! as NetworkId;
 
 // TODO, get network form somewhere
 const { nodeUrl } = alephiumConfig.networks[networkId];
-// Bun has issues with localhost urls: https://github.com/oven-sh/bun/issues/1425
-const bunFix = nodeUrl.replace("localhost", "127.0.0.1");
 
-web3.setCurrentNodeProvider(bunFix);
+web3.setCurrentNodeProvider(nodeUrl);
 const deploys = loadDeployments(networkId);
 
 const indexerCfg = {
