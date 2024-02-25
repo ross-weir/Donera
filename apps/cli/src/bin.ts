@@ -1,3 +1,4 @@
+import packageJson from "../package.json";
 import yargs from "yargs/yargs";
 import { hideBin } from "yargs/helpers";
 import { findUpSync } from "find-up";
@@ -30,18 +31,22 @@ function scriptName() {
   return "donera";
 }
 
-const CONFIG_FILENAME = "donera.config.ts";
-const configPath = findUpSync([CONFIG_FILENAME]);
+async function init() {
+  const CONFIG_FILENAME = "donera.config.ts";
+  const configPath = findUpSync([CONFIG_FILENAME]);
 
-if (!configPath) {
-  console.log(`Failed to find configuration file '${CONFIG_FILENAME}'`);
-  process.exit(1);
+  if (!configPath) {
+    console.log(`Failed to find configuration file '${CONFIG_FILENAME}'`);
+    process.exit(1);
+  }
+
+  const config = (await import(configPath)).default;
+  const parsedConfig = tryLoadConfig(config);
+
+  setGlobals(parsedConfig);
+
+  return parsedConfig;
 }
-
-const config = (await import(configPath)).default;
-const parsedConfig = tryLoadConfig(config);
-
-setGlobals(parsedConfig);
 
 yargs(hideBin(process.argv))
   .scriptName(scriptName())
@@ -55,9 +60,9 @@ yargs(hideBin(process.argv))
         demandOption: true,
       });
     },
-    (argv) => run.handler(argv.module, parsedConfig)
+    async (argv) => run.handler(argv.module, await init())
   )
-  .demandCommand()
   .help()
-  .version(`donera version: ${process.env.DONERA_VERSION ?? "TODO"}`)
+  .version(`donera version: ${packageJson.version}`)
+  .demandCommand()
   .parse();
