@@ -17,5 +17,10 @@
   },
   "devDependencies": {
     "turbo": "^1.12.4"
+  },
+  "pnpm": {
+    "overrides": {
+      "sharp": "^0.33.2"
+    }
   }
 }
