@@ -6,7 +6,7 @@
       "outputs": [".next/**", "!.next/cache/**", "./bin/**"]
     },
     "types": {
-      "outputs": ["./dist/**"]
+      "outputs": ["./dist/**/*.d.ts"]
     },
     "compile": {
       "outputs": ["artifacts/**", ".project.json"]
