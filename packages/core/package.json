@@ -5,6 +5,10 @@
   "exports": {
     ".": "./src/index.ts"
   },
+  "scripts": {
+    "types": "tsc -p ./tsconfig.types.json"
+  },
+  "types": "dist/index.d.ts",
   "devDependencies": {
     "@donera/eslint-config": "workspace:^",
     "@donera/typescript-config": "workspace:^",

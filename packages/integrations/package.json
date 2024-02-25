@@ -2,6 +2,10 @@
   "name": "@donera/integrations",
   "version": "1.0.0",
   "private": true,
+  "scripts": {
+    "types": "tsc -p ./tsconfig.types.json"
+  },
+  "types": "dist/index.d.ts",
   "exports": {
     ".": "./src/index.ts"
   },

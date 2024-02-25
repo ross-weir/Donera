@@ -36,20 +36,21 @@ export class DoneraIntegration implements Lifecycle {
   }
 
   async start(): Promise<void> {
-    if (!this.cfg.integrations) {
+    const { services } = this.cfg;
+    if (!services) {
       throw new Error("no integrations supplied");
     }
 
     this.logger.debug("initializing integrations");
 
-    for (const [integration, cfg] of Object.entries(this.cfg.integrations)) {
-      const factory = integrationFactoryMap[integration];
+    for (const [service, cfg] of Object.entries(services)) {
+      const factory = integrationFactoryMap[service];
 
       if (!factory) {
-        this.logger.warn(`No integration factory found for ${integration}`);
+        this.logger.warn(`No integration factory found for ${service}`);
       }
 
-      const logger = this.logger.child({ integration });
+      const logger = this.logger.child({ service });
       this.integrations.push(factory(cfg, logger));
     }
 
