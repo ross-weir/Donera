@@ -14,6 +14,15 @@ importers:
 
   apps/cli:
     dependencies:
+      '@alephium/web3':
+        specifier: ^0.31.0
+        version: 0.31.0
+      '@donera/alephium-config':
+        specifier: workspace:^
+        version: link:../../packages/alephium-config
+      '@donera/core':
+        specifier: workspace:^
+        version: link:../../packages/core
       '@donera/dapp':
         specifier: workspace:^
         version: link:../../packages/dapp
@@ -23,9 +32,15 @@ importers:
       find-up:
         specifier: ^7.0.0
         version: 7.0.0
+      pino:
+        specifier: ^8.19.0
+        version: 8.19.0
       yargs:
         specifier: ^17.7.2
         version: 17.7.2
+      zod:
+        specifier: ^3.22.4
+        version: 3.22.4
       zod-validation-error:
         specifier: ^3.0.2
         version: 3.0.2(zod@3.22.4)

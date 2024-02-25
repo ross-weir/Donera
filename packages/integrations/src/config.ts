@@ -1,4 +1,3 @@
-import { validateAddress } from "@alephium/web3";
 import { DoneraTypes } from "@donera/dapp/contracts";
 import { z } from "zod";
 
@@ -11,31 +10,19 @@ const filterSchema = z.object({
 export const discordIntegrationSchema = z.object({});
 export type DiscordIntegrationConfig = z.infer<typeof discordIntegrationSchema>;
 
-const integrationsSchema = z.object({
+const servicesIntegrationsSchema = z.object({
   discord: discordIntegrationSchema.optional(),
 });
 
 export const doneraIntegrationSchema = z.object({
-  // contract address of the deployed donera instance
-  doneraAddress: z.string().superRefine((val, ctx) => {
-    try {
-      validateAddress(val);
-    } catch (e: unknown) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: (e as Error).message,
-      });
-    }
-  }),
-  integrations: integrationsSchema,
+  services: servicesIntegrationsSchema,
   filters: filterSchema.optional(),
 });
 
 type InferredConfig = z.infer<typeof doneraIntegrationSchema>;
 
 export type DoneraIntegrationConfig = {
-  doneraAddress: InferredConfig["doneraAddress"];
-  integrations: InferredConfig["integrations"];
+  services: InferredConfig["services"];
   // This instead of zod infer so we can get strong typing on filter callbacks
   filters?: {
     listing?: Array<(event: DoneraTypes.FundListedEvent) => Promise<true>>;

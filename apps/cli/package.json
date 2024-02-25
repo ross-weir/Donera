@@ -1,7 +1,7 @@
 {
   "name": "@donera/cli",
   "version": "0.1.0",
-  "description": "",
+  "description": "Donera CLI",
   "scripts": {
     "types": "tsc -p ./tsconfig.types.json",
     "build": "bun build ./src/bin.ts --compile --outfile ./bin/donera"
@@ -20,10 +20,15 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
+    "@alephium/web3": "^0.31.0",
+    "@donera/alephium-config": "workspace:^",
+    "@donera/core": "workspace:^",
     "@donera/dapp": "workspace:^",
     "@donera/integrations": "workspace:^",
     "find-up": "^7.0.0",
+    "pino": "^8.19.0",
     "yargs": "^17.7.2",
+    "zod": "^3.22.4",
     "zod-validation-error": "^3.0.2"
   }
 }
