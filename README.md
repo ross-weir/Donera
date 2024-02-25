@@ -33,3 +33,17 @@ Find a brief description below:
 |-------------------|------------------------------------------------------------------------------------------------------|
 | [web](/apps/web/) | NextJS based web frontend for the Donera dApp. Contains the user interface and backend server        |
 | [cli](/apps/cli/) | Donera command line interface providing tooling such as off-chain bots and utilities for fundraisers |
+
+### Scripts
+
+Below is a description of mono-level npm scripts used to perform certain tasks:
+
+| Script        | Description                                                                                  |
+|---------------|----------------------------------------------------------------------------------------------|
+| `pnpm build`  | Compiles CLI, generates database client, creates production build of web app, etc            |
+| `pnpm types`  | Generates TypeScript type declaration files for all packages/apps that require it            |
+| `pnpm lint`   | Lints the codebase                                                                           |
+| `pnpm test`   | Runs unit tests in all packages/apps                                                         |
+| `pnpm fmt`    | Runs formatting tools on the codebase                                                        |
+| `devnet:up`   | Starts a local `devnet` using [`alephium-stack`](https://github.com/alephium/alephium-stack) |
+| `devnet:down` | Stops the local running `devnet`                                                             |
