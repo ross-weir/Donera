@@ -20,6 +20,7 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
+    "@donera/dapp": "workspace:^",
     "@donera/integrations": "workspace:^",
     "find-up": "^7.0.0",
     "yargs": "^17.7.2",

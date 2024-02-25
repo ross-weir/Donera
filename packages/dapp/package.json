@@ -6,11 +6,16 @@
     "deploy": "cli deploy",
     "test": "bun test src",
     "test:e2e": "bun test test/e2e/",
+    "types": "tsc -p ./tsconfig.types.json",
     "lint": "eslint ."
   },
+  "types": "./dist/src/index.d.ts",
   "exports": {
     ".": "./src/index.ts",
-    "./contracts": "./src/contracts/index.ts",
+    "./contracts": {
+      "types": "./dist/src/contracts/index.d.ts",
+      "import": "./src/contracts/index.ts"
+    },
     "./scripts": "./src/scripts.ts",
     "./deploys": "./src/deploys.ts",
     "./fees": "./src/fees.ts"

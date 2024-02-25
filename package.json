@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "build": "turbo build",
+    "types": "turbo types",
     "lint": "turbo lint",
     "test": "turbo test",
     "fmt": "prettier --write .",

@@ -3,7 +3,10 @@
   "pipeline": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": [".next/**", "!.next/cache/**", "dist/**"]
+      "outputs": [".next/**", "!.next/cache/**", "./bin/**"]
+    },
+    "types": {
+      "outputs": ["./dist/**"]
     },
     "compile": {
       "outputs": ["artifacts/**", ".project.json"]

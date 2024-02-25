@@ -14,6 +14,9 @@ importers:
 
   apps/cli:
     dependencies:
+      '@donera/dapp':
+        specifier: workspace:^
+        version: link:../../packages/dapp
       '@donera/integrations':
         specifier: workspace:^
         version: link:../../packages/integrations
@@ -157,15 +160,6 @@ importers:
       typescript:
         specifier: ^5.3.3
         version: 5.3.3
-
-  examples/using-integrations:
-    dependencies:
-      '@donera/cli':
-        specifier: workspace:^
-        version: link:../../apps/cli
-      '@donera/dapp':
-        specifier: workspace:^
-        version: link:../../packages/dapp
 
   packages/alephium-config:
     devDependencies:
