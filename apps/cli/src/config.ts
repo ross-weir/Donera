@@ -21,6 +21,6 @@ export const doneraConfigSchema = z.object({
 });
 
 // override `integrations` with strongly defined type
-export type DoneraConfig = z.infer<typeof doneraConfigSchema> & {
+export type DoneraConfig = Omit<z.infer<typeof doneraConfigSchema>, "integrations"> & {
   integrations?: DoneraIntegrationConfig;
 };

@@ -25,8 +25,8 @@ export type DoneraIntegrationConfig = {
   services: InferredConfig["services"];
   // This instead of zod infer so we can get strong typing on filter callbacks
   filters?: {
-    listing?: Array<(event: DoneraTypes.FundListedEvent) => Promise<true>>;
-    donation?: Array<(event: DoneraTypes.DonationEvent) => Promise<true>[]>;
-    finalization?: Array<(event: DoneraTypes.FundFinalizedEvent) => Promise<true>[]>;
+    listing?: Array<(event: DoneraTypes.FundListedEvent) => Promise<boolean>>;
+    donation?: Array<(event: DoneraTypes.DonationEvent) => Promise<boolean>>;
+    finalization?: Array<(event: DoneraTypes.FundFinalizedEvent) => Promise<boolean>>;
   };
 };
