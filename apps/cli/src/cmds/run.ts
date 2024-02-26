@@ -30,6 +30,7 @@ export function handler(module: "integrations", config: DoneraConfig) {
 
   const donera = getDonera(config);
   instance = new DoneraIntegration(moduleConfig, logger, donera);
+  logger.info("Starting donera integrations");
 
   instance.start();
 }
