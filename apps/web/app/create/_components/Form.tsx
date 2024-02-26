@@ -132,6 +132,7 @@ export default function CreateFundForm() {
     },
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const commonInputProps = { disabled: isSubmitting, required: true, withAsterisk: true };
 
   const onSuccess = async (result: CreateFundResult) => {
     notifications.show({
@@ -183,55 +184,49 @@ export default function CreateFundForm() {
         <TextInput
           label="Name"
           description="The name of your fund raiser"
-          withAsterisk
-          required
+          {...commonInputProps}
           {...form.getInputProps("name")}
         />
         <FileInput
           label="Upload image"
           description="Upload a image that will be shown on the fundraisers page. 4.5mb max size limit."
           placeholder="Fundraiser image"
-          required
-          withAsterisk
           accept={IMAGE_MIME_TYPES.join(",")}
           clearable
           multiple={false}
+          {...commonInputProps}
           {...form.getInputProps("image")}
         />
         <Textarea
           label="Description"
           description="Describe the reason for creating the fund"
-          withAsterisk
-          required
           autosize
           minRows={8}
           maxRows={8}
+          {...commonInputProps}
           {...form.getInputProps("description")}
         />
         <NumberInput
           label="Goal"
           description="The amount of ALPH you are aiming to raise"
-          withAsterisk
-          required
           hideControls
           leftSection={<TokenIcon size="sm" tokenId={ALPH_TOKEN_ID} />}
           decimalScale={2}
+          {...commonInputProps}
           {...form.getInputProps("goal")}
         />
         <DateTimePicker
           label="Deadline"
-          withAsterisk
-          required
           clearable
           description="The end time for the fundraiser"
+          {...commonInputProps}
           {...form.getInputProps("deadline")}
         />
         <TextInput
           label="Beneficiary"
-          withAsterisk
-          required
           description={<SetBeneficiaryText form={form} />}
           placeholder="Beneficiaries address"
+          {...commonInputProps}
           {...form.getInputProps("beneficiary")}
         />
         <Group justify="flex-end">
