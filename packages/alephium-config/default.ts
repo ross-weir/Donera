@@ -14,7 +14,7 @@ const config: Configuration<unknown> = {
   networks: {
     devnet: {
       nodeUrl: "http://127.0.0.1:22973",
-      privateKeys: ["a642942e67258589cd2b1822c631506632db5a12aabcf413604e785300d762a5"],
+      privateKeys: ["7f5692ab35cdf90f25a01c128fdce1fbea202dddd15eccb635b127bb6368db46"],
       settings: defaultSettings,
     },
     testnet: {

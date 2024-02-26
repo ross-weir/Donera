@@ -1,5 +1,5 @@
 {
-  "version": "v2.8.4",
+  "version": "v2.8.5",
   "name": "CreateFund",
   "bytecodeTemplate": "0101030001001c{3}0c334c05b4{1}{2}{3}aa0c0d{0}010913c40de0b6b3a76400002a1700b41600a2{4}{5}{6}{7}{8}110c{0}0100",
   "fieldsSig": {

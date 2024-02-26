@@ -147,7 +147,7 @@ export class DoneraDapp {
   ): Promise<E> {
     return new Promise((resolve, reject) => {
       const operation = retry.operation({
-        retries: 20, // Max retries
+        retries: 50, // Max retries
         factor: 1, // The exponential factor
         minTimeout: 3 * 1000, // 3 seconds in milliseconds
         maxTimeout: 3 * 1000, // 3 seconds in milliseconds

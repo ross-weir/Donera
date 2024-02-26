@@ -1,7 +1,7 @@
 import { Donera, DoneraTypes } from "@donera/dapp/contracts";
 import { BaseIndexer, IndexerConfig } from "./indexer";
 import { ALPH_TOKEN_ID, Contract, addressFromContractId, hexToString, node } from "@alephium/web3";
-import { PrismaPromise } from "@donera/database";
+import { Prisma, PrismaPromise } from "@donera/database";
 import { Deployments } from "@donera/dapp/deploys";
 import { nanoid } from "nanoid";
 
@@ -44,12 +44,20 @@ export class SimpleEventIndexer extends BaseIndexer {
   }
 
   private async processEvents(): Promise<void> {
-    const { events, nextStart } = await this.node.events.getEventsContractContractaddress(
-      this.deploys.contracts.Donera.contractInstance.address,
-      {
-        start: this.currentHeight,
-      }
-    );
+    const { groupIndex, address } = this.deploys.contracts.Donera.contractInstance;
+    // const group = this.deploys.contracts.Donera.contractInstance.groupIndex;
+    // const { events, nextStart } = await this.node.events.getEventsContractContractaddress(
+    //   this.deploys.contracts.Donera.contractInstance.address,
+    //   {
+    //     // group,
+    //     start: this.currentHeight,
+    //   }
+    // );
+    const { events, nextStart } = (await this.getEventsHacky(
+      address,
+      this.currentHeight,
+      groupIndex
+    )) as any;
 
     if (nextStart === this.currentHeight) {
       return;
@@ -60,11 +68,20 @@ export class SimpleEventIndexer extends BaseIndexer {
     const createTxns = await Promise.all(createEvents.map((e) => this.onEvent(e)));
     const otherTxns = await Promise.all(otherEvents.map((e) => this.onEvent(e)));
 
-    await this.db.$transaction([
-      ...createTxns.flat(),
-      ...otherTxns.flat(),
-      this.updateHeight(nextStart),
-    ]);
+    for (const tx of createTxns.flat()) {
+      await tx;
+    }
+
+    for (const tx of otherTxns.flat()) {
+      await tx;
+    }
+
+    // await this.db.$transaction(
+    //   [...createTxns.flat(), ...otherTxns.flat(), this.updateHeight(nextStart)],
+    //   {
+    //     isolationLevel: Prisma.TransactionIsolationLevel.Serializable,
+    //   }
+    // );
     this.currentHeight = nextStart;
   }
 
@@ -122,9 +139,21 @@ export class SimpleEventIndexer extends BaseIndexer {
 
   private async processDonation(event: DoneraTypes.DonationEvent): Promise<Tx[]> {
     const { fundContractId, amount, tokenId, ...rest } = event.fields;
+    // const { asset } = await this.deploys.contracts.Donera.contractInstance.fetchState();
+
     const contractAddress = addressFromContractId(fundContractId);
-    const { asset } = await this.node.contracts.getContractsAddressState(contractAddress);
-    const balances = [{ id: ALPH_TOKEN_ID, amount: asset.attoAlphAmount }, ...(asset.tokens ?? [])];
+    // const { asset } = await this.node.contracts.getContractsAddressState(contractAddress);
+    const { asset } = (await this.getStateHacky(contractAddress)) as any;
+    const balances = [
+      { id: ALPH_TOKEN_ID, amount: asset.attoAlphAmount.toString() },
+      ...(asset.tokens ?? []),
+    ];
+
+    // const tokenBalances = (asset.tokens ?? []).map((t) => ({
+    //   id: t.id,
+    //   amount: t.amount.toString(),
+    // }));
+    // balances = []
     return [
       this.db.donation.create({
         data: {
@@ -160,5 +189,60 @@ export class SimpleEventIndexer extends BaseIndexer {
         },
       }),
     ];
+  }
+
+  private async getEventsHacky(
+    contractAddress: string,
+    start: number,
+    group: number
+  ): Promise<unknown> {
+    const response = await fetch(
+      `https://wallet-v20.testnet.alephium.org/events/contract/${contractAddress}?start=${start}&group=${group}`,
+      {
+        headers: {
+          accept: "application/json",
+          "accept-language": "en-GB,en;q=0.8",
+          "sec-ch-ua": '"Not A(Brand";v="99", "Brave";v="121", "Chromium";v="121"',
+          "sec-ch-ua-mobile": "?0",
+          "sec-ch-ua-platform": '"Linux"',
+          "sec-fetch-dest": "empty",
+          "sec-fetch-mode": "cors",
+          "sec-fetch-site": "same-origin",
+          "sec-gpc": "1",
+        },
+        referrer: "https://wallet-v20.testnet.alephium.org/docs/",
+        referrerPolicy: "strict-origin-when-cross-origin",
+        body: null,
+        method: "GET",
+        mode: "cors",
+        credentials: "omit",
+      }
+    );
+    return response.json();
+  }
+  private async getStateHacky(address: string): Promise<unknown> {
+    const result = await fetch(
+      `https://wallet-v20.testnet.alephium.org/contracts/${address}/state?group=0`,
+      {
+        headers: {
+          accept: "application/json",
+          "accept-language": "en-GB,en;q=0.8",
+          "sec-ch-ua": '"Not A(Brand";v="99", "Brave";v="121", "Chromium";v="121"',
+          "sec-ch-ua-mobile": "?0",
+          "sec-ch-ua-platform": '"Linux"',
+          "sec-fetch-dest": "empty",
+          "sec-fetch-mode": "cors",
+          "sec-fetch-site": "same-origin",
+          "sec-gpc": "1",
+        },
+        referrer: "https://wallet-v20.testnet.alephium.org/docs/",
+        referrerPolicy: "strict-origin-when-cross-origin",
+        body: null,
+        method: "GET",
+        mode: "cors",
+        credentials: "omit",
+      }
+    );
+    return result.json();
   }
 }

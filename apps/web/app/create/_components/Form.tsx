@@ -29,6 +29,7 @@ import { ALPH_TOKEN_ID, validateAddress } from "@alephium/web3";
 import { dynamicWalletButton } from "@/_components/Wallet/DynamicWalletControl";
 import { ExtractProps } from "@/_lib/types";
 import { useTimeout } from "@mantine/hooks";
+import { useRouter } from "next/navigation";
 
 interface FormSchema {
   name: string;
@@ -109,6 +110,7 @@ function SetBeneficiaryText({ form }: { form: any }) {
 }
 
 export default function CreateFundForm() {
+  const router = useRouter();
   const { signer } = useWallet();
   const form = useForm<FormSchema>({
     initialValues: {
@@ -131,7 +133,7 @@ export default function CreateFundForm() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const onSuccess = (result: CreateFundResult) => {
+  const onSuccess = async (result: CreateFundResult) => {
     notifications.show({
       withBorder: true,
       color: "teal",
@@ -147,7 +149,18 @@ export default function CreateFundForm() {
       ),
     });
     const formData = new FormData();
+    // const { deadline, ...rest } = result;
+    // for (const [key, value] of Object.entries(rest)) {
+    //   formData.set(key, value);
+    // }
+    // formData.set("deadline", deadline.toISOString());
     formData.set("image", form.values.image!);
+    // const response = await fetch("/funds", {
+    //   method: "POST",
+    //   body: formData,
+    // });
+    // const { id } = await response.json();
+    // router.push(`/funds/${id}`);
     saveFund(result, formData).catch(onError);
   };
 
