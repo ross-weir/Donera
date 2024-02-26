@@ -8,6 +8,8 @@ import classes from "./Header.module.css";
 import cx from "clsx";
 import { dynamicWalletIcon } from "../Wallet/DynamicWalletControl";
 import { IconSearch } from "@tabler/icons-react";
+import { NetworkBadge } from "../NetworkBadge";
+import { getNetwork } from "@/_lib/donera";
 
 const controlIconProps = {
   iconProps: {
@@ -23,6 +25,7 @@ const controlIconProps = {
 const WalletIcon = dynamicWalletIcon(controlIconProps);
 
 export function Header() {
+  const network = getNetwork();
   return (
     <Container size="xl" className={classes.container}>
       <Group className={classes.container} justify="space-between">
@@ -33,6 +36,7 @@ export function Header() {
               <Title order={2}>Donera</Title>
             </Group>
           </Link>
+          {network !== "mainnet" && <NetworkBadge size="sm" value={getNetwork()} />}
         </Group>
         <Group>
           <LaunchFundButton variant="subtle">Launch fundraiser</LaunchFundButton>
