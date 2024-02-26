@@ -14,15 +14,23 @@ import {
 import { TokenValueText } from "../TokenValueText";
 import { ALPH_TOKEN_ID } from "@alephium/web3";
 import { AlphAddressText } from "../AlphAddressText";
+import { useState } from "react";
+import { IconLogout } from "@tabler/icons-react";
 
-export type WalletMenuProps = { disconnect: () => void } & ExtractProps<typeof Menu>;
+export type WalletMenuProps = { onClick: () => void } & ExtractProps<typeof Menu>;
 
-export function WalletMenu({ disconnect, children, ...rest }: WalletMenuProps) {
+export function WalletMenu({ onClick, children, ...rest }: WalletMenuProps) {
+  const [opened, setOpened] = useState(false);
   const { account } = useWallet();
   const { balance } = useBalance();
 
+  const onDisconnectClick = () => {
+    setOpened(false);
+    onClick();
+  };
+
   return (
-    <Menu {...rest} width={250} withArrow>
+    <Menu {...rest} opened={opened} onChange={setOpened} width={250} withArrow>
       <MenuTarget>{children}</MenuTarget>
       <MenuDropdown>
         <MenuLabel>Wallet information</MenuLabel>
@@ -45,7 +53,13 @@ export function WalletMenu({ disconnect, children, ...rest }: WalletMenuProps) {
           </Group>
         </MenuItem>
         <MenuDivider />
-        <Button variant="subtle" c="red" fullWidth onClick={disconnect}>
+        <Button
+          variant="subtle"
+          c="red"
+          fullWidth
+          onClick={onDisconnectClick}
+          leftSection={<IconLogout size={14} />}
+        >
           Disconnect
         </Button>
       </MenuDropdown>
