@@ -6,6 +6,8 @@ import { ActionIcon, Indicator } from "@mantine/core";
 import { IconWallet, TablerIconsProps } from "@tabler/icons-react";
 import { WalletMenu } from "./WalletMenu";
 import { Account } from "@alephium/web3";
+import { useDisclosure } from "@mantine/hooks";
+import { DisconnectModal } from "./DisconnectModal";
 
 // not exported from `@alephium/web3-react`
 interface ConnectButtonRendererProps {
@@ -34,18 +36,35 @@ export function WalletIconLoader({ actionProps, iconProps }: WalletIconProps) {
 }
 
 export default function WalletIcon({ actionProps, iconProps }: WalletIconProps) {
+  const [opened, { open, close }] = useDisclosure(false);
   const { connectionStatus } = useWallet();
   const { disconnect } = useConnect();
   const connected = connectionStatus === "connected";
 
+  const onModalDisconnect = () => {
+    close();
+    disconnect();
+  };
+
   return connected ? (
-    <WalletMenu disconnect={disconnect}>
-      <Indicator color="green">
-        <ActionIcon {...actionProps} aria-label="Wallet icon button">
-          <IconWallet {...iconProps} />
-        </ActionIcon>
-      </Indicator>
-    </WalletMenu>
+    <>
+      <DisconnectModal
+        onDisconnect={onModalDisconnect}
+        opened={opened}
+        onClose={close}
+        overlayProps={{
+          backgroundOpacity: 0.55,
+          blur: 3,
+        }}
+      />
+      <WalletMenu onClick={open}>
+        <Indicator color="green">
+          <ActionIcon {...actionProps} aria-label="Wallet icon button">
+            <IconWallet {...iconProps} />
+          </ActionIcon>
+        </Indicator>
+      </WalletMenu>
+    </>
   ) : (
     <AlephiumConnectButton.Custom>
       {({ show, isConnecting }: ConnectButtonRendererProps) => (
