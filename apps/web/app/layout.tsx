@@ -1,6 +1,7 @@
 import "@mantine/core/styles.css";
 import "@mantine/dates/styles.css";
 import "@mantine/notifications/styles.css";
+import "./donera.css";
 import "./_lib/server/init";
 
 import type { Metadata } from "next";

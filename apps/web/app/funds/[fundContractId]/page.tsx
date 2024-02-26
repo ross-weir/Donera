@@ -47,19 +47,7 @@ export default async function FundDetailPage({ params }: { params: SearchParam }
     notFound();
   }
 
-  const {
-    name,
-    shortId,
-    description,
-    createdAt,
-    beneficiary,
-    organizer,
-    verified,
-    deadline,
-    goal,
-    donations,
-    metadata,
-  } = fund;
+  const { shortId, goal, donations, metadata } = fund;
   // fallback to url
   // https://github.com/ross-weir/Donera/issues/73
   const image = cidToUrl(metadata.image?.cid) || metadata.image?.url;
@@ -68,19 +56,13 @@ export default async function FundDetailPage({ params }: { params: SearchParam }
     <Container fluid>
       <Flex justify="center" align="start" gap="xl">
         <FundDetail
-          name={name}
+          fund={fund}
           image={
             <Suspense fallback={<Skeleton height="425px" />}>
               <ImageWithPlaceholder height="425px" sizes="500px" src={image!} />
             </Suspense>
           }
           w={750}
-          description={description}
-          beneficiary={beneficiary}
-          deadline={deadline.toLocaleString()}
-          organizer={organizer}
-          verified={verified}
-          createdAt={createdAt.toLocaleString()}
         />
         <DonateSection
           miw={450}
