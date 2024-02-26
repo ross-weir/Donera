@@ -5,7 +5,7 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
-  sharp: 0.32.6
+  sharp: ^0.32.2
   pino: ^8.19.0
 
 importers:
@@ -108,7 +108,7 @@ importers:
         version: 7.5.3(@mantine/core@7.5.3)(@mantine/hooks@7.5.3)(react-dom@18.2.0)(react@18.2.0)
       '@plaiceholder/next':
         specifier: ^3.0.0
-        version: 3.0.0(next@14.1.0)(plaiceholder@3.0.0)(sharp@0.32.6)
+        version: 3.0.0(next@14.1.0)(plaiceholder@3.0.0)(sharp@0.32.2)
       '@tabler/icons-react':
         specifier: ^2.47.0
         version: 2.47.0(react@18.2.0)
@@ -126,7 +126,7 @@ importers:
         version: 14.1.0(@babel/core@7.23.9)(react-dom@18.2.0)(react@18.2.0)
       plaiceholder:
         specifier: ^3.0.0
-        version: 3.0.0(sharp@0.32.6)
+        version: 3.0.0(sharp@0.32.2)
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -137,8 +137,8 @@ importers:
         specifier: ^5.1.0
         version: 5.1.0(react@18.2.0)
       sharp:
-        specifier: 0.32.6
-        version: 0.32.6
+        specifier: ^0.32.2
+        version: 0.32.2
     devDependencies:
       '@donera/eslint-config':
         specifier: workspace:*
@@ -1721,7 +1721,7 @@ packages:
     dev: true
     optional: true
 
-  /@plaiceholder/next@3.0.0(next@14.1.0)(plaiceholder@3.0.0)(sharp@0.32.6):
+  /@plaiceholder/next@3.0.0(next@14.1.0)(plaiceholder@3.0.0)(sharp@0.32.2):
     resolution: {integrity: sha512-7UK/H1X64hwo2VaxOPKMXE+OY9IgmKLPsq/xKHZ+gU07oqQSfIWWIgpVVucMB3ZgVYah+68agR15BRuSxAuMHw==}
     peerDependencies:
       next: '>= 10.0.0'
@@ -1729,8 +1729,8 @@ packages:
       sharp: '>= 0.30.6'
     dependencies:
       next: 14.1.0(@babel/core@7.23.9)(react-dom@18.2.0)(react@18.2.0)
-      plaiceholder: 3.0.0(sharp@0.32.6)
-      sharp: 0.32.6
+      plaiceholder: 3.0.0(sharp@0.32.2)
+      sharp: 0.32.2
     dev: false
 
   /@prisma/client@5.9.1(prisma@5.9.1):
@@ -6786,12 +6786,12 @@ packages:
       pathe: 1.1.2
     dev: false
 
-  /plaiceholder@3.0.0(sharp@0.32.6):
+  /plaiceholder@3.0.0(sharp@0.32.2):
     resolution: {integrity: sha512-jwHxxHPnr1BwRzPCeZgEK2BMsEy2327sWynw3qb6XC/oGgGDUTPtR8pFxFQmNArhMBwhkUbUr5OPhhIJpCa8eQ==}
     peerDependencies:
       sharp: '>= 0.30.6'
     dependencies:
-      sharp: 0.32.6
+      sharp: 0.32.2
     dev: false
 
   /pngjs@3.4.0:
@@ -7487,8 +7487,8 @@ packages:
     resolution: {integrity: sha512-y0m1JoUZSlPAjXVtPPW70aZWfIL/dSP7AFkRnniLCrK/8MDKog3TySTBmckD+RObVxH0v4Tox67+F14PdED2oQ==}
     dev: false
 
-  /sharp@0.32.6:
-    resolution: {integrity: sha512-KyLTWwgcR9Oe4d9HwCwNM2l7+J0dUQwn/yf7S0EnTtb0eVS4RxO0eUSvxPtzT4F3SY+C4K6fqdv/DO27sJ/v/w==}
+  /sharp@0.32.2:
+    resolution: {integrity: sha512-e4hyWKtU7ks/rLmoPys476zhpQnLqPJopz4+5b6OPeyJfvCTInAp0pe5tGhstjsNdUvDLrUVGEwevewYdZM8Eg==}
     engines: {node: '>=14.15.0'}
     requiresBuild: true
     dependencies:

@@ -149,19 +149,19 @@ export default function CreateFundForm() {
       ),
     });
     const formData = new FormData();
-    // const { deadline, ...rest } = result;
-    // for (const [key, value] of Object.entries(rest)) {
-    //   formData.set(key, value);
-    // }
-    // formData.set("deadline", deadline.toISOString());
+    const { deadline, ...rest } = result;
+    for (const [key, value] of Object.entries(rest)) {
+      formData.set(key, value);
+    }
+    formData.set("deadline", deadline.toISOString());
     formData.set("image", form.values.image!);
-    // const response = await fetch("/funds", {
-    //   method: "POST",
-    //   body: formData,
-    // });
-    // const { id } = await response.json();
-    // router.push(`/funds/${id}`);
-    saveFund(result, formData).catch(onError);
+    const response = await fetch("/funds", {
+      method: "POST",
+      body: formData,
+    });
+    const { id } = await response.json();
+    router.push(`/funds/${id}`);
+    // saveFund(result, formData).catch(onError);
   };
 
   const onError = (e: Error) => {

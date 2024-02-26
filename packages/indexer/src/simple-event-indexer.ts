@@ -70,10 +70,14 @@ export class SimpleEventIndexer extends BaseIndexer {
 
     for (const tx of createTxns.flat()) {
       await tx;
+      await this.incHeight();
+      this.currentHeight++;
     }
 
     for (const tx of otherTxns.flat()) {
       await tx;
+      await this.incHeight();
+      this.currentHeight++;
     }
 
     // await this.db.$transaction(
@@ -82,7 +86,7 @@ export class SimpleEventIndexer extends BaseIndexer {
     //     isolationLevel: Prisma.TransactionIsolationLevel.Serializable,
     //   }
     // );
-    this.currentHeight = nextStart;
+    // this.currentHeight = nextStart;
   }
 
   private onEvent(contractEvent: node.ContractEvent): Promise<Tx[]> {
