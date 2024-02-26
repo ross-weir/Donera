@@ -27,12 +27,14 @@
     "@donera/eslint-config": "workspace:*",
     "@donera/typescript-config": "workspace:*",
     "@types/bun": "^1.0.5",
+    "@types/retry": "^0.12.5",
     "eslint": "^8.56.0",
     "typescript": "^5.3.3"
   },
   "dependencies": {
     "@alephium/token-list": "^0.0.15",
     "@alephium/web3": "^0.31.0",
-    "@donera/core": "workspace:^"
+    "@donera/core": "workspace:^",
+    "retry": "^0.13.1"
   }
 }

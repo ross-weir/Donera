@@ -17,6 +17,7 @@ import { CreateFund, DonateToFund } from "./scripts";
 import { getTokensForNetwork } from "./tokens";
 import { stringToHex } from "@donera/core";
 import { NO_UI_FEE, UiFee, UiFeeOnchain, convertUiFeeToOnchain } from "./fees";
+import retry from "retry";
 
 export type CreateFundParam = {
   name: string;
@@ -81,11 +82,10 @@ export class DoneraDapp {
       },
       attoAlphAmount: listingFeeCall.returns + ONE_ALPH + this.uiFee.uiFee,
     });
-    const { fields } = await this.getEventForTx<DoneraTypes.FundListedEvent, DoneraInstance>(
-      txId,
-      Donera,
-      Donera.eventIndex.FundListed
-    );
+    const { fields } = await this.getEventForTxWithRetry<
+      DoneraTypes.FundListedEvent,
+      DoneraInstance
+    >(txId, Donera, Donera.eventIndex.FundListed);
 
     // TODO: should probably return the values in `fields` as they come from
     // the blockchain itself
@@ -138,6 +138,34 @@ export class DoneraDapp {
       throw new Error(`getEventForTx: Failed to find event with index ${eventIndex} in tx ${txId}`);
     }
     return Contract.fromApiEvent(targetEvent, undefined, txId, () => contractFactory.contract) as E;
+  }
+
+  async getEventForTxWithRetry<E, C extends ContractInstance>(
+    txId: string,
+    contractFactory: ContractFactory<C>,
+    eventIndex: number
+  ): Promise<E> {
+    return new Promise((resolve, reject) => {
+      const operation = retry.operation({
+        retries: 20, // Max retries
+        factor: 1, // The exponential factor
+        minTimeout: 3 * 1000, // 3 seconds in milliseconds
+        maxTimeout: 3 * 1000, // 3 seconds in milliseconds
+        randomize: false,
+      });
+
+      operation.attempt(async (currentAttempt: number) => {
+        try {
+          const result = await this.getEventForTx<E, C>(txId, contractFactory, eventIndex);
+          resolve(result); // Resolve with the result on success
+        } catch (err) {
+          console.log(`Attempt ${currentAttempt} failed, retrying...`);
+          if (!operation.retry(err as Error)) {
+            reject(operation.mainError()); // Reject with the error if all attempts fail
+          }
+        }
+      });
+    });
   }
 
   private getTokenInfo(tokenId: string): TokenInfo | undefined {
