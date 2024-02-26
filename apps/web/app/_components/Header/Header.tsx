@@ -36,7 +36,7 @@ export function Header() {
               <Title order={2}>Donera</Title>
             </Group>
           </Link>
-          {network !== "mainnet" && <NetworkBadge size="sm" value={getNetwork()} />}
+          {network !== "mainnet" && <NetworkBadge size="sm" value={network} />}
         </Group>
         <Group>
           <LaunchFundButton variant="subtle">Launch fundraiser</LaunchFundButton>
