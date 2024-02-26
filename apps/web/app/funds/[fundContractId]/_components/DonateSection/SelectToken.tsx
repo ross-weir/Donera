@@ -2,6 +2,7 @@ import { TokenIcon } from "@/_components/TokenIcon";
 import {
   Combobox,
   ComboboxDropdownProps,
+  ComboboxProps,
   Group,
   InputBase,
   Text,
@@ -30,9 +31,16 @@ export type SelectTokenProps = {
   value?: string;
   onChange: (value: string) => void;
   dropdownProps?: ComboboxDropdownProps;
-};
+} & ComboboxProps;
 
-export function SelectToken({ value, onChange, data, dropdownProps = {} }: SelectTokenProps) {
+export function SelectToken({
+  value,
+  onChange,
+  data,
+  dropdownProps = {},
+  disabled,
+  ...rest
+}: SelectTokenProps) {
   const combobox = useCombobox({
     onDropdownClose: () => combobox.resetSelectedOption(),
   });
@@ -47,6 +55,8 @@ export function SelectToken({ value, onChange, data, dropdownProps = {} }: Selec
     <Combobox
       store={combobox}
       withinPortal={false}
+      disabled={disabled}
+      {...rest}
       onOptionSubmit={(val) => {
         onChange(val);
         combobox.closeDropdown();
@@ -57,6 +67,7 @@ export function SelectToken({ value, onChange, data, dropdownProps = {} }: Selec
           component="button"
           type="button"
           pointer
+          disabled={disabled}
           rightSection={<Combobox.Chevron />}
           onClick={() => combobox.toggleDropdown()}
           rightSectionPointerEvents="none"
