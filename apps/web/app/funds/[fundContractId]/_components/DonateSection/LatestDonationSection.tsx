@@ -1,8 +1,18 @@
-import { AlphAddressText } from "@/_components/AlphAddressText";
+import { AddressCopyText } from "@/_components/AddressCopyText";
 import { TokenIcon } from "@/_components/TokenIcon";
 import { TokenValueText } from "@/_components/TokenValueText";
 import { Donation } from "@donera/database";
-import { Box, BoxComponentProps, List, ListItem, Space, Title, Text, Center } from "@mantine/core";
+import {
+  Box,
+  BoxComponentProps,
+  List,
+  ListItem,
+  Space,
+  Title,
+  Text,
+  Center,
+  Group,
+} from "@mantine/core";
 import { IconGift } from "@tabler/icons-react";
 
 type SimpleDonation = Omit<Donation, "fundId" | "createdAt">;
@@ -23,9 +33,12 @@ function DonationText({ amount, tokenId, donor }: DonationTextProps) {
       <Text pt="sm">
         <TokenValueText span tokenId={tokenId} amount={amount} useCurrencySymbol={false} /> donated
       </Text>
-      <Text c="dimmed" size="xs">
-        by <AlphAddressText size="sm" span address={donor} />
-      </Text>
+      <Group gap={5}>
+        <Text c="dimmed" size="xs">
+          by
+        </Text>
+        <AddressCopyText c="dimmed" size="sm" span address={donor} />
+      </Group>
     </>
   );
 }

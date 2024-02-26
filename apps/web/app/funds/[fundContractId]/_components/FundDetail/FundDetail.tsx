@@ -1,11 +1,11 @@
 import { BoxProps, Divider, Group, Stack, Text, Title } from "@mantine/core";
 import { UnverifiedAlert } from "./UnverifiedAlert";
 import { FundDetailField } from "./FundDetailField";
-import { AlphAddressText } from "@/_components/AlphAddressText";
 import cx from "clsx";
 import classes from "./FundDetail.module.css";
 import { Fund } from "@donera/database";
 import { addressFromContractId } from "@alephium/web3";
+import { AddressCopyText } from "@/_components/AddressCopyText";
 
 export type FundDetailProps = {
   fund: Fund;
@@ -25,7 +25,7 @@ export function FundDetail({ fund, image, ...rest }: FundDetailProps) {
           <Text size="xs" style={{ fontFamily: "var(--donera-address-font-family)" }}>
             Contract:{" "}
           </Text>
-          <AlphAddressText address={contractAddress} size="xs" />
+          <AddressCopyText address={contractAddress} size="xs" />
         </Group>
       </Stack>
       {image}
@@ -33,7 +33,7 @@ export function FundDetail({ fund, image, ...rest }: FundDetailProps) {
       <Group justify="space-between">
         <FundDetailField
           title="Beneficiary"
-          value={<AlphAddressText address={beneficiary} size="xs" />}
+          value={<AddressCopyText address={beneficiary} size="xs" />}
         />
         <FundDetailField
           className={classes.fundDetailRight}
@@ -44,7 +44,7 @@ export function FundDetail({ fund, image, ...rest }: FundDetailProps) {
       <Group justify="space-between">
         <FundDetailField
           title="Organizer"
-          value={<AlphAddressText address={organizer} size="xs" />}
+          value={<AddressCopyText address={organizer} size="xs" />}
         />
         <FundDetailField
           className={classes.fundDetailRight}

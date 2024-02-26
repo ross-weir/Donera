@@ -3,9 +3,9 @@ import { Fund } from "@donera/database";
 import Link from "next/link";
 import NextImage from "next/image";
 import { FundProgress } from "@/_components/FundProgress";
-import { AlphAddressText } from "@/_components/AlphAddressText";
 import classes from "./FundCard.module.css";
 import { cidToUrl } from "@/_lib/donera";
+import { AddressText } from "@/_components/AddressText";
 
 type FundCardProps = {
   fund: Fund;
@@ -34,7 +34,7 @@ export function FundCard({ fund, alphRaised, ...rest }: FundCardProps) {
         {name}
       </Text>
       <Text c="dimmed" size="xs">
-        by <AlphAddressText span address={organizer} />
+        by <AddressText span address={organizer} />
       </Text>
       <FundProgress
         goal={goal}

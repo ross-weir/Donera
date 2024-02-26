@@ -13,9 +13,9 @@ import {
 } from "@mantine/core";
 import { TokenValueText } from "../TokenValueText";
 import { ALPH_TOKEN_ID } from "@alephium/web3";
-import { AlphAddressText } from "../AlphAddressText";
 import { useState } from "react";
 import { IconLogout } from "@tabler/icons-react";
+import { AddressText } from "../AddressText";
 
 export type WalletMenuProps = { onClick: () => void } & ExtractProps<typeof Menu>;
 
@@ -37,7 +37,7 @@ export function WalletMenu({ onClick, children, ...rest }: WalletMenuProps) {
         <MenuItem>
           <Group justify="space-between">
             <Text size="sm">Address</Text>
-            <AlphAddressText size="xs" address={account?.address as string} showTooltip={false} />
+            <AddressText size="xs" address={account?.address as string} />
           </Group>
         </MenuItem>
         <MenuItem>
