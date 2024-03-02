@@ -14,16 +14,12 @@ export const dynamic = "force-dynamic";
 
 const fundSummaryCached = cache(async (id: string) => fundSummary(db, id));
 
-type SearchParam = {
+type Params = {
   fundContractId: string;
 };
 
-export async function generateMetadata({
-  searchParams,
-}: {
-  searchParams: SearchParam;
-}): Promise<Metadata> {
-  const { fund } = await fundSummaryCached(searchParams.fundContractId);
+export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
+  const { fund } = await fundSummaryCached(params.fundContractId);
   let title = "Donera";
 
   if (fund) {
@@ -39,7 +35,7 @@ function alphRaised(fund: Fund): string {
   return fund.balances?.find((b) => b.id === ALPH_TOKEN_ID)?.amount ?? "0";
 }
 
-export default async function FundDetailPage({ params }: { params: SearchParam }) {
+export default async function FundDetailPage({ params }: { params: Params }) {
   const { fundContractId } = params;
   const { fund, donationCount } = await fundSummaryCached(fundContractId);
 
