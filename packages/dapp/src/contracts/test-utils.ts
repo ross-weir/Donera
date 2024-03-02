@@ -6,14 +6,11 @@ export async function prepareForTests() {
   await Project.build();
 }
 
-// `@alephium/web3-test` function assumes jests global `expect` is available
-// so doesn't work with bun
 export async function expectAssertionError(
   call: () => Promise<unknown>,
   address: string,
   errorCode: bigint
 ): Promise<void> {
-  expect(call()).rejects.toThrow(
-    new RegExp(`AssertionFailedWithErrorCode\\(${address},${errorCode}\\)`, "mg")
-  );
+  const pattern = `Assertion Failed in Contract @ ${address}, Error Code: ${errorCode}`;
+  expect(call()).rejects.toThrow(new RegExp(pattern, "mg"));
 }
