@@ -33,6 +33,7 @@
   "dependencies": {
     "@alephium/token-list": "^0.0.15",
     "@alephium/web3": "^0.34.0",
-    "@donera/core": "workspace:^"
+    "@donera/core": "workspace:^",
+    "@noble/hashes": "^1.3.3"
   }
 }
