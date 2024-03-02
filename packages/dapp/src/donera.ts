@@ -13,7 +13,7 @@ import {
 import { ALPH, TokenInfo } from "@alephium/token-list";
 import { Donera, DoneraInstance, DoneraTypes } from "./contracts/donera";
 import { Deployments, loadDeployments } from "./deploys";
-import { CreateFund, DonateToFund } from "./scripts";
+import { CreateFund, DonateToFund, FinalizeFund } from "./scripts";
 import { getTokensForNetwork } from "./tokens";
 import { stringToHex } from "@donera/core";
 import { NO_UI_FEE, UiFee, UiFeeOnchain, convertUiFeeToOnchain } from "./fees";
@@ -47,6 +47,22 @@ export type DonateToFundResult = {
   txId: string;
 };
 
+export type FinalizeFundParam = {
+  fundContractId: string;
+};
+
+export type FinalizeFundResult = {
+  txId: string;
+};
+
+/**
+ * Donera Facade
+ *
+ * This class is intended to hide implementation details
+ * associated with TxScripts and conversion to/from onchain
+ * and offchain types. It should make working with the donera
+ * protocol more convienent.
+ */
 export class DoneraDapp {
   private readonly uiFee: UiFeeOnchain;
   private readonly tokens: TokenInfo[];
@@ -121,6 +137,22 @@ export class DoneraDapp {
         amount: donateAmount,
       },
       attoAlphAmount: donateAmount + this.uiFee.uiFee,
+    });
+
+    return { txId };
+  }
+
+  public async finalizeFund(
+    signer: SignerProvider,
+    { fundContractId }: FinalizeFundParam
+  ): Promise<FinalizeFundResult> {
+    const { txId } = await FinalizeFund.execute(signer, {
+      initialFields: {
+        donera: this.doneraInstance.contractId,
+        ...this.uiFee,
+        fundContractId,
+      },
+      attoAlphAmount: this.uiFee.uiFee,
     });
 
     return { txId };

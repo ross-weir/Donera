@@ -36,6 +36,7 @@ export class SimpleEventIndexer extends BaseIndexer {
   }
 
   async run(): Promise<void> {
+    console.log(`Monitoring donera ${this.deploys.contracts.Donera.contractInstance.address}`);
     this.taskHandle = setInterval(async () => await this.processEvents(), this.intervalMs);
   }
 
