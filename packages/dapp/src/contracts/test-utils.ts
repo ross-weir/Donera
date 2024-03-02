@@ -13,7 +13,6 @@ export async function expectAssertionError(
   address: string,
   errorCode: bigint
 ): Promise<void> {
-  expect(call()).rejects.toThrow(
-    new RegExp(`AssertionFailedWithErrorCode\\(${address},${errorCode}\\)`, "mg")
-  );
+  const pattern = `Assertion Failed in Contract @ ${address}, Error Code: ${errorCode}`;
+  expect(call()).rejects.toThrow(new RegExp(pattern, "mg"));
 }
