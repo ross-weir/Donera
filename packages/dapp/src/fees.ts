@@ -1,4 +1,4 @@
-import { ALPH_TOKEN_ID } from "@alephium/web3";
+import { ALPH_TOKEN_ID, ZERO_ADDRESS } from "@alephium/web3";
 
 // In frontend apps its easiest to deal with fees in strings instead of bigints to avoid issues associated
 // with serialization/network requests.
@@ -19,7 +19,7 @@ export function convertUiFeeToOnchain({ uiFee, ...rest }: UiFee): UiFeeOnchain {
 }
 
 export const NO_UI_FEE: Readonly<UiFeeOnchain> = Object.freeze({
-  uiDev: "",
+  uiDev: ZERO_ADDRESS,
   uiFeeToken: ALPH_TOKEN_ID,
   uiFee: BigInt(0),
 });

@@ -55,7 +55,7 @@ export default async function FundDetailPage({ params }: { params: Params }) {
           fund={fund}
           image={
             <Suspense fallback={<Skeleton height="425px" />}>
-              <ImageWithPlaceholder height="425px" sizes="500px" src={image!} />
+              {image && <ImageWithPlaceholder height="425px" sizes="500px" src={image!} />}
             </Suspense>
           }
           w={750}
