@@ -18,8 +18,8 @@ importers:
   apps/cli:
     dependencies:
       '@alephium/web3':
-        specifier: ^0.33.0
-        version: 0.33.0
+        specifier: ^0.34.0
+        version: 0.34.0
       '@donera/alephium-config':
         specifier: workspace:^
         version: link:../../packages/alephium-config
@@ -73,11 +73,11 @@ importers:
         specifier: ^0.0.15
         version: 0.0.15
       '@alephium/web3':
-        specifier: ^0.33.0
-        version: 0.33.0
+        specifier: ^0.34.0
+        version: 0.34.0
       '@alephium/web3-react':
-        specifier: ^0.33.0
-        version: 0.33.0(@babel/core@7.24.0)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)
+        specifier: ^0.34.0
+        version: 0.34.0(@babel/core@7.24.0)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)
       '@donera/alephium-config':
         specifier: workspace:^
         version: link:../../packages/alephium-config
@@ -182,8 +182,8 @@ importers:
   packages/alephium-config:
     devDependencies:
       '@alephium/cli':
-        specifier: ^0.33.0
-        version: 0.33.0(@types/node@20.11.17)(node-fetch@3.3.2)
+        specifier: ^0.34.0
+        version: 0.34.0(@types/node@20.11.17)(node-fetch@3.3.2)
       '@types/node':
         specifier: ^20.11.17
         version: 20.11.17
@@ -234,18 +234,18 @@ importers:
         specifier: ^0.0.15
         version: 0.0.15
       '@alephium/web3':
-        specifier: ^0.33.0
-        version: 0.33.0
+        specifier: ^0.34.0
+        version: 0.34.0
       '@donera/core':
         specifier: workspace:^
         version: link:../core
     devDependencies:
       '@alephium/cli':
-        specifier: ^0.33.0
-        version: 0.33.0(@types/node@20.11.17)(node-fetch@3.3.2)
+        specifier: ^0.34.0
+        version: 0.34.0(node-fetch@3.3.2)
       '@alephium/web3-test':
-        specifier: ^0.33.0
-        version: 0.33.0
+        specifier: ^0.34.0
+        version: 0.34.0
       '@donera/alephium-config':
         specifier: workspace:^
         version: link:../alephium-config
@@ -314,8 +314,8 @@ importers:
   packages/indexer:
     dependencies:
       '@alephium/web3':
-        specifier: ^0.33.0
-        version: 0.33.0
+        specifier: ^0.34.0
+        version: 0.34.0
       '@donera/alephium-config':
         specifier: workspace:^
         version: link:../alephium-config
@@ -351,8 +351,8 @@ importers:
   packages/integrations:
     dependencies:
       '@alephium/web3':
-        specifier: ^0.33.0
-        version: 0.33.0
+        specifier: ^0.34.0
+        version: 0.34.0
       '@donera/core':
         specifier: workspace:^
         version: link:../core
@@ -395,13 +395,13 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: true
 
-  /@alephium/cli@0.33.0(@types/node@20.11.17)(node-fetch@3.3.2):
-    resolution: {integrity: sha512-guYTM+bSkEZqN/vykZJ8VnxvIQ0lWmP7NgsWiLoZWhiNe9u328yR9OKjXtfF8WyEQ1v0MZE8xC0STCOFqCaP5A==}
+  /@alephium/cli@0.34.0(@types/node@20.11.17)(node-fetch@3.3.2):
+    resolution: {integrity: sha512-Ugz0PlpxE1IQRkEg7V0+6RoKr9Abh51mUIXxSaaGKBxg2UceOdP5abCA2Ex4tnlygqimpSUq1GHSb458EnfZyA==}
     engines: {node: '>=14.0.0', npm: '>=7.0.0'}
     hasBin: true
     dependencies:
-      '@alephium/web3': 0.33.0
-      '@alephium/web3-wallet': 0.33.0
+      '@alephium/web3': 0.34.0
+      '@alephium/web3-wallet': 0.34.0
       '@swc/core': 1.4.2
       commander: 9.5.0
       cross-fetch: 3.1.8
@@ -424,10 +424,39 @@ packages:
       - ts-node
     dev: true
 
-  /@alephium/get-extension-wallet@0.33.0:
-    resolution: {integrity: sha512-aQH7LymzCIaEuk/XpkO0r7qIMWOQtOlnDOjtePWoesgWAt5SZhSZIB3TmtUWwKyUy93ZhrNkzSWtG5U+3Bk4RA==}
+  /@alephium/cli@0.34.0(node-fetch@3.3.2):
+    resolution: {integrity: sha512-Ugz0PlpxE1IQRkEg7V0+6RoKr9Abh51mUIXxSaaGKBxg2UceOdP5abCA2Ex4tnlygqimpSUq1GHSb458EnfZyA==}
+    engines: {node: '>=14.0.0', npm: '>=7.0.0'}
+    hasBin: true
     dependencies:
-      '@alephium/web3': 0.33.0
+      '@alephium/web3': 0.34.0
+      '@alephium/web3-wallet': 0.34.0
+      '@swc/core': 1.4.2
+      commander: 9.5.0
+      cross-fetch: 3.1.8
+      crypto-js: 4.2.0
+      fetch-retry: 5.0.6
+      fs-extra: 10.1.0
+      ipfs-http-client: 56.0.3(node-fetch@3.3.2)
+      jest: 28.1.3
+      openai: 3.3.0
+      prettier: 2.8.8
+      yaml: 2.4.0
+    transitivePeerDependencies:
+      - '@swc/helpers'
+      - '@types/node'
+      - debug
+      - encoding
+      - node-fetch
+      - node-notifier
+      - supports-color
+      - ts-node
+    dev: true
+
+  /@alephium/get-extension-wallet@0.34.0:
+    resolution: {integrity: sha512-qnh7qWyYaJdLqTpAGwHCVvxUXvjQ6Bv+NB7TpDjPkVQoQaWVVSvpyUHGNIHDKOPZkrWyIZ+c6zukhA+icisgJQ==}
+    dependencies:
+      '@alephium/web3': 0.34.0
       bowser: 2.11.0
     transitivePeerDependencies:
       - encoding
@@ -442,12 +471,12 @@ packages:
       - encoding
     dev: false
 
-  /@alephium/walletconnect-provider@0.33.0:
-    resolution: {integrity: sha512-3sEJ5HAAmWqRvU+mh+e2BVs9rhihlyatfqlIIHI1W+rGqKKirFDbRN1jjYDZQQNCvqnSXJK3IsjX0U5zU4KUvg==}
+  /@alephium/walletconnect-provider@0.34.0:
+    resolution: {integrity: sha512-7rrDP1DAfBn91GRmlhNtHCDz0rUQJf/imWQA4d6gwT2VxVdOllvfs4Bo7AcAaqQjhvUKUeUyUjR82JRpZxhjVA==}
     engines: {node: '>=14.0.0', npm: '>=7.0.0'}
     dependencies:
-      '@alephium/web3': 0.33.0
-      '@alephium/web3-wallet': 0.33.0
+      '@alephium/web3': 0.34.0
+      '@alephium/web3-wallet': 0.34.0
       '@walletconnect/core': 2.11.0
       '@walletconnect/keyvaluestorage': 1.1.1
       '@walletconnect/sign-client': 2.11.0
@@ -485,15 +514,15 @@ packages:
       qrcode: 1.4.4
     dev: false
 
-  /@alephium/web3-react@0.33.0(@babel/core@7.24.0)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-hl2GiKliqZbon2aIDXguf4sSJfF7Kesnxdbz9o1h4HO8pZ2Tisy8sqwSB0mGq/MRIlbUZfYt7fmyTr0pHl+Jpw==}
+  /@alephium/web3-react@0.34.0(@babel/core@7.24.0)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-D4LOV31Z7RIjYoJ0riVFCff+p7ORgi1Nwfz/U/JhFF3XhpPzh8f5bPAp8ORADsnOUBY2eA+T/KsFdM3MBODaNA==}
     engines: {node: '>=12.4'}
     peerDependencies:
       react: 17.x || 18.x
       react-dom: 17.x || 18.x
     dependencies:
-      '@alephium/get-extension-wallet': 0.33.0
-      '@alephium/walletconnect-provider': 0.33.0
+      '@alephium/get-extension-wallet': 0.34.0
+      '@alephium/walletconnect-provider': 0.34.0
       '@alephium/walletconnect-qrcode-modal': 0.1.0
       buffer: 6.0.3
       detect-browser: 5.3.0
@@ -527,21 +556,21 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@alephium/web3-test@0.33.0:
-    resolution: {integrity: sha512-soj4y2pmTLTUNfVmZ27fLSWoeGM0sxQx+gs54iEOujlKpmXeNNmv1/Cq7tjjBi3+6S1try/YcqiPkBLv9qCj4g==}
+  /@alephium/web3-test@0.34.0:
+    resolution: {integrity: sha512-CZQdUBwKvg7fccUlXlKb8SS7HWgIbtCrwTZvMuzUjMh7+H+XcADBdBPXdrbvkzMtstu/XKwk/+NBNtkmCnnl6A==}
     engines: {node: '>=14.0.0', npm: '>=7.0.0'}
     dependencies:
-      '@alephium/web3': 0.33.0
-      '@alephium/web3-wallet': 0.33.0
+      '@alephium/web3': 0.34.0
+      '@alephium/web3-wallet': 0.34.0
     transitivePeerDependencies:
       - encoding
     dev: true
 
-  /@alephium/web3-wallet@0.33.0:
-    resolution: {integrity: sha512-7t1OVJoO0fxujlyKQi9goa10GQQqaNN92tRkthHTNnBc3/FzytDpF7XxDPBLlS7kh6hPpkavhIvMYEh30gUO1A==}
+  /@alephium/web3-wallet@0.34.0:
+    resolution: {integrity: sha512-2+XCWZSUAhYDtvOSBwj4LTX1FgJzSVEZrcZLDFkEZIc1WZg0g65AojyDqbCyW47Fx5yymn3F4fQZah4qyYAUQw==}
     engines: {node: '>=14.0.0', npm: '>=7.0.0'}
     dependencies:
-      '@alephium/web3': 0.33.0
+      '@alephium/web3': 0.34.0
       '@noble/secp256k1': 1.7.1
       '@types/node': 16.18.86
       bip32: 3.1.0
@@ -552,8 +581,8 @@ packages:
     transitivePeerDependencies:
       - encoding
 
-  /@alephium/web3@0.33.0:
-    resolution: {integrity: sha512-Cwe2TwhKCGiu9BS0mt69C4cD7kSxDZ3LZIlIeE64LafUKxrIduoWUP9/XunTpI0NlqJgN00iBBtcPTNAADn14A==}
+  /@alephium/web3@0.34.0:
+    resolution: {integrity: sha512-iW+a9J04tOT6DV2z5sBH6pP51crxDSz5ROxAJUZ3F+s2zuYcBnGmLZP97Y9chqe9qEuBT5NSPWPEFWv4A0GY2g==}
     engines: {node: '>=14.0.0', npm: '>=7.0.0'}
     dependencies:
       '@noble/secp256k1': 1.7.1
@@ -576,7 +605,7 @@ packages:
     engines: {node: '>=6.0.0'}
     dependencies:
       '@jridgewell/gen-mapping': 0.3.5
-      '@jridgewell/trace-mapping': 0.3.24
+      '@jridgewell/trace-mapping': 0.3.25
 
   /@babel/code-frame@7.23.5:
     resolution: {integrity: sha512-CgH3s1a96LipHCmSUmYFPwY7MNx8C3avkq7i4Wl3cfa662ldtUe4VM1TPXX70pfmrlWTb6jLqTYrZyT2ZTJBgA==}
@@ -617,7 +646,7 @@ packages:
     dependencies:
       '@babel/types': 7.24.0
       '@jridgewell/gen-mapping': 0.3.5
-      '@jridgewell/trace-mapping': 0.3.24
+      '@jridgewell/trace-mapping': 0.3.25
       jsesc: 2.5.2
 
   /@babel/helper-annotate-as-pure@7.22.5:
@@ -1206,7 +1235,7 @@ packages:
       '@jest/test-result': 28.1.3
       '@jest/transform': 28.1.3
       '@jest/types': 28.1.3
-      '@jridgewell/trace-mapping': 0.3.24
+      '@jridgewell/trace-mapping': 0.3.25
       '@types/node': 20.11.17
       chalk: 4.1.2
       collect-v8-coverage: 1.0.2
@@ -1241,7 +1270,7 @@ packages:
     resolution: {integrity: sha512-cV8Lx3BeStJb8ipPHnqVw/IM2VCMWO3crWZzYodSIkxXnRcXJipCdx1JCK0K5MsJJouZQTH73mzf4vgxRaH9ww==}
     engines: {node: ^12.13.0 || ^14.15.0 || ^16.10.0 || >=17.0.0}
     dependencies:
-      '@jridgewell/trace-mapping': 0.3.24
+      '@jridgewell/trace-mapping': 0.3.25
       callsites: 3.1.0
       graceful-fs: 4.2.11
     dev: true
@@ -1272,7 +1301,7 @@ packages:
     dependencies:
       '@babel/core': 7.24.0
       '@jest/types': 28.1.3
-      '@jridgewell/trace-mapping': 0.3.24
+      '@jridgewell/trace-mapping': 0.3.25
       babel-plugin-istanbul: 6.1.1
       chalk: 4.1.2
       convert-source-map: 1.9.0
@@ -1307,7 +1336,7 @@ packages:
     dependencies:
       '@jridgewell/set-array': 1.2.1
       '@jridgewell/sourcemap-codec': 1.4.15
-      '@jridgewell/trace-mapping': 0.3.24
+      '@jridgewell/trace-mapping': 0.3.25
 
   /@jridgewell/resolve-uri@3.1.2:
     resolution: {integrity: sha512-bRISgCIjP20/tbWSPWMEi54QVPRZExkuD9lJL+UIxUKtwVJA8wW1Trb1jMs1RFXo1CBTNZ/5hpC9QvmKWdopKw==}
@@ -1320,8 +1349,8 @@ packages:
   /@jridgewell/sourcemap-codec@1.4.15:
     resolution: {integrity: sha512-eF2rxCRulEKXHTRiDrDy6erMYWqNw4LPdQ8UQA4huuxaQsVeRPFl2oM8oDGxMFhJUWZf9McpLtJasDDZb/Bpeg==}
 
-  /@jridgewell/trace-mapping@0.3.24:
-    resolution: {integrity: sha512-+VaWXDa6+l6MhflBvVXjIEAzb59nQ2JUK3bwRp2zRpPtU+8TFRy9Gg/5oIcNlkEL5PGlBFGfemUVvIgLnTzq7Q==}
+  /@jridgewell/trace-mapping@0.3.25:
+    resolution: {integrity: sha512-vNk6aEwybGtawWmy/PzwnGDOjCkLWSD2wqvjGGAgOAwCGWySYXfYoxt00IJkTF+8Lb57DwOb3Aa0o9CApepiYQ==}
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.4.15
@@ -5490,6 +5519,34 @@ packages:
       - supports-color
     dev: true
 
+  /jest-cli@28.1.3:
+    resolution: {integrity: sha512-roY3kvrv57Azn1yPgdTebPAXvdR2xfezaKKYzVxZ6It/5NCxzJym6tUI5P1zkdWhfUYkxEI9uZWcQdaFLo8mJQ==}
+    engines: {node: ^12.13.0 || ^14.15.0 || ^16.10.0 || >=17.0.0}
+    hasBin: true
+    peerDependencies:
+      node-notifier: ^8.0.1 || ^9.0.0 || ^10.0.0
+    peerDependenciesMeta:
+      node-notifier:
+        optional: true
+    dependencies:
+      '@jest/core': 28.1.3
+      '@jest/test-result': 28.1.3
+      '@jest/types': 28.1.3
+      chalk: 4.1.2
+      exit: 0.1.2
+      graceful-fs: 4.2.11
+      import-local: 3.1.0
+      jest-config: 28.1.3(@types/node@20.11.24)
+      jest-util: 28.1.3
+      jest-validate: 28.1.3
+      prompts: 2.4.2
+      yargs: 17.7.2
+    transitivePeerDependencies:
+      - '@types/node'
+      - supports-color
+      - ts-node
+    dev: true
+
   /jest-cli@28.1.3(@types/node@20.11.17):
     resolution: {integrity: sha512-roY3kvrv57Azn1yPgdTebPAXvdR2xfezaKKYzVxZ6It/5NCxzJym6tUI5P1zkdWhfUYkxEI9uZWcQdaFLo8mJQ==}
     engines: {node: ^12.13.0 || ^14.15.0 || ^16.10.0 || >=17.0.0}
@@ -5534,6 +5591,45 @@ packages:
       '@jest/test-sequencer': 28.1.3
       '@jest/types': 28.1.3
       '@types/node': 20.11.17
+      babel-jest: 28.1.3(@babel/core@7.24.0)
+      chalk: 4.1.2
+      ci-info: 3.9.0
+      deepmerge: 4.3.1
+      glob: 7.2.3
+      graceful-fs: 4.2.11
+      jest-circus: 28.1.3
+      jest-environment-node: 28.1.3
+      jest-get-type: 28.0.2
+      jest-regex-util: 28.0.2
+      jest-resolve: 28.1.3
+      jest-runner: 28.1.3
+      jest-util: 28.1.3
+      jest-validate: 28.1.3
+      micromatch: 4.0.5
+      parse-json: 5.2.0
+      pretty-format: 28.1.3
+      slash: 3.0.0
+      strip-json-comments: 3.1.1
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
+  /jest-config@28.1.3(@types/node@20.11.24):
+    resolution: {integrity: sha512-MG3INjByJ0J4AsNBm7T3hsuxKQqFIiRo/AUqb1q9LRKI5UU6Aar9JHbr9Ivn1TVwfUD9KirRoM/T6u8XlcQPHQ==}
+    engines: {node: ^12.13.0 || ^14.15.0 || ^16.10.0 || >=17.0.0}
+    peerDependencies:
+      '@types/node': '*'
+      ts-node: '>=9.0.0'
+    peerDependenciesMeta:
+      '@types/node':
+        optional: true
+      ts-node:
+        optional: true
+    dependencies:
+      '@babel/core': 7.24.0
+      '@jest/test-sequencer': 28.1.3
+      '@jest/types': 28.1.3
+      '@types/node': 20.11.24
       babel-jest: 28.1.3(@babel/core@7.24.0)
       chalk: 4.1.2
       ci-info: 3.9.0
@@ -5839,6 +5935,26 @@ packages:
       '@types/node': 20.11.17
       merge-stream: 2.0.0
       supports-color: 8.1.1
+    dev: true
+
+  /jest@28.1.3:
+    resolution: {integrity: sha512-N4GT5on8UkZgH0O5LUavMRV1EDEhNTL0KEfRmDIeZHSV7p2XgLoY9t9VDUgL6o+yfdgYHVxuz81G8oB9VG5uyA==}
+    engines: {node: ^12.13.0 || ^14.15.0 || ^16.10.0 || >=17.0.0}
+    hasBin: true
+    peerDependencies:
+      node-notifier: ^8.0.1 || ^9.0.0 || ^10.0.0
+    peerDependenciesMeta:
+      node-notifier:
+        optional: true
+    dependencies:
+      '@jest/core': 28.1.3
+      '@jest/types': 28.1.3
+      import-local: 3.1.0
+      jest-cli: 28.1.3
+    transitivePeerDependencies:
+      - '@types/node'
+      - supports-color
+      - ts-node
     dev: true
 
   /jest@28.1.3(@types/node@20.11.17):
@@ -8372,7 +8488,7 @@ packages:
     resolution: {integrity: sha512-/EH/sDgxU2eGxajKdwLCDmQ4FWq+kpi3uCmBGpw1xJtnAxEjlD8j8PEiGWpCIMIs3ciNAgH0d3TTJiUkYzyZjA==}
     engines: {node: '>=10.12.0'}
     dependencies:
-      '@jridgewell/trace-mapping': 0.3.24
+      '@jridgewell/trace-mapping': 0.3.25
       '@types/istanbul-lib-coverage': 2.0.6
       convert-source-map: 2.0.0
     dev: true

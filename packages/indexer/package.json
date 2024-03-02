@@ -9,7 +9,7 @@
     ".": "./src/index.ts"
   },
   "dependencies": {
-    "@alephium/web3": "^0.33.0",
+    "@alephium/web3": "^0.34.0",
     "@donera/alephium-config": "workspace:^",
     "@donera/dapp": "workspace:^",
     "@donera/database": "workspace:^",

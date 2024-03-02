@@ -21,8 +21,8 @@
     "./fees": "./src/fees.ts"
   },
   "devDependencies": {
-    "@alephium/cli": "^0.33.0",
-    "@alephium/web3-test": "^0.33.0",
+    "@alephium/cli": "^0.34.0",
+    "@alephium/web3-test": "^0.34.0",
     "@donera/alephium-config": "workspace:^",
     "@donera/eslint-config": "workspace:*",
     "@donera/typescript-config": "workspace:*",
@@ -32,7 +32,7 @@
   },
   "dependencies": {
     "@alephium/token-list": "^0.0.15",
-    "@alephium/web3": "^0.33.0",
+    "@alephium/web3": "^0.34.0",
     "@donera/core": "workspace:^"
   }
 }
