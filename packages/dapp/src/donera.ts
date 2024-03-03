@@ -9,9 +9,16 @@ import {
   ContractInstance,
   convertAmountWithDecimals,
   ALPH_TOKEN_ID,
+  subContractId,
 } from "@alephium/web3";
 import { ALPH, TokenInfo } from "@alephium/token-list";
-import { Donera, DoneraInstance, DoneraTypes } from "./contracts/donera";
+import {
+  DeriveFundPathParam,
+  Donera,
+  DoneraInstance,
+  DoneraTypes,
+  deriveFundPath,
+} from "./contracts/donera";
 import { Deployments, loadDeployments } from "./deploys";
 import { CreateFund, DonateToFund, FinalizeFund } from "./scripts";
 import { getTokensForNetwork } from "./tokens";
@@ -84,16 +91,18 @@ export class DoneraDapp {
   ): Promise<CreateFundResult> {
     const deadlineUnixTs = Math.floor(params.deadline.getTime() / 1000);
     const listingFeeCall = await this.doneraInstance.methods.getAttoListingFee();
-    const attoGoal = convertAlphAmountWithDecimals(params.goal)!;
+    const onchainParams = {
+      name: stringToHex(params.name),
+      goal: convertAlphAmountWithDecimals(params.goal)!,
+      beneficiary: params.beneficiary,
+      deadlineTimestamp: BigInt(deadlineUnixTs),
+    };
     const { txId } = await CreateFund.execute(signer, {
       initialFields: {
         donera: this.doneraInstance.contractId,
         ...this.uiFee,
-        name: stringToHex(params.name),
         description: stringToHex(params.description),
-        beneficiary: params.beneficiary,
-        goal: attoGoal,
-        deadlineTimestamp: BigInt(deadlineUnixTs),
+        ...onchainParams,
       },
       attoAlphAmount: listingFeeCall.returns + ONE_ALPH + this.uiFee.uiFee,
     });
@@ -110,7 +119,7 @@ export class DoneraDapp {
       fundContractId: fields.fundContractId,
       name: params.name,
       description: params.description,
-      goal: attoGoal.toString(),
+      goal: onchainParams.goal.toString(),
       deadline: params.deadline,
       beneficiary: params.beneficiary,
       organizer: fields.organizer,
@@ -156,6 +165,14 @@ export class DoneraDapp {
     });
 
     return { txId };
+  }
+
+  public deriveFundContractId(param: DeriveFundPathParam, organizer: string): string {
+    return subContractId(
+      this.doneraInstance.contractId,
+      deriveFundPath(param, organizer),
+      this.doneraInstance.groupIndex
+    );
   }
 
   private async getEventForTx<E, C extends ContractInstance>(

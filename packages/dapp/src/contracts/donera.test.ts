@@ -1,7 +1,7 @@
 import { describe, it, beforeAll, expect } from "bun:test";
 import { randomContractAddress, testAddress } from "@alephium/web3-test";
 import { expectAssertionError, prepareForTests } from "./test-utils";
-import { Donera } from "./donera";
+import { Donera, deriveFundContractPath } from "./donera";
 import {
   ALPH_TOKEN_ID,
   ONE_ALPH,
@@ -17,7 +17,27 @@ describe("Donera", () => {
   beforeAll(async () => {
     await prepareForTests();
   });
-  describe("createFund()", () => {
+  describe("deriveFundPath", () => {
+    it("should produce matching fund subcontract paths", async () => {
+      const args = {
+        name: stringToHex("test"),
+        beneficiary: testAddress,
+        organizer: testAddress,
+        deadlineTimestamp: 10000000n,
+        goal: convertAlphAmountWithDecimals(500)!,
+      };
+      const { returns } = await Donera.tests.deriveFundPath({
+        initialFields: {
+          ...Donera.getInitialFieldsWithDefaultValues(),
+        },
+        testArgs: {
+          ...args,
+        },
+      });
+      expect(returns).toBe(deriveFundContractPath(args));
+    });
+  });
+  describe("createFund", () => {
     it("should pay listing fee to donera", async () => {
       const fundTemplate = Fund.stateForTest(Fund.getInitialFieldsWithDefaultValues());
       const doneraAddress = randomContractAddress();
@@ -121,7 +141,7 @@ describe("Donera", () => {
       expect(call()).resolves.toBeDefined();
     });
   });
-  describe("donateToFund())", () => {
+  describe("donateToFund", () => {
     it("should emit a donation event", async () => {
       const doneraAddress = randomContractAddress();
       const fund = Fund.stateForTest({
