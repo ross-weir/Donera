@@ -17,7 +17,7 @@ import {
   Donera,
   DoneraInstance,
   DoneraTypes,
-  deriveFundPath,
+  deriveFundContractPath,
 } from "./contracts/donera";
 import { Deployments, loadDeployments } from "./deploys";
 import { CreateFund, DonateToFund, FinalizeFund } from "./scripts";
@@ -170,7 +170,7 @@ export class DoneraDapp {
   public deriveFundContractId(param: DeriveFundPathParam, organizer: string): string {
     return subContractId(
       this.doneraInstance.contractId,
-      deriveFundPath(param, organizer),
+      deriveFundContractPath({ ...param, organizer }),
       this.doneraInstance.groupIndex
     );
   }
