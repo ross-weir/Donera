@@ -80,7 +80,7 @@ export class DoneraDapp {
     params: CreateFundParam
   ): Promise<CreateFundResult> {
     const deadlineUnixTs = Math.floor(params.deadline.getTime() / 1000);
-    const listingFeeCall = await this.doneraInstance.methods.getAttoListingFee();
+    const listingFeeCall = await this.doneraInstance.methods.getListingFee();
     const onchainParams = {
       name: stringToHex(params.name),
       goal: convertAlphAmountWithDecimals(params.goal)!,
@@ -126,6 +126,7 @@ export class DoneraDapp {
       throw new Error(`Only verified tokens can be donated, tokenId ${tokenId} is not verified`);
     }
 
+    const donationFee = await this.doneraInstance.methods.getDonationFee();
     const donateAmount = convertAmountWithDecimals(amount, tokenInfo.decimals)!;
     const { txId } = await DonateToFund.execute(signer, {
       initialFields: {
@@ -135,7 +136,7 @@ export class DoneraDapp {
         tokenId,
         amount: donateAmount,
       },
-      attoAlphAmount: donateAmount + this.uiFee.uiFee,
+      attoAlphAmount: donateAmount + this.uiFee.uiFee + donationFee.returns,
     });
 
     return { txId };

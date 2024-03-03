@@ -1,6 +1,7 @@
 Contract Donera(
   mut selfFundTemplateId: ByteVec,
-  mut selfAttoListingFee: U256, 
+  mut selfListingFee: U256, 
+  mut selfDonationFee: U256,
   mut selfDeadlineLimit: U256,
   mut selfOwner: Address
 ) extends Upgradeable(selfOwner) implements IDonera {
@@ -29,7 +30,7 @@ Contract Donera(
 
     let organizer = callerAddress!()
 
-    transferTokenToSelf!(organizer, ALPH, selfAttoListingFee)
+    transferTokenToSelf!(organizer, ALPH, selfListingFee)
 
     let pathHash = deriveFundPath(
       name,
@@ -39,7 +40,7 @@ Contract Donera(
       deadlineTimestamp
     )
 
-    emit Debug(`createFund: {span: subcontractPath, data: ${pathHash}}`)
+    emit Debug(`createFund: {span: subContractPath, pathHash: ${pathHash}}`)
 
     let (immFields, mutFields) = Fund.encodeFields!(
       name,
@@ -72,12 +73,19 @@ Contract Donera(
 
   // Donate tokens to the supplied fund.
   // If making an ALPH token donation the amount should be in atto format.
-  @using(preapprovedAssets = true, checkExternalCaller = false)
+  @using(preapprovedAssets = true, checkExternalCaller = false, assetsInContract = true)
   pub fn donateToFund(fundContractId: ByteVec, tokenId: ByteVec, amount: U256) -> () {
+    emit Debug(`donateToFund: {
+      span: entry,
+      fundContractId: ${fundContractId},
+      tokenId: ${tokenId},
+      amount: ${amount}
+    }`)
+
     let fund = IFund(fundContractId)
     let donor = callerAddress!()
 
-    // TODO fees
+    transferTokenToSelf!(donor, ALPH, selfDonationFee)
 
     fund.donate{donor -> tokenId: amount}(donor, tokenId, amount)
 
@@ -88,8 +96,6 @@ Contract Donera(
   pub fn finalizeFund(fundContractId: ByteVec) -> () {
     let finalizer = callerAddress!()
     let fund = IFund(fundContractId)
-
-    // TODO fees
 
     fund.finalize()
 
@@ -110,7 +116,7 @@ Contract Donera(
       goal,
       deadlineTimestamp
     )
-    emit Debug(`deriveFundPath: {span: encoding, data: ${pathEncoded}}`)
+    emit Debug(`deriveFundPath: {span: encoding, pathEncoded: ${pathEncoded}}`)
 
     return blake2b!(pathEncoded)
   }
@@ -140,20 +146,36 @@ Contract Donera(
   }
 
   // Get the current fund listing fee in atto ALPH format.
-  pub fn getAttoListingFee() -> U256 {
-    return selfAttoListingFee
+  pub fn getListingFee() -> U256 {
+    return selfListingFee
   }
 
   // Update the listing fee for new funds.
   //
   // @throws {OwnedError.Forbidden} Caller must be the admin.
   //
-  // @param newAttoListingFee The new cost of listing a fund in ALPH atto format.
+  // @param newListingFee The new cost of listing a fund in ALPH atto format.
   // @returns unit
   @using(updateFields = true)
-  pub fn setSelfAttoListingFee(newAttoListingFee: U256) -> () {
+  pub fn setListingFee(newListingFee: U256) -> () {
     assertOwner(callerAddress!())
-    selfAttoListingFee = newAttoListingFee
+    selfListingFee = newListingFee
+  }
+
+  pub fn getDonationFee() -> U256 {
+    return selfDonationFee
+  }
+
+  // Update the fee charged when donating to funds.
+  //
+  // @throws {OwnedError.Forbidden} Caller must be the admin.
+  //
+  // @param newDonationFee The new cost of donating to a fund in ALPH atto format.
+  // @returns unit
+  @using(updateFields = true)
+  pub fn setDonationFee(newDonationFee: U256) -> () {
+    assertOwner(callerAddress!())
+    selfDonationFee = newDonationFee
   }
 
   // Update the deadline limit for new funds.
