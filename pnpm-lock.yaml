@@ -242,6 +242,9 @@ importers:
       '@noble/hashes':
         specifier: ^1.3.3
         version: 1.3.3
+      yaml:
+        specifier: ^2.4.0
+        version: 2.4.0
     devDependencies:
       '@alephium/cli':
         specifier: ^0.34.0
@@ -8550,7 +8553,6 @@ packages:
     resolution: {integrity: sha512-j9iR8g+/t0lArF4V6NE/QCfT+CO7iLqrXAHZbJdo+LfjqP1vR8Fg5bSiaq6Q2lOD1AUEVrEVIgABvBFYojJVYQ==}
     engines: {node: '>= 14'}
     hasBin: true
-    dev: true
 
   /yargs-parser@13.1.2:
     resolution: {integrity: sha512-3lbsNRf/j+A4QuSZfDRA7HRSfWrzO0YjqTJd5kjAq37Zep1CEgaYmrH9Q3GwPiB9cHyd1Y1UwggGhJGoxipbzg==}
