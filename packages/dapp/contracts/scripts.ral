@@ -14,7 +14,7 @@ TxScript CreateFund(
   }
 
   // 1 alph for the subcontract that's created
-  let requiredAssets =  donera.getAttoListingFee() + 1 alph
+  let requiredAssets = donera.getListingFee() + 1 alph
   donera.createFund{callerAddress!() -> ALPH: requiredAssets}(
     name,
     description,
@@ -37,7 +37,8 @@ TxScript DonateToFund(
     transferToken!(callerAddress!(), uiDev, uiFeeToken, uiFee)
   }
 
-  donera.donateToFund{callerAddress!() -> tokenId: amount}(
+  let fee = donera.getDonationFee()
+  donera.donateToFund{callerAddress!() -> tokenId: amount, ALPH: fee}(
     fundContractId,
     tokenId,
     amount
@@ -58,9 +59,9 @@ TxScript FinalizeFund(
   donera.finalizeFund(fundContractId)
 }
 
-TxScript SetAttoListingFee(
+TxScript SetListingFee(
   donera: Donera,
-  newAttoFee: U256
+  newListingFee: U256
 ) {
-  donera.setSelfAttoListingFee(newAttoFee)
+  donera.setListingFee(newListingFee)
 }

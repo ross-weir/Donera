@@ -8,7 +8,7 @@ describe("Fund", () => {
   beforeAll(async () => {
     await prepareForTests();
   });
-  describe("donate()", () => {
+  describe("donate", () => {
     it("should fail when called by an address that isn't donera", async () => {
       const address = randomContractAddress();
       const call = () =>
@@ -41,7 +41,7 @@ describe("Fund", () => {
       expect(contract!.asset.alphAmount).toBe(initialAlph + donatedAlph);
     });
   });
-  describe("finalize()", () => {
+  describe("finalize", () => {
     it("should fail when called by an address that isn't donera", async () => {
       const address = randomContractAddress();
       const call = () =>

@@ -48,7 +48,7 @@ describe("Donera", () => {
         initialAsset: { alphAmount: initialAlph },
         initialFields: {
           ...Donera.getInitialFieldsWithDefaultValues(),
-          selfAttoListingFee: listingFee,
+          selfListingFee: listingFee,
           selfFundTemplateId: fundTemplate.contractId,
         },
         testArgs: {
@@ -71,7 +71,7 @@ describe("Donera", () => {
         address: doneraAddress,
         initialFields: {
           ...Donera.getInitialFieldsWithDefaultValues(),
-          selfAttoListingFee: convertAlphAmountWithDecimals(1)!,
+          selfListingFee: convertAlphAmountWithDecimals(1)!,
           selfFundTemplateId: fundTemplate.contractId,
         },
         testArgs: {
@@ -100,7 +100,7 @@ describe("Donera", () => {
           initialFields: {
             ...Donera.getInitialFieldsWithDefaultValues(),
             selfDeadlineLimit: THREE_MONTHS,
-            selfAttoListingFee: convertAlphAmountWithDecimals(1)!,
+            selfListingFee: convertAlphAmountWithDecimals(1)!,
             selfFundTemplateId: fundTemplate.contractId,
           },
           testArgs: {
@@ -125,7 +125,7 @@ describe("Donera", () => {
           initialFields: {
             ...Donera.getInitialFieldsWithDefaultValues(),
             selfDeadlineLimit: THREE_MONTHS,
-            selfAttoListingFee: convertAlphAmountWithDecimals(1)!,
+            selfListingFee: convertAlphAmountWithDecimals(1)!,
             selfFundTemplateId: fundTemplate.contractId,
           },
           testArgs: {
@@ -142,6 +142,33 @@ describe("Donera", () => {
     });
   });
   describe("donateToFund", () => {
+    it("should pay donation fee to donera", async () => {
+      const doneraAddress = randomContractAddress();
+      const fund = Fund.stateForTest({
+        ...Fund.getInitialFieldsWithDefaultValues(),
+        selfOwner: doneraAddress,
+      });
+      const initialAlph = ONE_ALPH;
+      const donationFee = ONE_ALPH * 5n;
+      const donateAmount = convertAlphAmountWithDecimals(5)!;
+      const result = await Donera.tests.donateToFund({
+        address: doneraAddress,
+        initialAsset: { alphAmount: initialAlph },
+        initialFields: {
+          ...Donera.getInitialFieldsWithDefaultValues(),
+          selfDonationFee: donationFee,
+        },
+        testArgs: {
+          fundContractId: fund.contractId,
+          tokenId: ALPH_TOKEN_ID,
+          amount: donateAmount,
+        },
+        inputAssets: [{ address: testAddress, asset: { alphAmount: ONE_ALPH * 20n } }],
+        existingContracts: [fund],
+      });
+      const contract = result.contracts.find((c) => c.address === doneraAddress)!;
+      expect(contract.asset.alphAmount).toBe(initialAlph + donationFee);
+    });
     it("should emit a donation event", async () => {
       const doneraAddress = randomContractAddress();
       const fund = Fund.stateForTest({
