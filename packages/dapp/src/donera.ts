@@ -106,23 +106,23 @@ export class DoneraDapp {
       },
       attoAlphAmount: listingFeeCall.returns + ONE_ALPH + this.uiFee.uiFee,
     });
-    const { fields } = await this.getEventForTx<DoneraTypes.FundListedEvent, DoneraInstance>(
-      txId,
-      Donera,
-      Donera.eventIndex.FundListed
-    );
+    const organizerAccount = await signer.getSelectedAccount();
+    const fundContractId = this.deriveFundContractId({
+      ...onchainParams,
+      organizer: organizerAccount.address,
+    });
 
     // TODO: should probably return the values in `fields` as they come from
     // the blockchain itself
     return {
       txId,
-      fundContractId: fields.fundContractId,
+      fundContractId,
       name: params.name,
       description: params.description,
       goal: onchainParams.goal.toString(),
       deadline: params.deadline,
       beneficiary: params.beneficiary,
-      organizer: fields.organizer,
+      organizer: organizerAccount.address,
     };
   }
 
@@ -167,26 +167,12 @@ export class DoneraDapp {
     return { txId };
   }
 
-  public deriveFundContractId(param: DeriveFundPathParam, organizer: string): string {
+  public deriveFundContractId(param: DeriveFundPathParam): string {
     return subContractId(
       this.doneraInstance.contractId,
-      deriveFundContractPath({ ...param, organizer }),
+      deriveFundContractPath(param),
       this.doneraInstance.groupIndex
     );
-  }
-
-  private async getEventForTx<E, C extends ContractInstance>(
-    txId: string,
-    // needed to get the events signatures
-    contractFactory: ContractFactory<C>,
-    eventIndex: number
-  ): Promise<E> {
-    const { events } = await web3.getCurrentNodeProvider().events.getEventsTxIdTxid(txId);
-    const targetEvent = events.find((e) => e.eventIndex === eventIndex);
-    if (!targetEvent) {
-      throw new Error(`getEventForTx: Failed to find event with index ${eventIndex} in tx ${txId}`);
-    }
-    return Contract.fromApiEvent(targetEvent, undefined, txId, () => contractFactory.contract) as E;
   }
 
   private getTokenInfo(tokenId: string): TokenInfo | undefined {
