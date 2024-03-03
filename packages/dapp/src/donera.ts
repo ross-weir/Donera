@@ -2,16 +2,13 @@ import {
   NetworkId,
   ONE_ALPH,
   SignerProvider,
-  web3,
-  Contract,
   convertAlphAmountWithDecimals,
-  ContractFactory,
-  ContractInstance,
   convertAmountWithDecimals,
   ALPH_TOKEN_ID,
+  subContractId,
 } from "@alephium/web3";
 import { ALPH, TokenInfo } from "@alephium/token-list";
-import { Donera, DoneraInstance, DoneraTypes } from "./contracts/donera";
+import { DeriveFundPathParam, DoneraInstance, deriveFundContractPath } from "./contracts/donera";
 import { Deployments, loadDeployments } from "./deploys";
 import { CreateFund, DonateToFund, FinalizeFund } from "./scripts";
 import { getTokensForNetwork } from "./tokens";
@@ -84,36 +81,38 @@ export class DoneraDapp {
   ): Promise<CreateFundResult> {
     const deadlineUnixTs = Math.floor(params.deadline.getTime() / 1000);
     const listingFeeCall = await this.doneraInstance.methods.getAttoListingFee();
-    const attoGoal = convertAlphAmountWithDecimals(params.goal)!;
+    const onchainParams = {
+      name: stringToHex(params.name),
+      goal: convertAlphAmountWithDecimals(params.goal)!,
+      beneficiary: params.beneficiary,
+      deadlineTimestamp: BigInt(deadlineUnixTs),
+    };
     const { txId } = await CreateFund.execute(signer, {
       initialFields: {
         donera: this.doneraInstance.contractId,
         ...this.uiFee,
-        name: stringToHex(params.name),
         description: stringToHex(params.description),
-        beneficiary: params.beneficiary,
-        goal: attoGoal,
-        deadlineTimestamp: BigInt(deadlineUnixTs),
+        ...onchainParams,
       },
       attoAlphAmount: listingFeeCall.returns + ONE_ALPH + this.uiFee.uiFee,
     });
-    const { fields } = await this.getEventForTx<DoneraTypes.FundListedEvent, DoneraInstance>(
-      txId,
-      Donera,
-      Donera.eventIndex.FundListed
-    );
+    const organizerAccount = await signer.getSelectedAccount();
+    const fundContractId = this.deriveFundContractId({
+      ...onchainParams,
+      organizer: organizerAccount.address,
+    });
 
     // TODO: should probably return the values in `fields` as they come from
     // the blockchain itself
     return {
       txId,
-      fundContractId: fields.fundContractId,
+      fundContractId,
       name: params.name,
       description: params.description,
-      goal: attoGoal.toString(),
+      goal: onchainParams.goal.toString(),
       deadline: params.deadline,
       beneficiary: params.beneficiary,
-      organizer: fields.organizer,
+      organizer: organizerAccount.address,
     };
   }
 
@@ -158,18 +157,12 @@ export class DoneraDapp {
     return { txId };
   }
 
-  private async getEventForTx<E, C extends ContractInstance>(
-    txId: string,
-    // needed to get the events signatures
-    contractFactory: ContractFactory<C>,
-    eventIndex: number
-  ): Promise<E> {
-    const { events } = await web3.getCurrentNodeProvider().events.getEventsTxIdTxid(txId);
-    const targetEvent = events.find((e) => e.eventIndex === eventIndex);
-    if (!targetEvent) {
-      throw new Error(`getEventForTx: Failed to find event with index ${eventIndex} in tx ${txId}`);
-    }
-    return Contract.fromApiEvent(targetEvent, undefined, txId, () => contractFactory.contract) as E;
+  public deriveFundContractId(param: DeriveFundPathParam): string {
+    return subContractId(
+      this.doneraInstance.contractId,
+      deriveFundContractPath(param),
+      this.doneraInstance.groupIndex
+    );
   }
 
   private getTokenInfo(tokenId: string): TokenInfo | undefined {

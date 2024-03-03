@@ -18,20 +18,29 @@ Contract Donera(
     goal: U256,
     deadlineTimestamp: U256
   ) -> () {
+    emit Debug(`createFund: {
+      span: entry,
+      name: ${name},
+      beneficiary: ${beneficiary},
+      goal: ${goal},
+      deadlineTimestamp: ${deadlineTimestamp}
+    }`)
     assert!(deadlineTimestamp <= blockTimeStamp!() + selfDeadlineLimit, DoneraError.InvalidDeadline)
 
     let organizer = callerAddress!()
 
     transferTokenToSelf!(organizer, ALPH, selfAttoListingFee)
 
-    let pathHash = blake2b!(
-      name ++
-      description ++
-      toByteVec!(beneficiary) ++
-      toByteVec!(organizer) ++
-      toByteVec!(goal) ++
-      toByteVec!(deadlineTimestamp)
+    let pathHash = deriveFundPath(
+      name,
+      beneficiary,
+      organizer,
+      goal,
+      deadlineTimestamp
     )
+
+    emit Debug(`createFund: {span: subcontractPath, data: ${pathHash}}`)
+
     let (immFields, mutFields) = Fund.encodeFields!(
       name,
       description,
@@ -47,6 +56,8 @@ Contract Donera(
       immFields,
       mutFields
     )
+
+    emit Debug(`createFund: {span: fundCreated, fundId: ${fundContractId}}`)
 
     emit FundListed(
       name,
@@ -83,6 +94,25 @@ Contract Donera(
     fund.finalize()
 
     emit FundFinalized(finalizer, fundContractId)
+  }
+
+  fn deriveFundPath(
+    name: ByteVec,
+    beneficiary: Address,
+    organizer: Address,
+    goal: U256,
+    deadlineTimestamp: U256
+  ) -> (ByteVec) {
+    let pathEncoded = encodeToByteVec!(
+      name,
+      beneficiary,
+      organizer,
+      goal,
+      deadlineTimestamp
+    )
+    emit Debug(`deriveFundPath: {span: encoding, data: ${pathEncoded}}`)
+
+    return blake2b!(pathEncoded)
   }
 
   // Withdraw collected protocol fees from the contract.
