@@ -2,23 +2,13 @@ import {
   NetworkId,
   ONE_ALPH,
   SignerProvider,
-  web3,
-  Contract,
   convertAlphAmountWithDecimals,
-  ContractFactory,
-  ContractInstance,
   convertAmountWithDecimals,
   ALPH_TOKEN_ID,
   subContractId,
 } from "@alephium/web3";
 import { ALPH, TokenInfo } from "@alephium/token-list";
-import {
-  DeriveFundPathParam,
-  Donera,
-  DoneraInstance,
-  DoneraTypes,
-  deriveFundContractPath,
-} from "./contracts/donera";
+import { DeriveFundPathParam, DoneraInstance, deriveFundContractPath } from "./contracts/donera";
 import { Deployments, loadDeployments } from "./deploys";
 import { CreateFund, DonateToFund, FinalizeFund } from "./scripts";
 import { getTokensForNetwork } from "./tokens";
