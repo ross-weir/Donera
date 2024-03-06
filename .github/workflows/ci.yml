@@ -22,12 +22,14 @@ jobs:
           - 127.0.0.1:22973:22973
         env:
           ALEPHIUM_FILE_LOG_LEVEL: "DEBUG"
+        volumes:
+          - ${{ github.workspace }}/vendor/alephium-stack/devnet/devnet.conf:/alephium-home/.alephium/user.conf
         options: >-
           --health-cmd "curl http://127.0.0.1:22973/infos/self-clique"
           --health-interval 10s
           --health-timeout 45s
           --health-retries 5
-          --volume ${{ github.workspace }}/vendor/alephium-stack/devnet/devnet.conf:/alephium-home/.alephium/user.conf
+          --name alephium
     steps:
       - name: Check out code
         uses: actions/checkout@v4
