@@ -11,11 +11,29 @@ jobs:
     name: Test and Lint
     timeout-minutes: 15
     runs-on: ubuntu-latest
+    services:
+      alephium:
+        image: "alephium/alephium:v2.9.1"
+        ports:
+          - 19973:19973/tcp
+          - 19973:19973/udp
+          - 127.0.0.1:20973:20973
+          - 127.0.0.1:21973:21973
+          - 127.0.0.1:22973:22973
+        environment:
+          ALEPHIUM_FILE_LOG_LEVEL: "DEBUG"
+        options: >-
+          --health-cmd "curl http://127.0.0.1:22973/infos/self-clique"
+          --health-interval 10s
+          --health-timeout 45s
+          --health-retries 5
+          --volume ${{ github.workspace }}/vendor/alephium-stack/devnet/devnet.conf:/alephium-home/.alephium/user.conf
     steps:
       - name: Check out code
         uses: actions/checkout@v4
         with:
           fetch-depth: 2
+          submodules: "true"
       - uses: pnpm/action-setup@v3
       - name: Setup Node.js environment
         uses: actions/setup-node@v4
@@ -27,5 +45,4 @@ jobs:
       - name: Lint
         run: pnpm lint
       - name: Test
-        # TODO dapp package requires devnet node to run tests
-        run: npx turbo test --filter=\!dapp
+        run: npx turbo test
