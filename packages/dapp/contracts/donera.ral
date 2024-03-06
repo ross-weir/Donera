@@ -97,6 +97,12 @@ Contract Donera(
     let finalizer = callerAddress!()
     let fund = IFund(fundContractId)
 
+    emit Debug(`finalizeFund: {
+      span: finalize,
+      fundContractId: ${fundContractId},
+      finalizer: ${finalizer}
+    }`)
+
     fund.finalize()
 
     emit FundFinalized(finalizer, fundContractId)
