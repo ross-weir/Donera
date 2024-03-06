@@ -20,7 +20,7 @@ jobs:
           - 127.0.0.1:20973:20973
           - 127.0.0.1:21973:21973
           - 127.0.0.1:22973:22973
-        environment:
+        env:
           ALEPHIUM_FILE_LOG_LEVEL: "DEBUG"
         options: >-
           --health-cmd "curl http://127.0.0.1:22973/infos/self-clique"
