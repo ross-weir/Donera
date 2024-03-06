@@ -22,8 +22,6 @@ jobs:
           - 127.0.0.1:22973:22973
         env:
           ALEPHIUM_FILE_LOG_LEVEL: "DEBUG"
-        volumes:
-          - ${{ github.workspace }}/vendor/alephium-stack/devnet/devnet.conf:/alephium-home/.alephium/user.conf
         options: >-
           --health-cmd "curl http://127.0.0.1:22973/infos/self-clique"
           --health-interval 10s
@@ -36,6 +34,10 @@ jobs:
         with:
           fetch-depth: 2
           submodules: "true"
+      - name: Copy node config to service
+        run: |
+          docker cp ./vendor/alephium-stack/devnet/devnet.conf alephium:/alephium-home/.alephium/user.conf
+          docker restart alephium
       - uses: pnpm/action-setup@v3
       - name: Setup Node.js environment
         uses: actions/setup-node@v4
