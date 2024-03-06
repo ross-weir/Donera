@@ -23,6 +23,9 @@ jobs:
         with:
           node-version: 18
           cache: 'pnpm'
+      - uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
       - name: Install dependencies
         run: pnpm install
       - name: Lint
