@@ -1,12 +1,13 @@
 {
-  "version": "v2.8.5",
+  "version": "v2.9.1",
   "name": "Donera",
-  "bytecode": "040c406f409940b240be40ce40e440f641044111411a412741340101050a00403c160456a0022a320c7bb417051605a001a91600160144160247441605474416034044160440444e1706160016011602160516031604130664b213016417081707160513c40de0b6b3a7640000a21606a00016071608c117090516001601160216051603160416097501030305001516001703b41704160416011602a31604160116020f0c160301000616011602160416006101000103000cb41701160017020c0c1602010107160116005f010001040004b400051600ba010003030006b40005160016011602bb00000101000ab4b24513405a7b1600a0034513405a7b010001010007b4a0034513405a7b1600a103010201010005b40005a0031600a8010001010004b400051600a100010000000102a00102010001010004b400051600a101010001010004b400051600a102",
-  "codeHash": "a7cbd4a05ef2cc664ba03734ced49445c4bea668b41b4658117db488ba931a47",
+  "bytecode": "050f4065409440ad40b940c940df40f1410a41184125412e413b41444151415e0101050a004032160456a0032a320c7bb417051605a001a91600160216051603160400071706160016011602160516031604130664b213016417081707160513c40de0b6b3a7640000a21606a00016071608c117090516001601160216051603160416097501010305001816001703b417041604a002a9160416011602a31604160116020f0c160301000616011602160416006101000103000cb41701160017020c0c1602010107160116005f010001040004b400051600ba010003030006b40005160016011602bb00000101000ab4b24513405a7b1600a0044513405a7b010001010007b4a0044513405a7b1600a10400000506010b16001601160216031604130564170516054e02010201010005b40005a0041600a8010001010004b400051600a100010000000102a00102010001010004b400051600a101010000000102a00202010001010004b400051600a102010001010004b400051600a103",
+  "codeHash": "ffef21618e5397aa2029a095f609aef3ab13a319baac05278aebfaa645c33325",
   "fieldsSig": {
     "names": [
       "selfFundTemplateId",
-      "selfAttoListingFee",
+      "selfListingFee",
+      "selfDonationFee",
       "selfDeadlineLimit",
       "selfOwner"
     ],
@@ -14,9 +15,11 @@
       "ByteVec",
       "U256",
       "U256",
+      "U256",
       "Address"
     ],
     "isMutable": [
+      true,
       true,
       true,
       true,
@@ -104,7 +107,7 @@
     {
       "name": "donateToFund",
       "usePreapprovedAssets": true,
-      "useAssetsInContract": false,
+      "useAssetsInContract": true,
       "isPublic": true,
       "paramNames": [
         "fundContractId",
@@ -210,6 +213,36 @@
       "returnTypes": []
     },
     {
+      "name": "deriveFundPath",
+      "usePreapprovedAssets": false,
+      "useAssetsInContract": false,
+      "isPublic": false,
+      "paramNames": [
+        "name",
+        "beneficiary",
+        "organizer",
+        "goal",
+        "deadlineTimestamp"
+      ],
+      "paramTypes": [
+        "ByteVec",
+        "Address",
+        "Address",
+        "U256",
+        "U256"
+      ],
+      "paramIsMutable": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "returnTypes": [
+        "ByteVec"
+      ]
+    },
+    {
       "name": "withdraw",
       "usePreapprovedAssets": false,
       "useAssetsInContract": true,
@@ -242,7 +275,7 @@
       "returnTypes": []
     },
     {
-      "name": "getAttoListingFee",
+      "name": "getListingFee",
       "usePreapprovedAssets": false,
       "useAssetsInContract": false,
       "isPublic": true,
@@ -254,12 +287,40 @@
       ]
     },
     {
-      "name": "setSelfAttoListingFee",
+      "name": "setListingFee",
       "usePreapprovedAssets": false,
       "useAssetsInContract": false,
       "isPublic": true,
       "paramNames": [
-        "newAttoListingFee"
+        "newListingFee"
+      ],
+      "paramTypes": [
+        "U256"
+      ],
+      "paramIsMutable": [
+        false
+      ],
+      "returnTypes": []
+    },
+    {
+      "name": "getDonationFee",
+      "usePreapprovedAssets": false,
+      "useAssetsInContract": false,
+      "isPublic": true,
+      "paramNames": [],
+      "paramTypes": [],
+      "paramIsMutable": [],
+      "returnTypes": [
+        "U256"
+      ]
+    },
+    {
+      "name": "setDonationFee",
+      "usePreapprovedAssets": false,
+      "useAssetsInContract": false,
+      "isPublic": true,
+      "paramNames": [
+        "newDonationFee"
       ],
       "paramTypes": [
         "U256"
