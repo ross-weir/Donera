@@ -31,7 +31,8 @@ import { getContractByCodeHash } from "./contracts";
 export namespace DoneraTypes {
   export type Fields = {
     selfFundTemplateId: HexString;
-    selfAttoListingFee: bigint;
+    selfListingFee: bigint;
+    selfDonationFee: bigint;
     selfDeadlineLimit: bigint;
     selfOwner: Address;
   };
@@ -59,7 +60,11 @@ export namespace DoneraTypes {
   }>;
 
   export interface CallMethodTable {
-    getAttoListingFee: {
+    getListingFee: {
+      params: Omit<CallContractParams<{}>, "args">;
+      result: CallContractResult<bigint>;
+    };
+    getDonationFee: {
       params: Omit<CallContractParams<{}>, "args">;
       result: CallContractResult<bigint>;
     };
@@ -151,6 +156,20 @@ class Factory extends ContractFactory<DoneraInstance, DoneraTypes.Fields> {
     ): Promise<TestContractResult<null>> => {
       return testMethod(this, "setOwner", params);
     },
+    deriveFundPath: async (
+      params: TestContractParams<
+        DoneraTypes.Fields,
+        {
+          name: HexString;
+          beneficiary: Address;
+          organizer: Address;
+          goal: bigint;
+          deadlineTimestamp: bigint;
+        }
+      >
+    ): Promise<TestContractResult<HexString>> => {
+      return testMethod(this, "deriveFundPath", params);
+    },
     withdraw: async (
       params: TestContractParams<DoneraTypes.Fields, { amount: bigint }>
     ): Promise<TestContractResult<null>> => {
@@ -164,18 +183,25 @@ class Factory extends ContractFactory<DoneraInstance, DoneraTypes.Fields> {
     ): Promise<TestContractResult<null>> => {
       return testMethod(this, "setSelfFundTemplateId", params);
     },
-    getAttoListingFee: async (
+    getListingFee: async (
       params: Omit<TestContractParams<DoneraTypes.Fields, never>, "testArgs">
     ): Promise<TestContractResult<bigint>> => {
-      return testMethod(this, "getAttoListingFee", params);
+      return testMethod(this, "getListingFee", params);
     },
-    setSelfAttoListingFee: async (
-      params: TestContractParams<
-        DoneraTypes.Fields,
-        { newAttoListingFee: bigint }
-      >
+    setListingFee: async (
+      params: TestContractParams<DoneraTypes.Fields, { newListingFee: bigint }>
     ): Promise<TestContractResult<null>> => {
-      return testMethod(this, "setSelfAttoListingFee", params);
+      return testMethod(this, "setListingFee", params);
+    },
+    getDonationFee: async (
+      params: Omit<TestContractParams<DoneraTypes.Fields, never>, "testArgs">
+    ): Promise<TestContractResult<bigint>> => {
+      return testMethod(this, "getDonationFee", params);
+    },
+    setDonationFee: async (
+      params: TestContractParams<DoneraTypes.Fields, { newDonationFee: bigint }>
+    ): Promise<TestContractResult<null>> => {
+      return testMethod(this, "setDonationFee", params);
     },
     setSelfDeadlineLimit: async (
       params: TestContractParams<
@@ -192,8 +218,8 @@ class Factory extends ContractFactory<DoneraInstance, DoneraTypes.Fields> {
 export const Donera = new Factory(
   Contract.fromJson(
     DoneraContractJson,
-    "",
-    "a7cbd4a05ef2cc664ba03734ced49445c4bea668b41b4658117db488ba931a47"
+    "=5+14c41e8426=1+42=1-1+c427c429242a442f34301=1+3=1-1+e=1+317=1+324432d433a4347010105=2-1+00=2+3=1-1+160016021603160=1+7e=1-2+5=2+2=1-1+637265617465=1+6756e643a207b0a202020202020737=1-1+6=1+6e3a20656e7=1-1+72792c=2-2+2020202020206e6=1-2+6d653a20=1+52c0a2020202020206=1+6=1-1+6e65666963696=1+7=1+793a200=1-1+2c0a202020202020676f6=1+6c=1+a201=1+2c0a2020202020206=1+656=1+6=1+6c696e655=1-2+696d6=1-1+737=1+6=1-2+6d7=1-1+3a2=1-1=1-1+6=2+2=1+2=1-1+2=1-1=1+07d=65+67e02402e63726561746546756e643a207b7370616e3a20737562436f6e7472616374506174682c2070617468486173683a20017d160=91+16097e02402863726561746546756e643a207b7370616e3a2066756e64437265617465642c2066756e6449643a20017d=43-1+c1600160116027e044039646f6e617465546f46756e643a207b0a2020202020207370616e3a20656e7472792c0a20202020202066756e64436f6e747261637449643a20112c0a202020202020746f6b656e49643a20102c0a202020202020616d6f756e743a20060a202020207d=93-1+f=14+160016017e03403c66696e616c697a6546756e643a207b0a2020202020207370616e3a2066696e616c697a652c0a20202020202066756e64436f6e747261637449643a20132c0a20202020202066696e616c697a65723a20060a202020207d=171-1+d=30+16057e02402e64657269766546756e64506174683a207b7370616e3a20656e636f64696e672c2070617468456e636f6465643a20017d=176",
+    "2ce6974a5349de7e0b366a172878cc62e22fbe93493a811451cb7139fe43dedd"
   )
 );
 
@@ -262,13 +288,24 @@ export class DoneraInstance extends ContractInstance {
   }
 
   methods = {
-    getAttoListingFee: async (
-      params?: DoneraTypes.CallMethodParams<"getAttoListingFee">
-    ): Promise<DoneraTypes.CallMethodResult<"getAttoListingFee">> => {
+    getListingFee: async (
+      params?: DoneraTypes.CallMethodParams<"getListingFee">
+    ): Promise<DoneraTypes.CallMethodResult<"getListingFee">> => {
       return callMethod(
         Donera,
         this,
-        "getAttoListingFee",
+        "getListingFee",
+        params === undefined ? {} : params,
+        getContractByCodeHash
+      );
+    },
+    getDonationFee: async (
+      params?: DoneraTypes.CallMethodParams<"getDonationFee">
+    ): Promise<DoneraTypes.CallMethodResult<"getDonationFee">> => {
+      return callMethod(
+        Donera,
+        this,
+        "getDonationFee",
         params === undefined ? {} : params,
         getContractByCodeHash
       );

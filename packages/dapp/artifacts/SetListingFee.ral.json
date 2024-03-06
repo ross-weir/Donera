@@ -1,11 +1,11 @@
 {
-  "version": "v2.8.5",
-  "name": "SetAttoListingFee",
-  "bytecodeTemplate": "01010300000005{1}0d0c{0}010a",
+  "version": "v2.9.1",
+  "name": "SetListingFee",
+  "bytecodeTemplate": "01010300000005{1}0d0c{0}010b",
   "fieldsSig": {
     "names": [
       "donera",
-      "newAttoFee"
+      "newListingFee"
     ],
     "types": [
       "ByteVec",
