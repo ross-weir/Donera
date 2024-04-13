@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "devDependencies": {
-    "@alephium/cli": "^0.34.0",
+    "@alephium/cli": "^0.38.1",
     "@types/node": "^20.11.17"
   }
 }
