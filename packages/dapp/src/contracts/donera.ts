@@ -11,7 +11,7 @@ export * from "../../artifacts/ts/Donera";
 
 export type DeriveFundPathParam = {
   // hex formatted
-  name: string;
+  metadataUrl: string;
   organizer: string;
   beneficiary: string;
   goal: bigint;
@@ -20,7 +20,7 @@ export type DeriveFundPathParam = {
 
 /** Calculate the path used for the fund subcontract */
 export function deriveFundContractPath({
-  name,
+  metadataUrl,
   beneficiary,
   deadlineTimestamp,
   goal,
@@ -28,7 +28,7 @@ export function deriveFundContractPath({
 }: DeriveFundPathParam): string {
   const buf = Buffer.concat([
     encodeU256(5n),
-    encodeVmByteVec(name),
+    encodeVmByteVec(metadataUrl),
     encodeVmAddress(beneficiary),
     encodeVmAddress(organizer),
     encodeVmU256(goal),

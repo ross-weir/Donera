@@ -3,8 +3,7 @@ TxScript CreateFund(
   uiDev: Address,
   uiFeeToken: ByteVec,
   uiFee: U256,
-  name: ByteVec,
-  description: ByteVec,
+  metadataUrl: ByteVec,
   beneficiary: Address,
   goal: U256,
   deadlineTimestamp: U256
@@ -16,8 +15,7 @@ TxScript CreateFund(
   // 1 alph for the subcontract that's created
   let requiredAssets = donera.getListingFee() + 1 alph
   donera.createFund{callerAddress!() -> ALPH: requiredAssets}(
-    name,
-    description,
+    metadataUrl,
     beneficiary,
     goal,
     deadlineTimestamp

@@ -1,7 +1,6 @@
 Interface IDonera {
   event FundListed(
-    name: ByteVec,
-    description: ByteVec,
+    metadataUrl: ByteVec,
     beneficiary: Address,
     organizer: Address,
     goal: U256,
@@ -20,8 +19,7 @@ Interface IDonera {
 
   @using(preapprovedAssets = true, checkExternalCaller = false, assetsInContract = true)
   pub fn createFund(
-    name: ByteVec,
-    description: ByteVec,
+    metadataUrl: ByteVec,
     beneficiary: Address,
     goal: U256,
     deadlineTimestamp: U256

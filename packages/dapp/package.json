@@ -3,11 +3,12 @@
   "version": "1.0.0",
   "scripts": {
     "compile": "cli compile",
-    "deploy": "cli deploy",
-    "test": "bun test src",
+    "deploy": "cli deploy ",
+    "test": "ALEPHIUM_CONTRACT_DEBUG_MESSAGE=false bun test src",
     "test:e2e": "bun test test/e2e/",
     "types": "tsc -p ./tsconfig.types.json",
-    "lint": "eslint ."
+    "types:check": "tsc -p ./tsconfig.lint.json",
+    "lint": "eslint . && pnpm types:check"
   },
   "types": "./dist/src/index.d.ts",
   "exports": {

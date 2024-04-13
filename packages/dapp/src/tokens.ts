@@ -8,5 +8,5 @@ export function getTokensForNetwork(networkId: NetworkId): TokenInfo[] {
     return devnetTokens;
   }
 
-  return tokenMetadata[networkId].tokens.tokens;
+  return tokenMetadata[networkId].tokens;
 }

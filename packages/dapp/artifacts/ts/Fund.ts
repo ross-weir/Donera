@@ -23,6 +23,8 @@ import {
   fetchContractState,
   ContractInstance,
   getContractEventsCurrentCount,
+  TestContractParamsWithoutMaps,
+  TestContractResultWithoutMaps,
 } from "@alephium/web3";
 import { default as FundContractJson } from "../Fund.ral.json";
 import { getContractByCodeHash } from "./contracts";
@@ -30,8 +32,7 @@ import { getContractByCodeHash } from "./contracts";
 // Custom types for the contract
 export namespace FundTypes {
   export type Fields = {
-    selfName: HexString;
-    selfDescription: HexString;
+    selfMetadataUrl: HexString;
     selfBeneficiary: Address;
     selfOrganizer: Address;
     selfGoal: bigint;
@@ -42,11 +43,7 @@ export namespace FundTypes {
   export type State = ContractState<Fields>;
 
   export interface CallMethodTable {
-    getName: {
-      params: Omit<CallContractParams<{}>, "args">;
-      result: CallContractResult<HexString>;
-    };
-    getDescription: {
+    getSelfMetadataUrl: {
       params: Omit<CallContractParams<{}>, "args">;
       result: CallContractResult<HexString>;
     };
@@ -93,51 +90,67 @@ class Factory extends ContractFactory<FundInstance, FundTypes.Fields> {
 
   tests = {
     donate: async (
-      params: TestContractParams<
+      params: TestContractParamsWithoutMaps<
         FundTypes.Fields,
         { donor: Address; tokenId: HexString; amount: bigint }
       >
-    ): Promise<TestContractResult<null>> => {
+    ): Promise<TestContractResultWithoutMaps<null>> => {
       return testMethod(this, "donate", params);
     },
     finalize: async (
-      params: Omit<TestContractParams<FundTypes.Fields, never>, "testArgs">
-    ): Promise<TestContractResult<null>> => {
+      params: Omit<
+        TestContractParamsWithoutMaps<FundTypes.Fields, never>,
+        "testArgs"
+      >
+    ): Promise<TestContractResultWithoutMaps<null>> => {
       return testMethod(this, "finalize", params);
     },
     assertOwner: async (
-      params: TestContractParams<FundTypes.Fields, { caller: Address }>
-    ): Promise<TestContractResult<null>> => {
+      params: TestContractParamsWithoutMaps<
+        FundTypes.Fields,
+        { caller: Address }
+      >
+    ): Promise<TestContractResultWithoutMaps<null>> => {
       return testMethod(this, "assertOwner", params);
     },
     setOwner: async (
-      params: TestContractParams<FundTypes.Fields, { newOwner: Address }>
-    ): Promise<TestContractResult<null>> => {
+      params: TestContractParamsWithoutMaps<
+        FundTypes.Fields,
+        { newOwner: Address }
+      >
+    ): Promise<TestContractResultWithoutMaps<null>> => {
       return testMethod(this, "setOwner", params);
     },
-    getName: async (
-      params: Omit<TestContractParams<FundTypes.Fields, never>, "testArgs">
-    ): Promise<TestContractResult<HexString>> => {
-      return testMethod(this, "getName", params);
-    },
-    getDescription: async (
-      params: Omit<TestContractParams<FundTypes.Fields, never>, "testArgs">
-    ): Promise<TestContractResult<HexString>> => {
-      return testMethod(this, "getDescription", params);
+    getSelfMetadataUrl: async (
+      params: Omit<
+        TestContractParamsWithoutMaps<FundTypes.Fields, never>,
+        "testArgs"
+      >
+    ): Promise<TestContractResultWithoutMaps<HexString>> => {
+      return testMethod(this, "getSelfMetadataUrl", params);
     },
     getGoal: async (
-      params: Omit<TestContractParams<FundTypes.Fields, never>, "testArgs">
-    ): Promise<TestContractResult<bigint>> => {
+      params: Omit<
+        TestContractParamsWithoutMaps<FundTypes.Fields, never>,
+        "testArgs"
+      >
+    ): Promise<TestContractResultWithoutMaps<bigint>> => {
       return testMethod(this, "getGoal", params);
     },
     getBeneficiary: async (
-      params: Omit<TestContractParams<FundTypes.Fields, never>, "testArgs">
-    ): Promise<TestContractResult<Address>> => {
+      params: Omit<
+        TestContractParamsWithoutMaps<FundTypes.Fields, never>,
+        "testArgs"
+      >
+    ): Promise<TestContractResultWithoutMaps<Address>> => {
       return testMethod(this, "getBeneficiary", params);
     },
     getOrganizer: async (
-      params: Omit<TestContractParams<FundTypes.Fields, never>, "testArgs">
-    ): Promise<TestContractResult<Address>> => {
+      params: Omit<
+        TestContractParamsWithoutMaps<FundTypes.Fields, never>,
+        "testArgs"
+      >
+    ): Promise<TestContractResultWithoutMaps<Address>> => {
       return testMethod(this, "getOrganizer", params);
     },
   };
@@ -148,7 +161,7 @@ export const Fund = new Factory(
   Contract.fromJson(
     FundContractJson,
     "",
-    "d029c5f32519bc4a1639873afb0be1eb619a6bccd76846e5da6347e55bc25e63"
+    "332f5b4e9cb525d039cb5b9126f6ec6d1d6e332ef4dff4c2c8cb22c5b0c08107"
   )
 );
 
@@ -163,24 +176,13 @@ export class FundInstance extends ContractInstance {
   }
 
   methods = {
-    getName: async (
-      params?: FundTypes.CallMethodParams<"getName">
-    ): Promise<FundTypes.CallMethodResult<"getName">> => {
+    getSelfMetadataUrl: async (
+      params?: FundTypes.CallMethodParams<"getSelfMetadataUrl">
+    ): Promise<FundTypes.CallMethodResult<"getSelfMetadataUrl">> => {
       return callMethod(
         Fund,
         this,
-        "getName",
-        params === undefined ? {} : params,
-        getContractByCodeHash
-      );
-    },
-    getDescription: async (
-      params?: FundTypes.CallMethodParams<"getDescription">
-    ): Promise<FundTypes.CallMethodResult<"getDescription">> => {
-      return callMethod(
-        Fund,
-        this,
-        "getDescription",
+        "getSelfMetadataUrl",
         params === undefined ? {} : params,
         getContractByCodeHash
       );

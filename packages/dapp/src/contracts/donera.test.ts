@@ -20,7 +20,7 @@ describe("Donera", () => {
   describe("deriveFundPath", () => {
     it("should produce matching fund subcontract paths", async () => {
       const args = {
-        name: stringToHex("test"),
+        metadataUrl: stringToHex("ipfs://klmasdfxvxcvalksdf"),
         beneficiary: testAddress,
         organizer: testAddress,
         deadlineTimestamp: 10000000n,
@@ -52,8 +52,7 @@ describe("Donera", () => {
           selfFundTemplateId: fundTemplate.contractId,
         },
         testArgs: {
-          name: stringToHex("test"),
-          description: stringToHex("testing description"),
+          metadataUrl: stringToHex("ipfs://klmasdfxvxcvalksdf"),
           beneficiary: testAddress,
           deadlineTimestamp: 5n,
           goal: convertAlphAmountWithDecimals(500)!,
@@ -75,8 +74,7 @@ describe("Donera", () => {
           selfFundTemplateId: fundTemplate.contractId,
         },
         testArgs: {
-          name: stringToHex("test"),
-          description: stringToHex("testing description"),
+          metadataUrl: stringToHex("ipfs://klmasdfxvxcvalksdf"),
           beneficiary: testAddress,
           deadlineTimestamp: 5n,
           goal: convertAlphAmountWithDecimals(500)!,
@@ -104,8 +102,7 @@ describe("Donera", () => {
             selfFundTemplateId: fundTemplate.contractId,
           },
           testArgs: {
-            name: stringToHex("test"),
-            description: stringToHex("testing description"),
+            metadataUrl: stringToHex("ipfs://klmasdfxvxcvalksdf"),
             beneficiary: testAddress,
             deadlineTimestamp: THREE_MONTHS + ONE_DAY,
             goal: convertAlphAmountWithDecimals(500)!,
@@ -129,8 +126,7 @@ describe("Donera", () => {
             selfFundTemplateId: fundTemplate.contractId,
           },
           testArgs: {
-            name: stringToHex("test"),
-            description: stringToHex("testing description"),
+            metadataUrl: stringToHex("ipfs://klmasdfxvxcvalksdf"),
             beneficiary: testAddress,
             deadlineTimestamp: THREE_MONTHS - ONE_DAY,
             goal: convertAlphAmountWithDecimals(500)!,

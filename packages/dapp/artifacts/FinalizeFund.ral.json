@@ -1,5 +1,5 @@
 {
-  "version": "v2.9.1",
+  "version": "v2.11.0",
   "name": "FinalizeFund",
   "bytecodeTemplate": "0101030000000e{3}0c334c05b4{1}{2}{3}aa{4}0d0c{0}0102",
   "fieldsSig": {
@@ -11,7 +11,7 @@
       "fundContractId"
     ],
     "types": [
-      "ByteVec",
+      "Donera",
       "Address",
       "ByteVec",
       "U256",

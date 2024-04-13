@@ -1,6 +1,5 @@
 Contract Fund(
-  selfName: ByteVec,
-  selfDescription: ByteVec,
+  selfMetadataUrl: ByteVec,
   selfBeneficiary: Address,
   selfOrganizer: Address,
   selfGoal: U256,
@@ -13,14 +12,8 @@ Contract Fund(
     FundInProgress = 50
   }
 
-  // Get the name of the fund raiser.
-  pub fn getName() -> ByteVec {
-    return selfName
-  }
-
-  // Get the description of the fund raiser.
-  pub fn getDescription() -> ByteVec {
-    return selfDescription
+  pub fn getSelfMetadataUrl() -> ByteVec {
+    return selfMetadataUrl
   }
 
   // Get the goal of the fund raiser.
