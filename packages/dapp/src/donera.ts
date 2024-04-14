@@ -161,6 +161,7 @@ export class DoneraDapp {
   }
 
   private getTokenInfo(tokenId: string): TokenInfo | undefined {
+    // TODO: check if this can be removed, looks like ALPH token has since been added to token lists
     if (tokenId === ALPH_TOKEN_ID) {
       return ALPH;
     }

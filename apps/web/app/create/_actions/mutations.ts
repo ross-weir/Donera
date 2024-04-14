@@ -1,36 +1,75 @@
 "use server";
 
-import { redirect } from "next/navigation";
-import { CreateFundResult } from "@donera/dapp";
 import db from "@donera/database";
 import { nanoid } from "nanoid";
 import { blob } from "@/_lib/server";
-import { cidToUrl } from "@/_lib/donera";
+import { getDoneraDapp } from "@/_lib/donera";
 
-export async function saveFund({ fundContractId, ...rest }: CreateFundResult, formData: FormData) {
-  const file = formData.get("image") as File;
-  const { id } = await blob.put(fundContractId, await file.arrayBuffer());
-  // storing url to ensure there's a way to get the image until the cid is stored onchain
-  // https://github.com/ross-weir/Donera/issues/73
-  const metadata = { image: { cid: id, url: cidToUrl(id) } };
+type SaveFundParam = {
+  name: string;
+  description: string;
+  goal: string;
+  deadline: string;
+  beneficiary: string;
+  organizer: string;
+  image: File;
+};
 
-  // there's a race condition where the indexer can insert the record before
-  // we have a chance to optimistically create it. Use upsert.
-  // Not sure if this is just a devnet thing or realistic
-  await db.fund.upsert({
-    where: {
-      id: fundContractId,
-    },
-    update: {
-      metadata,
-    },
-    create: {
-      ...rest,
+function getFormFieldOrThrow<T extends FormDataEntryValue = string>(
+  formData: FormData,
+  field: string
+): T {
+  const value = formData.get(field);
+
+  if (!value) {
+    throw new Error(`Field was missing: ${field}`);
+  }
+
+  return value as T;
+}
+
+function parseFormData(formData: FormData): SaveFundParam {
+  return {
+    name: getFormFieldOrThrow(formData, "name"),
+    description: getFormFieldOrThrow(formData, "description"),
+    goal: getFormFieldOrThrow(formData, "goal"),
+    deadline: getFormFieldOrThrow(formData, "deadline"),
+    beneficiary: getFormFieldOrThrow(formData, "beneficiary"),
+    organizer: getFormFieldOrThrow(formData, "organizer"),
+    image: getFormFieldOrThrow<File>(formData, "image"),
+  };
+}
+
+export async function saveFund(formData: FormData) {
+  const param = parseFormData(formData);
+  const imageBuf = await param.image.arrayBuffer();
+  const { url: imageUrl } = await blob.put(nanoid(10), new Blob([imageBuf]));
+  const onchainMetadata = {
+    name: param.name,
+    description: param.description,
+    imageUrl,
+  };
+  const { url: metadataUrl } = await blob.put(
+    nanoid(10),
+    new Blob([JSON.stringify(onchainMetadata)], { type: "application/json" })
+  );
+  const metadata = { image: { url: imageUrl } };
+  const fundContractId = getDoneraDapp().deriveFundContractId({
+    deadlineTimestamp: BigInt(param.deadline),
+    goal: BigInt(param.goal),
+    beneficiary: param.beneficiary,
+    organizer: param.organizer,
+    metadataUrl,
+  });
+
+  return await db.fund.create({
+    data: {
+      ...param,
       id: fundContractId,
       shortId: nanoid(10),
       verified: false,
       metadata,
+      metadataUrl,
     },
   });
-  redirect(`/funds/${fundContractId}`);
 }
