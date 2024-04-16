@@ -109,7 +109,7 @@ function SetBeneficiaryText({ form }: { form: any }) {
 }
 
 export default function CreateFundForm() {
-  const { signer } = useWallet();
+  const { signer, account } = useWallet();
   const router = useRouter();
   const form = useForm<FormSchema>({
     initialValues: {
@@ -148,6 +148,7 @@ export default function CreateFundForm() {
       formData.set("image", image!);
       formData.set("deadline", deadline.toISOString());
       formData.set("goal", goal.toString());
+      formData.set("organizer", account!.address);
 
       // save the fund before submitting transaction so we ensure
       // fund metadata is uploaded to ipfs
@@ -169,8 +170,15 @@ export default function CreateFundForm() {
         ),
       });
 
+      if (saveResult.id !== fundContractId) {
+        throw new Error(
+          `Fund contract id mismatch, backend ${saveResult.id} !== frontend ${fundContractId}`
+        );
+      }
+
       router.push(`/funds/${fundContractId}`);
     } catch (e) {
+      console.error(e);
       handleTxSubmitError(e as Error, "Fund creation");
     }
 

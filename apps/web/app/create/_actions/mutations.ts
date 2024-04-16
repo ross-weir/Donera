@@ -4,6 +4,7 @@ import db from "@donera/database";
 import { nanoid } from "nanoid";
 import { blob } from "@/_lib/server";
 import { getDoneraDapp } from "@/_lib/donera";
+import { convertAlphAmountWithDecimals, stringToHex } from "@alephium/web3";
 
 type SaveFundParam = {
   name: string;
@@ -41,31 +42,33 @@ function parseFormData(formData: FormData): SaveFundParam {
 }
 
 export async function saveFund(formData: FormData) {
-  const param = parseFormData(formData);
-  const imageBuf = await param.image.arrayBuffer();
-  const { url: imageUrl } = await blob.put(nanoid(10), new Blob([imageBuf]));
+  const { image, deadline, ...param } = parseFormData(formData);
+  const imageBuf = await image.arrayBuffer();
+  const { url: imageUrl } = await blob.put(nanoid(32), new Blob([imageBuf]));
   const onchainMetadata = {
     name: param.name,
     description: param.description,
     imageUrl,
   };
   const { url: metadataUrl } = await blob.put(
-    nanoid(10),
+    nanoid(32),
     new Blob([JSON.stringify(onchainMetadata)], { type: "application/json" })
   );
   const metadata = { image: { url: imageUrl } };
+  const deadlineDate = new Date(deadline);
   const fundContractId = getDoneraDapp().deriveFundContractId({
-    deadlineTimestamp: BigInt(param.deadline),
-    goal: BigInt(param.goal),
+    deadlineTimestamp: BigInt(Math.floor(deadlineDate.getTime() / 1000)),
+    goal: convertAlphAmountWithDecimals(param.goal)!,
     beneficiary: param.beneficiary,
     organizer: param.organizer,
-    metadataUrl,
+    metadataUrl: stringToHex(metadataUrl),
   });
 
   return await db.fund.create({
     data: {
       ...param,
       id: fundContractId,
+      deadline: deadlineDate,
       shortId: nanoid(10),
       verified: false,
       metadata,
