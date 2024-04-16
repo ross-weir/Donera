@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "compile": "cli compile",
-    "deploy": "cli deploy ",
+    "deploy": "cli deploy",
     "test": "ALEPHIUM_CONTRACT_DEBUG_MESSAGE=false bun test src",
     "test:e2e": "bun test test/e2e/",
     "types": "tsc -p ./tsconfig.types.json",

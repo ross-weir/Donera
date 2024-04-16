@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "DATABASE_URL=mongodb://localhost:27017/donera bun bin/simple-index.ts"
+    "dev": "DONERA_NETWORK_ID=devnet DATABASE_URL=mongodb://localhost:27017/donera bun bin/simple-index.ts"
   },
   "exports": {
     ".": "./src/index.ts"

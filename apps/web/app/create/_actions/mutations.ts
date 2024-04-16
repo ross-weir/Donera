@@ -5,6 +5,7 @@ import { nanoid } from "nanoid";
 import { blob } from "@/_lib/server";
 import { getDoneraDapp } from "@/_lib/donera";
 import { convertAlphAmountWithDecimals, stringToHex } from "@alephium/web3";
+import { OnchainMetadata } from "@donera/dapp";
 
 type SaveFundParam = {
   name: string;
@@ -45,7 +46,7 @@ export async function saveFund(formData: FormData) {
   const { image, deadline, ...param } = parseFormData(formData);
   const imageBuf = await image.arrayBuffer();
   const { url: imageUrl } = await blob.put(nanoid(32), new Blob([imageBuf]));
-  const onchainMetadata = {
+  const onchainMetadata: OnchainMetadata = {
     name: param.name,
     description: param.description,
     imageUrl,

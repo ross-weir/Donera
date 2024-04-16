@@ -4,7 +4,7 @@ import alephiumConfig from "@donera/alephium-config/default";
 import { NetworkId, web3 } from "@alephium/web3";
 import db from "@donera/database";
 
-const networkId: NetworkId = "devnet";
+const networkId = process.env.DONERA_NETWORK_ID! as NetworkId;
 
 // TODO, get network form somewhere
 const { nodeUrl } = alephiumConfig.networks[networkId];
@@ -17,6 +17,7 @@ const deploys = loadDeployments(networkId);
 const indexerCfg = {
   node: web3.getCurrentNodeProvider(),
   db,
+  ipfsGateway: "https://ipfs.chainsafe.io/ipfs",
 };
 
 const indexer = new SimpleEventIndexer(indexerCfg, {

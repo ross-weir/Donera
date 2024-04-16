@@ -4,6 +4,7 @@ import { ALPH_TOKEN_ID, Contract, addressFromContractId, hexToString, node } fro
 import { PrismaPromise } from "@donera/database";
 import { Deployments } from "@donera/dapp/deploys";
 import { nanoid } from "nanoid";
+import { OnchainMetadata } from "@donera/dapp";
 
 export type EventIndexerConfig = {
   intervalMs: number;
@@ -91,13 +92,31 @@ export class SimpleEventIndexer extends BaseIndexer {
   }
 
   private async processFundListed(event: DoneraTypes.FundListedEvent): Promise<Tx[]> {
-    const { name, description, fundContractId, goal, deadlineTimestamp, ...rest } = event.fields;
+    const {
+      metadataUrl: metadataUrlHex,
+      fundContractId,
+      goal,
+      deadlineTimestamp,
+      ...rest
+    } = event.fields;
+    const metadataUrl = hexToString(metadataUrlHex);
+    const metadataCid = metadataUrl.split("//")[1];
+    const response = await fetch(`${this.ipfsGateway}/${metadataCid}`);
+    if (!response.ok) {
+      const body = await response.text();
+      console.log(metadataUrl, metadataCid);
+      throw new Error(`IPFS metadata request failed, status: ${response.status}, body: ${body}`);
+    }
+    // TODO: validate this, users can put whatever they like by interacting
+    // directly with the dapp without using the web app
+    const { name, description, imageUrl } = (await response.json()) as OnchainMetadata;
     const data = {
-      name: hexToString(name),
-      description: hexToString(description),
+      name,
+      description,
       goal: goal.toString(),
       verified: true,
       deadline: new Date(Number(deadlineTimestamp * 1000n)),
+      metadataUrl,
       txId: event.txId,
       ...rest,
     };
@@ -106,15 +125,22 @@ export class SimpleEventIndexer extends BaseIndexer {
         where: {
           id: fundContractId,
         },
-        // The previous values where provided by the client
-        // update them to ensure the client provided the right fields
         update: {
+          metadata: {
+            image: {
+              url: imageUrl,
+            },
+          },
           ...data,
         },
         create: {
           id: fundContractId,
           shortId: nanoid(10),
-          metadata: {},
+          metadata: {
+            image: {
+              url: imageUrl,
+            },
+          },
           ...data,
         },
       }),

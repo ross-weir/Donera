@@ -1,5 +1,5 @@
 {
-  "extends": "@donera/typescript-config/bun.json",
+  "extends": "@donera/typescript-config/types.json",
   "compilerOptions": {
     "outDir": "dist",
   },

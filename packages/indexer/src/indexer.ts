@@ -4,6 +4,7 @@ import { PrismaClient, PrismaPromise, configure } from "@donera/database";
 export type IndexerConfig = {
   db: PrismaClient;
   node: NodeProvider;
+  ipfsGateway: string;
 };
 
 export interface Indexer {
@@ -15,11 +16,13 @@ export abstract class BaseIndexer implements Indexer {
   protected currentHeight: number;
   protected readonly node: NodeProvider;
   protected readonly db: PrismaClient;
+  protected readonly ipfsGateway: string;
 
   constructor(cfg: IndexerConfig) {
     this.currentHeight = 0;
     this.node = cfg.node;
     this.db = cfg.db;
+    this.ipfsGateway = cfg.ipfsGateway;
   }
 
   async getCurrentHeight(): Promise<number> {

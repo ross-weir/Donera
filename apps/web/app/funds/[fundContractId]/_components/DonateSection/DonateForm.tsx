@@ -36,6 +36,7 @@ type FormSchema = {
 
 export type DonateFormProps = {
   fundContractId: string;
+  disabled: boolean;
 };
 
 const donateButtonProps: ExtractProps<typeof Button> = {
@@ -45,7 +46,7 @@ const donateButtonProps: ExtractProps<typeof Button> = {
 
 const FallbackConnectButton = dynamicWalletButton(donateButtonProps);
 
-export function DonateForm({ fundContractId }: DonateFormProps) {
+export function DonateForm({ fundContractId, disabled }: DonateFormProps) {
   const { signer } = useWallet();
   const form = useForm<FormSchema>({
     initialValues: { tokenId: ALPH_TOKEN_ID, amount: 0 },
@@ -93,7 +94,7 @@ export function DonateForm({ fundContractId }: DonateFormProps) {
             required
             hideControls
             decimalScale={2}
-            disabled={isSubmitting}
+            disabled={isSubmitting || disabled}
             {...form.getInputProps("amount")}
           />
         </Grid.Col>
@@ -101,13 +102,13 @@ export function DonateForm({ fundContractId }: DonateFormProps) {
           <SelectToken
             data={tokens}
             dropdownProps={{ mah: 200, style: { overflowY: "auto" } }}
-            disabled={isSubmitting}
+            disabled={isSubmitting || disabled}
             {...form.getInputProps("tokenId")}
           />
         </Grid.Col>
       </Grid>
       <FallbackConnectButton {...donateButtonProps}>
-        <Button type="submit" {...donateButtonProps} loading={isSubmitting}>
+        <Button type="submit" {...donateButtonProps} loading={isSubmitting} disabled={disabled}>
           Donate
         </Button>
       </FallbackConnectButton>

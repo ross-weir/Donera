@@ -43,7 +43,7 @@ export default async function FundDetailPage({ params }: { params: Params }) {
     notFound();
   }
 
-  const { shortId, goal, donations, metadata } = fund;
+  const { shortId, goal, donations, metadata, verified } = fund;
   const image = ipfsUrlToGateway(metadata.image.url);
 
   return (
@@ -67,6 +67,7 @@ export default async function FundDetailPage({ params }: { params: Params }) {
           alphRaised={alphRaised(fund)}
           latestDonations={donations}
           donationCount={donationCount}
+          verified={verified}
           shadow="sm"
           p="xl"
           withBorder
