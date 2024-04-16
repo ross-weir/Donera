@@ -104,11 +104,8 @@ export class SimpleEventIndexer extends BaseIndexer {
     const response = await fetch(`${this.ipfsGateway}/${metadataCid}`);
     if (!response.ok) {
       const body = await response.text();
-      console.log(metadataUrl, metadataCid);
       throw new Error(`IPFS metadata request failed, status: ${response.status}, body: ${body}`);
     }
-    // TODO: validate this, users can put whatever they like by interacting
-    // directly with the dapp without using the web app
     const { name, description, imageUrl } = (await response.json()) as OffchainMetadata;
     const data = {
       name,
