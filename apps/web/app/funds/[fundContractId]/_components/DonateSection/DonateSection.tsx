@@ -17,6 +17,7 @@ export type DonateSectionProps = {
   assetsRaised?: unknown;
   latestDonations: SimpleDonation[];
   donationCount: number;
+  verified: boolean;
 } & PaperProps;
 
 export function DonateSection({
@@ -27,6 +28,7 @@ export function DonateSection({
   assetsRaised,
   latestDonations,
   donationCount,
+  verified,
   ...rest
 }: DonateSectionProps) {
   return (
@@ -38,7 +40,7 @@ export function DonateSection({
       <Space h="md" />
       <Title order={4}>Make a donation</Title>
       <Space h="md" />
-      <DonateForm fundContractId={fundContractId} />
+      <DonateForm fundContractId={fundContractId} disabled={!verified} />
       <ShareButton shortId={shortId} />
       <Divider my="lg" />
       <LatestDonationSection donations={latestDonations} />

@@ -8,7 +8,7 @@ import { fundSummary } from "@donera/database/funds";
 import { Metadata } from "next";
 import { Suspense, cache } from "react";
 import { ImageWithPlaceholder } from "@/_components/ImageWithPlaceholder";
-import { cidToUrl } from "@/_lib/donera";
+import { ipfsUrlToGateway } from "@/_lib/donera";
 
 export const dynamic = "force-dynamic";
 
@@ -43,10 +43,8 @@ export default async function FundDetailPage({ params }: { params: Params }) {
     notFound();
   }
 
-  const { shortId, goal, donations, metadata } = fund;
-  // fallback to url
-  // https://github.com/ross-weir/Donera/issues/73
-  const image = cidToUrl(metadata.image?.cid) || metadata.image?.url;
+  const { shortId, goal, donations, metadata, verified } = fund;
+  const image = ipfsUrlToGateway(metadata.image.url);
 
   return (
     <Container fluid>
@@ -69,6 +67,7 @@ export default async function FundDetailPage({ params }: { params: Params }) {
           alphRaised={alphRaised(fund)}
           latestDonations={donations}
           donationCount={donationCount}
+          verified={verified}
           shadow="sm"
           p="xl"
           withBorder

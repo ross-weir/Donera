@@ -1,12 +1,11 @@
 {
-  "version": "v2.9.1",
+  "version": "v2.11.0",
   "name": "Fund",
-  "bytecode": "07091040234039404b4054405d4066406f4078010103030006b40002160016011602ac010200000009b4000256ce053413327bce02b000000101000ab4b24513405a7b1600a0004513405a7b010001010007b4a0004513405a7b1600a100010000000102ce0002010000000102ce0102010000000102ce0402010000000102ce0202010000000102ce0302",
-  "codeHash": "d029c5f32519bc4a1639873afb0be1eb619a6bccd76846e5da6347e55bc25e63",
+  "bytecode": "06081040234039404b4054405d4066406f010103030006b40002160016011602ac010200000009b4000256ce043413327bce01b000000101000ab4b24513405a7b1600a0004513405a7b010001010007b4a0004513405a7b1600a100010000000102ce0002010000000102ce0302010000000102ce0102010000000102ce0202",
+  "codeHash": "332f5b4e9cb525d039cb5b9126f6ec6d1d6e332ef4dff4c2c8cb22c5b0c08107",
   "fieldsSig": {
     "names": [
-      "selfName",
-      "selfDescription",
+      "selfMetadataUrl",
       "selfBeneficiary",
       "selfOrganizer",
       "selfGoal",
@@ -15,7 +14,6 @@
     ],
     "types": [
       "ByteVec",
-      "ByteVec",
       "Address",
       "Address",
       "U256",
@@ -23,7 +21,6 @@
       "Address"
     ],
     "isMutable": [
-      false,
       false,
       false,
       false,
@@ -99,19 +96,7 @@
       "returnTypes": []
     },
     {
-      "name": "getName",
-      "usePreapprovedAssets": false,
-      "useAssetsInContract": false,
-      "isPublic": true,
-      "paramNames": [],
-      "paramTypes": [],
-      "paramIsMutable": [],
-      "returnTypes": [
-        "ByteVec"
-      ]
-    },
-    {
-      "name": "getDescription",
+      "name": "getSelfMetadataUrl",
       "usePreapprovedAssets": false,
       "useAssetsInContract": false,
       "isPublic": true,

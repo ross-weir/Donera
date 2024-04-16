@@ -19,8 +19,8 @@ import { useForm, isNotEmpty, hasLength, isInRange } from "@mantine/form";
 import { getDoneraDapp, getExternalLinkForTx } from "@/_lib/donera";
 import dayjs from "dayjs";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { saveFund } from "../_actions/mutations";
-import { CreateFundResult } from "@donera/dapp";
 import { notifications } from "@mantine/notifications";
 import { IconCheck, IconExternalLink } from "@tabler/icons-react";
 import { handleTxSubmitError } from "@/_components/TxErrorNotification";
@@ -109,7 +109,8 @@ function SetBeneficiaryText({ form }: { form: any }) {
 }
 
 export default function CreateFundForm() {
-  const { signer } = useWallet();
+  const { signer, account } = useWallet();
+  const router = useRouter();
   const form = useForm<FormSchema>({
     initialValues: {
       name: "",
@@ -132,37 +133,55 @@ export default function CreateFundForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const commonInputProps = { disabled: isSubmitting, required: true, withAsterisk: true };
 
-  const onSuccess = (result: CreateFundResult) => {
-    notifications.show({
-      withBorder: true,
-      color: "teal",
-      icon: <IconCheck size="1.1rem" />,
-      title: "Fund submitted",
-      message: (
-        <span>
-          View your transaction on the explorer{" "}
-          <Anchor href={getExternalLinkForTx(result.txId)} target="_blank" rel="noreferrer">
-            <IconExternalLink size={12} />.
-          </Anchor>
-        </span>
-      ),
-    });
-    const formData = new FormData();
-    formData.set("image", form.values.image!);
-    saveFund(result, formData).catch(onError);
-  };
-
-  const onError = (e: Error) => {
-    // only set isSubmitting on error
-    // so the loading state stays until the backend redirects the client
-    // in the `saveFund` function
-    setIsSubmitting(false);
-    handleTxSubmitError(e, "Fund creation");
-  };
-
-  const onSubmit = async (form: FormSchema) => {
+  const onSubmit = async () => {
     setIsSubmitting(true);
-    getDoneraDapp().createFund(signer!, form).then(onSuccess).catch(onError);
+
+    try {
+      // submitted as form data because we're posting a file
+      const { deadline, image, goal, ...rest } = form.values;
+      const formData = new FormData();
+
+      for (const [key, value] of Object.entries(rest)) {
+        formData.set(key, value);
+      }
+
+      formData.set("image", image!);
+      formData.set("deadline", deadline.toISOString());
+      formData.set("goal", goal.toString());
+      formData.set("organizer", account!.address);
+
+      // save the fund before submitting transaction so we ensure
+      // fund metadata is uploaded to ipfs
+      const saveResult = await saveFund(formData);
+      const { txId, fundContractId } = await getDoneraDapp().createFund(signer!, saveResult);
+
+      notifications.show({
+        withBorder: true,
+        color: "teal",
+        icon: <IconCheck size="1.1rem" />,
+        title: "Fund submitted",
+        message: (
+          <span>
+            View your transaction on the explorer{" "}
+            <Anchor href={getExternalLinkForTx(txId)} target="_blank" rel="noreferrer">
+              <IconExternalLink size={12} />.
+            </Anchor>
+          </span>
+        ),
+      });
+
+      if (saveResult.id !== fundContractId) {
+        throw new Error(
+          `Fund contract id mismatch, backend ${saveResult.id} !== frontend ${fundContractId}`
+        );
+      }
+
+      router.push(`/funds/${fundContractId}`);
+    } catch (e) {
+      console.error(e);
+      setIsSubmitting(false);
+      handleTxSubmitError(e as Error, "Fund creation");
+    }
   };
 
   return (

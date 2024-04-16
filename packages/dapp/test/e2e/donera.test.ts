@@ -14,6 +14,10 @@ function generateRandomString(length: number) {
   return result;
 }
 
+function generateMetadataUrl() {
+  return `ipfs://${generateRandomString(10)}`;
+}
+
 describe("end-to-end Donera", () => {
   beforeAll(async () => {
     web3.setCurrentNodeProvider("http://127.0.0.1:22973");
@@ -24,10 +28,9 @@ describe("end-to-end Donera", () => {
     const donera = DoneraDapp.forNetwork("devnet");
     console.log(`Donera instance: ${donera.doneraInstance.address}`);
 
-    const name = generateRandomString(10);
+    const metadataUrl = generateMetadataUrl();
     const fundParams = {
-      name,
-      description: "Testing donera end to end",
+      metadataUrl,
       goal: 50,
       deadline: new Date(),
       beneficiary: testAddress,
@@ -40,9 +43,9 @@ describe("end-to-end Donera", () => {
     // confirms the way we manually derive fundContractId matches what happened onchain
     const fund = Fund.at(addressFromContractId(newFund.fundContractId));
     const state = await fund.fetchState();
-    const { selfName, selfOwner } = state.fields;
+    const { selfMetadataUrl, selfOwner } = state.fields;
 
-    expect(selfName).toEqual(stringToHex(name));
+    expect(selfMetadataUrl).toEqual(stringToHex(metadataUrl));
     expect(selfOwner).toEqual(donera.doneraInstance.address);
 
     const donateResult = await donera.donateToFund(signer, {

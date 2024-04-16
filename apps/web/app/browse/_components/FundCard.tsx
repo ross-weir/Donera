@@ -4,7 +4,7 @@ import Link from "next/link";
 import NextImage from "next/image";
 import { FundProgress } from "@/_components/FundProgress";
 import classes from "./FundCard.module.css";
-import { cidToUrl } from "@/_lib/donera";
+import { ipfsUrlToGateway } from "@/_lib/donera";
 import { AddressText } from "@/_components/AddressText";
 
 type FundCardProps = {
@@ -14,9 +14,7 @@ type FundCardProps = {
 
 export function FundCard({ fund, alphRaised, ...rest }: FundCardProps) {
   const { name, goal, id, organizer, metadata } = fund;
-  // fallback to url
-  // https://github.com/ross-weir/Donera/issues/73
-  const image = cidToUrl(metadata.image?.cid) || metadata.image?.url;
+  const image = ipfsUrlToGateway(metadata.image.url);
 
   return (
     <Card radius="md" {...rest} component={Link} href={`/funds/${id}`} withBorder>

@@ -21,12 +21,12 @@ export const CreateFund = new ExecutableScript<{
   uiDev: Address;
   uiFeeToken: HexString;
   uiFee: bigint;
-  name: HexString;
-  description: HexString;
+  metadataUrl: HexString;
   beneficiary: Address;
   goal: bigint;
   deadlineTimestamp: bigint;
-}>(Script.fromJson(CreateFundScriptJson));
+}>(Script.fromJson(CreateFundScriptJson, ""));
+
 export const DonateToFund = new ExecutableScript<{
   donera: HexString;
   uiDev: Address;
@@ -35,15 +35,17 @@ export const DonateToFund = new ExecutableScript<{
   fundContractId: HexString;
   tokenId: HexString;
   amount: bigint;
-}>(Script.fromJson(DonateToFundScriptJson));
+}>(Script.fromJson(DonateToFundScriptJson, ""));
+
 export const FinalizeFund = new ExecutableScript<{
   donera: HexString;
   uiDev: Address;
   uiFeeToken: HexString;
   uiFee: bigint;
   fundContractId: HexString;
-}>(Script.fromJson(FinalizeFundScriptJson));
+}>(Script.fromJson(FinalizeFundScriptJson, ""));
+
 export const SetListingFee = new ExecutableScript<{
   donera: HexString;
   newListingFee: bigint;
-}>(Script.fromJson(SetListingFeeScriptJson));
+}>(Script.fromJson(SetListingFeeScriptJson, ""));

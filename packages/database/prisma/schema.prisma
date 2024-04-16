@@ -12,10 +12,12 @@ datasource db {
 model Fund {
   // the funds contract id
   id          String     @id @map("_id")
+  // stored as metadata in ipfs
+  name        String
+  // stored as metadata in ipfs
+  description String
   // for sharable link
   shortId     String
-  name        String
-  description String
   // In atto alph format
   // BigInt doesn't work for numbers greater than JS number
   // Decimal128 not currently supported, String is the
@@ -29,15 +31,17 @@ model Fund {
   // we eagerly create the fund before verifying the transaction actually exists
   // to provide a smooth ui when users are creating a new fund
   // if verified is false we have not actually seen the fund on the network yet
-  // if it is true, we have seen the fund and it is legit
+  // if it is true, we have seen the fund via an event or onchain and it is legit
   verified    Boolean
   finalized   Boolean    @default(false)
   finalizedBy String?
-  txId        String
+  txId        String?
   // TODO get timestamp from blockchain?
   createdAt   DateTime   @default(now())
   confirmed   Boolean    @default(false)
   metadata    Metadata
+  // ipfs metadata url that contains the fund name, description, image, etc
+  metadataUrl String
 }
 
 type Balance {
@@ -56,14 +60,12 @@ model Donation {
 }
 
 type Image {
-  cid String?
-  // storing url to ensure there's a way to get the image until the cid is stored onchain
-  // https://github.com/ross-weir/Donera/issues/73
-  url String?
+  // for example ipfs://${cid}
+  url String
 }
 
 type Metadata {
-  image Image?
+  image Image
 }
 
 model Indexer {

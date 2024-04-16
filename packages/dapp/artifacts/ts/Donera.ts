@@ -23,6 +23,8 @@ import {
   fetchContractState,
   ContractInstance,
   getContractEventsCurrentCount,
+  TestContractParamsWithoutMaps,
+  TestContractResultWithoutMaps,
 } from "@alephium/web3";
 import { default as DoneraContractJson } from "../Donera.ral.json";
 import { getContractByCodeHash } from "./contracts";
@@ -40,8 +42,7 @@ export namespace DoneraTypes {
   export type State = ContractState<Fields>;
 
   export type FundListedEvent = ContractEvent<{
-    name: HexString;
-    description: HexString;
+    metadataUrl: HexString;
     beneficiary: Address;
     organizer: Address;
     goal: bigint;
@@ -100,42 +101,44 @@ class Factory extends ContractFactory<DoneraInstance, DoneraTypes.Fields> {
 
   tests = {
     createFund: async (
-      params: TestContractParams<
+      params: TestContractParamsWithoutMaps<
         DoneraTypes.Fields,
         {
-          name: HexString;
-          description: HexString;
+          metadataUrl: HexString;
           beneficiary: Address;
           goal: bigint;
           deadlineTimestamp: bigint;
         }
       >
-    ): Promise<TestContractResult<null>> => {
+    ): Promise<TestContractResultWithoutMaps<null>> => {
       return testMethod(this, "createFund", params);
     },
     donateToFund: async (
-      params: TestContractParams<
+      params: TestContractParamsWithoutMaps<
         DoneraTypes.Fields,
         { fundContractId: HexString; tokenId: HexString; amount: bigint }
       >
-    ): Promise<TestContractResult<null>> => {
+    ): Promise<TestContractResultWithoutMaps<null>> => {
       return testMethod(this, "donateToFund", params);
     },
     finalizeFund: async (
-      params: TestContractParams<
+      params: TestContractParamsWithoutMaps<
         DoneraTypes.Fields,
         { fundContractId: HexString }
       >
-    ): Promise<TestContractResult<null>> => {
+    ): Promise<TestContractResultWithoutMaps<null>> => {
       return testMethod(this, "finalizeFund", params);
     },
     upgrade: async (
-      params: TestContractParams<DoneraTypes.Fields, { newCode: HexString }>
-    ): Promise<TestContractResult<null>> => {
+      params: TestContractParamsWithoutMaps<
+        DoneraTypes.Fields,
+        { newCode: HexString }
+      >
+    ): Promise<TestContractResultWithoutMaps<null>> => {
       return testMethod(this, "upgrade", params);
     },
     upgradeWithFields: async (
-      params: TestContractParams<
+      params: TestContractParamsWithoutMaps<
         DoneraTypes.Fields,
         {
           newCode: HexString;
@@ -143,72 +146,93 @@ class Factory extends ContractFactory<DoneraInstance, DoneraTypes.Fields> {
           newMutFieldsEncoded: HexString;
         }
       >
-    ): Promise<TestContractResult<null>> => {
+    ): Promise<TestContractResultWithoutMaps<null>> => {
       return testMethod(this, "upgradeWithFields", params);
     },
     assertOwner: async (
-      params: TestContractParams<DoneraTypes.Fields, { caller: Address }>
-    ): Promise<TestContractResult<null>> => {
+      params: TestContractParamsWithoutMaps<
+        DoneraTypes.Fields,
+        { caller: Address }
+      >
+    ): Promise<TestContractResultWithoutMaps<null>> => {
       return testMethod(this, "assertOwner", params);
     },
     setOwner: async (
-      params: TestContractParams<DoneraTypes.Fields, { newOwner: Address }>
-    ): Promise<TestContractResult<null>> => {
+      params: TestContractParamsWithoutMaps<
+        DoneraTypes.Fields,
+        { newOwner: Address }
+      >
+    ): Promise<TestContractResultWithoutMaps<null>> => {
       return testMethod(this, "setOwner", params);
     },
     deriveFundPath: async (
-      params: TestContractParams<
+      params: TestContractParamsWithoutMaps<
         DoneraTypes.Fields,
         {
-          name: HexString;
+          metadataUrl: HexString;
           beneficiary: Address;
           organizer: Address;
           goal: bigint;
           deadlineTimestamp: bigint;
         }
       >
-    ): Promise<TestContractResult<HexString>> => {
+    ): Promise<TestContractResultWithoutMaps<HexString>> => {
       return testMethod(this, "deriveFundPath", params);
     },
     withdraw: async (
-      params: TestContractParams<DoneraTypes.Fields, { amount: bigint }>
-    ): Promise<TestContractResult<null>> => {
+      params: TestContractParamsWithoutMaps<
+        DoneraTypes.Fields,
+        { amount: bigint }
+      >
+    ): Promise<TestContractResultWithoutMaps<null>> => {
       return testMethod(this, "withdraw", params);
     },
     setSelfFundTemplateId: async (
-      params: TestContractParams<
+      params: TestContractParamsWithoutMaps<
         DoneraTypes.Fields,
         { newFundTemplateId: HexString }
       >
-    ): Promise<TestContractResult<null>> => {
+    ): Promise<TestContractResultWithoutMaps<null>> => {
       return testMethod(this, "setSelfFundTemplateId", params);
     },
     getListingFee: async (
-      params: Omit<TestContractParams<DoneraTypes.Fields, never>, "testArgs">
-    ): Promise<TestContractResult<bigint>> => {
+      params: Omit<
+        TestContractParamsWithoutMaps<DoneraTypes.Fields, never>,
+        "testArgs"
+      >
+    ): Promise<TestContractResultWithoutMaps<bigint>> => {
       return testMethod(this, "getListingFee", params);
     },
     setListingFee: async (
-      params: TestContractParams<DoneraTypes.Fields, { newListingFee: bigint }>
-    ): Promise<TestContractResult<null>> => {
+      params: TestContractParamsWithoutMaps<
+        DoneraTypes.Fields,
+        { newListingFee: bigint }
+      >
+    ): Promise<TestContractResultWithoutMaps<null>> => {
       return testMethod(this, "setListingFee", params);
     },
     getDonationFee: async (
-      params: Omit<TestContractParams<DoneraTypes.Fields, never>, "testArgs">
-    ): Promise<TestContractResult<bigint>> => {
+      params: Omit<
+        TestContractParamsWithoutMaps<DoneraTypes.Fields, never>,
+        "testArgs"
+      >
+    ): Promise<TestContractResultWithoutMaps<bigint>> => {
       return testMethod(this, "getDonationFee", params);
     },
     setDonationFee: async (
-      params: TestContractParams<DoneraTypes.Fields, { newDonationFee: bigint }>
-    ): Promise<TestContractResult<null>> => {
+      params: TestContractParamsWithoutMaps<
+        DoneraTypes.Fields,
+        { newDonationFee: bigint }
+      >
+    ): Promise<TestContractResultWithoutMaps<null>> => {
       return testMethod(this, "setDonationFee", params);
     },
     setSelfDeadlineLimit: async (
-      params: TestContractParams<
+      params: TestContractParamsWithoutMaps<
         DoneraTypes.Fields,
         { newDeadlineLimit: bigint }
       >
-    ): Promise<TestContractResult<null>> => {
+    ): Promise<TestContractResultWithoutMaps<null>> => {
       return testMethod(this, "setSelfDeadlineLimit", params);
     },
   };
@@ -218,8 +242,8 @@ class Factory extends ContractFactory<DoneraInstance, DoneraTypes.Fields> {
 export const Donera = new Factory(
   Contract.fromJson(
     DoneraContractJson,
-    "=5+14c41e8426=1+42=1-1+c427c429242a442f34301=1+3=1-1+e=1+317=1+324432d433a4347010105=2-1+00=2+3=1-1+160016021603160=1+7e=1-2+5=2+2=1-1+637265617465=1+6756e643a207b0a202020202020737=1-1+6=1+6e3a20656e7=1-1+72792c=2-2+2020202020206e6=1-2+6d653a20=1+52c0a2020202020206=1+6=1-1+6e65666963696=1+7=1+793a200=1-1+2c0a202020202020676f6=1+6c=1+a201=1+2c0a2020202020206=1+656=1+6=1+6c696e655=1-2+696d6=1-1+737=1+6=1-2+6d7=1-1+3a2=1-1=1-1+6=2+2=1+2=1-1+2=1-1=1+07d=65+67e02402e63726561746546756e643a207b7370616e3a20737562436f6e7472616374506174682c2070617468486173683a20017d160=91+16097e02402863726561746546756e643a207b7370616e3a2066756e64437265617465642c2066756e6449643a20017d=43-1+c1600160116027e044039646f6e617465546f46756e643a207b0a2020202020207370616e3a20656e7472792c0a20202020202066756e64436f6e747261637449643a20112c0a202020202020746f6b656e49643a20102c0a202020202020616d6f756e743a20060a202020207d=93-1+f=14+160016017e03403c66696e616c697a6546756e643a207b0a2020202020207370616e3a2066696e616c697a652c0a20202020202066756e64436f6e747261637449643a20132c0a20202020202066696e616c697a65723a20060a202020207d=171-1+d=30+16057e02402e64657269766546756e64506174683a207b7370616e3a20656e636f64696e672c2070617468456e636f6465643a20017d=176",
-    "2ce6974a5349de7e0b366a172878cc62e22fbe93493a811451cb7139fe43dedd"
+    "=5-1+14f41eb42=1-1+3426f427f=1-1+2=1-1+5=1+2a742f643=1+44311431=1-1+4327=1+33=1-2+433d=1+34a=1-2+1010=2-2+900=2-3+39=1+60=1+1=1-1+0=2+60216037e05=1+03=1-1+637=1+656=1+7=1-1+6546756e643a=1+07b0=1-1+20202020202073706=1+6e=1+a20656e=2-2+72792c0a20202020202=1+6d657=1+6=1+6=1-1+617=1+6=2+5726c3=1+2=2+52c=1-1+a2=1-1+2=1+2020202062656e65666=1+63696172793a2=2+e2c0a202020202020676f616c3a201b2c0a2020202020206=1+6561646c696e6554696d657374616d7=2+a2=1+060a202020207d=65+57e02402e63726561746546756e643a207b7370616e3a20737562436f6e7472616374506174682c2070617468486173683a20017d160=87+16087e02402863726561746546756e643a207b7370616e3a2066756e64437265617465642c2066756e6449643a20017d=39-1+c1600160116027e044039646f6e617465546f46756e643a207b0a2020202020207370616e3a20656e7472792c0a20202020202066756e64436f6e747261637449643a20112c0a202020202020746f6b656e49643a20102c0a202020202020616d6f756e743a20060a202020207d=93-1+f=14+160016017e03403c66696e616c697a6546756e643a207b0a2020202020207370616e3a2066696e616c697a652c0a20202020202066756e64436f6e747261637449643a20132c0a20202020202066696e616c697a65723a20060a202020207d=171-1+d=30+16057e02402e64657269766546756e64506174683a207b7370616e3a20656e636f64696e672c2070617468456e636f6465643a20017d=176",
+    "8c0097a9443aec277e5d64bdd283db3c88af9a1371ea105a751fc7bfe7985f24"
   )
 );
 

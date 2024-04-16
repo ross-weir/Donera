@@ -16,8 +16,7 @@ import { stringToHex } from "@donera/core";
 import { NO_UI_FEE, UiFee, UiFeeOnchain, convertUiFeeToOnchain } from "./fees";
 
 export type CreateFundParam = {
-  name: string;
-  description: string;
+  metadataUrl: string;
   goal: number | string;
   deadline: Date;
   beneficiary: string;
@@ -26,8 +25,7 @@ export type CreateFundParam = {
 export type CreateFundResult = {
   txId: string;
   fundContractId: string;
-  name: string;
-  description: string;
+  metadataUrl: string;
   goal: string;
   deadline: Date;
   beneficiary: string;
@@ -82,7 +80,7 @@ export class DoneraDapp {
     const deadlineUnixTs = Math.floor(params.deadline.getTime() / 1000);
     const listingFeeCall = await this.doneraInstance.methods.getListingFee();
     const onchainParams = {
-      name: stringToHex(params.name),
+      metadataUrl: stringToHex(params.metadataUrl),
       goal: convertAlphAmountWithDecimals(params.goal)!,
       beneficiary: params.beneficiary,
       deadlineTimestamp: BigInt(deadlineUnixTs),
@@ -91,7 +89,6 @@ export class DoneraDapp {
       initialFields: {
         donera: this.doneraInstance.contractId,
         ...this.uiFee,
-        description: stringToHex(params.description),
         ...onchainParams,
       },
       attoAlphAmount: listingFeeCall.returns + ONE_ALPH + this.uiFee.uiFee,
@@ -102,13 +99,10 @@ export class DoneraDapp {
       organizer: organizerAccount.address,
     });
 
-    // TODO: should probably return the values in `fields` as they come from
-    // the blockchain itself
     return {
       txId,
       fundContractId,
-      name: params.name,
-      description: params.description,
+      metadataUrl: params.metadataUrl,
       goal: onchainParams.goal.toString(),
       deadline: params.deadline,
       beneficiary: params.beneficiary,
@@ -167,6 +161,7 @@ export class DoneraDapp {
   }
 
   private getTokenInfo(tokenId: string): TokenInfo | undefined {
+    // TODO: check if this can be removed, looks like ALPH token has since been added to token lists
     if (tokenId === ALPH_TOKEN_ID) {
       return ALPH;
     }

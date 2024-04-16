@@ -14,10 +14,10 @@ export class ChainsafeBlobStore implements BlobStore {
     throw new Error("Method not implemented.");
   }
 
-  async put(key: string, buffer: ArrayBuffer): Promise<PutResult> {
+  async put(key: string, blob: Blob): Promise<PutResult> {
     const formData = new FormData();
 
-    formData.append("file", new Blob([buffer]), key);
+    formData.append("file", blob, key);
     formData.append("path", "/");
 
     const response = await fetch(`${this.apiUrl}/api/v1/bucket/${this.bucketId}/upload`, {
@@ -30,6 +30,6 @@ export class ChainsafeBlobStore implements BlobStore {
     const json = await response.json();
     const data = json.files_details[0]!;
 
-    return { id: data.cid };
+    return { url: `ipfs://${data.cid}` };
   }
 }

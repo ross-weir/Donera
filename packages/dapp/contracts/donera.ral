@@ -13,15 +13,14 @@ Contract Donera(
 
   @using(preapprovedAssets = true, checkExternalCaller = false, assetsInContract = true)
   pub fn createFund(
-    name: ByteVec,
-    description: ByteVec,
+    metadataUrl: ByteVec,
     beneficiary: Address,
     goal: U256,
     deadlineTimestamp: U256
   ) -> () {
     emit Debug(`createFund: {
       span: entry,
-      name: ${name},
+      metadataUrl: ${metadataUrl},
       beneficiary: ${beneficiary},
       goal: ${goal},
       deadlineTimestamp: ${deadlineTimestamp}
@@ -33,7 +32,7 @@ Contract Donera(
     transferTokenToSelf!(organizer, ALPH, selfListingFee)
 
     let pathHash = deriveFundPath(
-      name,
+      metadataUrl,
       beneficiary,
       organizer,
       goal,
@@ -43,8 +42,7 @@ Contract Donera(
     emit Debug(`createFund: {span: subContractPath, pathHash: ${pathHash}}`)
 
     let (immFields, mutFields) = Fund.encodeFields!(
-      name,
-      description,
+      metadataUrl,
       beneficiary,
       organizer,
       goal,
@@ -61,8 +59,7 @@ Contract Donera(
     emit Debug(`createFund: {span: fundCreated, fundId: ${fundContractId}}`)
 
     emit FundListed(
-      name,
-      description,
+      metadataUrl,
       beneficiary,
       organizer,
       goal,
@@ -109,14 +106,14 @@ Contract Donera(
   }
 
   fn deriveFundPath(
-    name: ByteVec,
+    metadataUrl: ByteVec,
     beneficiary: Address,
     organizer: Address,
     goal: U256,
     deadlineTimestamp: U256
   ) -> (ByteVec) {
     let pathEncoded = encodeToByteVec!(
-      name,
+      metadataUrl,
       beneficiary,
       organizer,
       goal,
