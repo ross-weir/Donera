@@ -179,10 +179,9 @@ export default function CreateFundForm() {
       router.push(`/funds/${fundContractId}`);
     } catch (e) {
       console.error(e);
+      setIsSubmitting(false);
       handleTxSubmitError(e as Error, "Fund creation");
     }
-
-    setIsSubmitting(false);
   };
 
   return (
