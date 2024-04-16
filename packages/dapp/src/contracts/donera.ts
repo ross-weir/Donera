@@ -37,9 +37,8 @@ export function deriveFundContractPath({
   return binToHex(blake2b(buf, { dkLen: 32 }));
 }
 
-export type OnchainMetadata = {
+export type OffchainMetadata = {
   name: string;
   description: string;
   imageUrl: string;
 };
-

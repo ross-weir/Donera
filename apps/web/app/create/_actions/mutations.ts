@@ -5,7 +5,7 @@ import { nanoid } from "nanoid";
 import { blob } from "@/_lib/server";
 import { getDoneraDapp } from "@/_lib/donera";
 import { convertAlphAmountWithDecimals, stringToHex } from "@alephium/web3";
-import { OnchainMetadata } from "@donera/dapp";
+import { OffchainMetadata } from "@donera/dapp";
 
 type SaveFundParam = {
   name: string;
@@ -46,14 +46,14 @@ export async function saveFund(formData: FormData) {
   const { image, deadline, ...param } = parseFormData(formData);
   const imageBuf = await image.arrayBuffer();
   const { url: imageUrl } = await blob.put(nanoid(32), new Blob([imageBuf]));
-  const onchainMetadata: OnchainMetadata = {
+  const offchainMetadata: OffchainMetadata = {
     name: param.name,
     description: param.description,
     imageUrl,
   };
   const { url: metadataUrl } = await blob.put(
     nanoid(32),
-    new Blob([JSON.stringify(onchainMetadata)], { type: "application/json" })
+    new Blob([JSON.stringify(offchainMetadata)], { type: "application/json" })
   );
   const metadata = { image: { url: imageUrl } };
   const deadlineDate = new Date(deadline);

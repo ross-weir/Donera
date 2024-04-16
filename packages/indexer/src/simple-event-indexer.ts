@@ -4,7 +4,7 @@ import { ALPH_TOKEN_ID, Contract, addressFromContractId, hexToString, node } fro
 import { PrismaPromise } from "@donera/database";
 import { Deployments } from "@donera/dapp/deploys";
 import { nanoid } from "nanoid";
-import { OnchainMetadata } from "@donera/dapp";
+import { OffchainMetadata } from "@donera/dapp";
 
 export type EventIndexerConfig = {
   intervalMs: number;
@@ -109,7 +109,7 @@ export class SimpleEventIndexer extends BaseIndexer {
     }
     // TODO: validate this, users can put whatever they like by interacting
     // directly with the dapp without using the web app
-    const { name, description, imageUrl } = (await response.json()) as OnchainMetadata;
+    const { name, description, imageUrl } = (await response.json()) as OffchainMetadata;
     const data = {
       name,
       description,
