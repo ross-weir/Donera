@@ -20,7 +20,6 @@ import { getDoneraDapp, getExternalLinkForTx } from "@/_lib/donera";
 import dayjs from "dayjs";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { saveFund } from "../_actions/mutations";
 import { notifications } from "@mantine/notifications";
 import { IconCheck, IconExternalLink } from "@tabler/icons-react";
 import { handleTxSubmitError } from "@/_components/TxErrorNotification";
@@ -150,10 +149,15 @@ export default function CreateFundForm() {
       formData.set("goal", goal.toString());
       formData.set("organizer", account!.address);
 
-      // save the fund before submitting transaction so we ensure
-      // fund metadata is uploaded to ipfs
-      const saveResult = await saveFund(formData);
-      const { txId, fundContractId } = await getDoneraDapp().createFund(signer!, saveResult);
+      const response = await fetch("/funds", {
+        method: "POST",
+        body: formData,
+      });
+      const { deadline: deadlineStr, ...fund } = await response.json();
+      const { txId, fundContractId } = await getDoneraDapp().createFund(signer!, {
+        ...fund,
+        deadline: new Date(deadlineStr),
+      });
 
       notifications.show({
         withBorder: true,
@@ -170,9 +174,9 @@ export default function CreateFundForm() {
         ),
       });
 
-      if (saveResult.id !== fundContractId) {
+      if (fund.id !== fundContractId) {
         throw new Error(
-          `Fund contract id mismatch, backend ${saveResult.id} !== frontend ${fundContractId}`
+          `Fund contract id mismatch, backend ${fund.id} !== frontend ${fundContractId}`
         );
       }
 

@@ -1,11 +1,10 @@
-"use server";
-
 import db from "@donera/database";
 import { nanoid } from "nanoid";
 import { blob } from "@/_lib/server";
 import { getDoneraDapp } from "@/_lib/donera";
 import { convertAlphAmountWithDecimals, stringToHex } from "@alephium/web3";
 import { OffchainMetadata } from "@donera/dapp";
+import { NextRequest, NextResponse } from "next/server";
 
 type SaveFundParam = {
   name: string;
@@ -42,7 +41,8 @@ function parseFormData(formData: FormData): SaveFundParam {
   };
 }
 
-export async function saveFund(formData: FormData) {
+export async function POST(request: NextRequest) {
+  const formData = await request.formData();
   const { image, deadline, ...param } = parseFormData(formData);
   const imageBuf = await image.arrayBuffer();
   const { url: imageUrl } = await blob.put(nanoid(32), new Blob([imageBuf]));
@@ -64,8 +64,7 @@ export async function saveFund(formData: FormData) {
     organizer: param.organizer,
     metadataUrl: stringToHex(metadataUrl),
   });
-
-  return await db.fund.create({
+  const fund = await db.fund.create({
     data: {
       ...param,
       id: fundContractId,
@@ -76,4 +75,5 @@ export async function saveFund(formData: FormData) {
       metadataUrl,
     },
   });
+  return NextResponse.json(fund);
 }
