@@ -1,5 +1,5 @@
 {
-  "version": "v2.11.0",
+  "version": "v2.12.0",
   "name": "DonateToFund",
   "bytecodeTemplate": "0101030001001c{3}0c334c05b4{1}{2}{3}aa0c0d{0}010c1700b47a{5}{6}a31600a2{4}{5}{6}0f0c{0}0101",
   "fieldsSig": {
