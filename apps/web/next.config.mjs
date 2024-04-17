@@ -22,6 +22,10 @@ const nextConfig = {
     if (isServer) {
       config.plugins = [...config.plugins, new PrismaPlugin()];
     }
+    // this can be useful to enable for hard to debug build errors
+    // it will show us where an error occurred instead of displaying
+    // minified stack trace files/functions
+    // config.optimization = { minimize: false };
     return config;
   },
 };

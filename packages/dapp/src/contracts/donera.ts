@@ -27,7 +27,7 @@ export function deriveFundContractPath({
   organizer,
 }: DeriveFundPathParam): string {
   const buf = Buffer.concat([
-    encodeU256(5n),
+    encodeU256(BigInt(5)),
     encodeVmByteVec(metadataUrl),
     encodeVmAddress(beneficiary),
     encodeVmAddress(organizer),
